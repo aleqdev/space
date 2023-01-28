@@ -1,41 +1,49 @@
-use bevy::{core_pipeline::{bloom::BloomSettings, clear_color::ClearColorConfig}, prelude::*};
+use bevy::{
+    core_pipeline::{bloom::BloomSettings, clear_color::ClearColorConfig},
+    math::DVec3,
+    prelude::*,
+};
 use bevy_polyline::prelude::*;
 
-use crate::space::{TargetTransform, CameraOrbitParams};
-
-use super::BodyBundle;
+use super::{BodyRef, CameraScale, SpaceSimulation, UnconstrainedOrbit};
 
 pub fn setup(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut polylines: ResMut<Assets<Polyline>>,
-    mut polyline_materials: ResMut<Assets<PolylineMaterial>>
+    mut polyline_materials: ResMut<Assets<PolylineMaterial>>,
+    mut simulation: ResMut<SpaceSimulation>,
+    camera_scale: Res<CameraScale>,
 ) {
-    use bevy_mod_raycast::{RaycastSource, RaycastMesh};
-    use ringbuffer::AllocRingBuffer;
-    use super::SelectionRaycastSet;
     use super::MainCamera3d;
+    use super::SelectionRaycastSet;
+    use bevy_dolly::prelude::*;
+    use bevy_mod_raycast::{RaycastMesh, RaycastSource};
 
-    for (color, position, velocity) in [
-        (Color::RED, Vec3::ZERO, Vec3::ZERO),
-        (Color::CYAN, Vec3::Z * 4.0, Vec3::new(0.2, 0.7, 0.1)),
-        (Color::GREEN, Vec3::X * 4.0, Vec3::new(0.2, 0.3, 0.1)),
-        (Color::YELLOW, -Vec3::Z * 4.0, Vec3::ZERO),
-        (Color::WHITE, -Vec3::Y * 4.0, Vec3::new(0.2, 0.7, 0.1)),
-        (Color::ORANGE, -Vec3::X * 4.0, Vec3::new(0.2, 0.3, 0.1))
-    ] {
+    for (i, (color, mass, position, velocity)) in [
+        (
+            Color::GREEN,
+            5.97217 * 10e24,
+            DVec3::X * 147.095 * 10e6 * 1000.0,
+            -DVec3::Z * 30.29 * 1000.0,
+        ),
+        (Color::ORANGE, 1_988_500.0 * 10e24, DVec3::ZERO, DVec3::ZERO),
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        simulation.positions.push(position);
+        simulation.velocities.push(velocity);
+        simulation.masses.push(mass);
+        simulation.trails.push(Default::default());
+
         let polyline = polylines.add(Polyline {
             vertices: Vec::with_capacity(1024),
         });
 
         commands.spawn((
-            BodyBundle {
-                mass: 0.4.into(),
-                velocity: velocity.into(),
-                trail: AllocRingBuffer::with_capacity(1024).into(),
-                ..default()
-            },
+            BodyRef(i),
             PbrBundle {
                 mesh: meshes.add(
                     shape::Icosphere {
@@ -49,11 +57,15 @@ pub fn setup(
                     unlit: true,
                     ..default()
                 }),
-                transform: Transform::from_translation(position),
+                transform: Transform::from_translation(Vec3::new(
+                    (position.x * camera_scale.scale) as f32,
+                    (position.y * camera_scale.scale) as f32,
+                    (position.z * camera_scale.scale) as f32,
+                )),
                 ..default()
             },
             polyline.clone(),
-            RaycastMesh::<SelectionRaycastSet>::default()
+            RaycastMesh::<SelectionRaycastSet>::default(),
         ));
 
         commands.spawn(PolylineBundle {
@@ -68,31 +80,36 @@ pub fn setup(
         });
     }
 
-    commands
-        .spawn((
-            Camera3dBundle {
-                camera: Camera {
-                    hdr: true,
-                    ..default()
-                },
-                camera_3d: Camera3d {
-                    clear_color: ClearColorConfig::Custom(Color::BLACK),
-                    ..default()
-                },
+    commands.spawn((
+        MainCamera3d,
+        Rig::builder()
+            .with(
+                UnconstrainedOrbit::new()
+                    .yaw_degrees(45.0)
+                    .pitch_degrees(-30.0),
+            )
+            .with(Smooth::new_position(0.1))
+            .with(Arm::new(Vec3::Z * 8.0))
+            .build(),
+    ));
+
+    commands.spawn((
+        Camera3dBundle {
+            camera: Camera {
+                hdr: true,
                 ..default()
             },
-            BloomSettings {
-                intensity: 5.0,
+            camera_3d: Camera3d {
+                clear_color: ClearColorConfig::Custom(Color::BLACK),
                 ..default()
             },
-            RaycastSource::<SelectionRaycastSet>::new(),
-            MainCamera3d,
-            TargetTransform {
-                transform: Transform::from_xyz(0., 0., 10.,),
-                smooth: 0.9,
-            },
-            CameraOrbitParams {
-                distance: 10.0
-            }
-        ));
+            ..default()
+        },
+        BloomSettings {
+            intensity: 5.0,
+            ..default()
+        },
+        RaycastSource::<SelectionRaycastSet>::new(),
+        MainCamera3d,
+    ));
 }

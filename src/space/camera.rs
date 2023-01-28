@@ -1,26 +1,32 @@
-use bevy::{prelude::*, input::mouse::{MouseWheel, MouseMotion}};
+use bevy::{
+    input::mouse::{MouseMotion, MouseWheel},
+    prelude::*,
+};
+use bevy_dolly::prelude::*;
 use bevy_ecs_markers::params::{Marker, MarkerMut};
 
-use super::{SelectedBody, FocusedBody, TargetTransform};
+use super::{FocusedBody, SelectedBody, UnconstrainedOrbit};
+
+#[derive(Resource)]
+pub struct CameraScale {
+    pub scale: f64,
+}
 
 #[derive(Resource)]
 pub struct CameraControlSensitivity {
     pub zoom: f32,
-    pub orbit: Vec2
+    pub orbit: Vec2,
 }
 
 #[derive(Component)]
 pub struct MainCamera3d;
 
-#[derive(Component)]
-pub struct CameraOrbitParams {
-    pub distance: f32
-}
-
 pub fn focus_camera_on_click(
     mouse: Res<Input<MouseButton>>,
     selected_body: Marker<SelectedBody>,
-    mut focused_body: MarkerMut<FocusedBody>
+    mut focused_body: MarkerMut<FocusedBody>,
+    camera: Query<Entity, (With<MainCamera3d>, With<Camera3d>)>,
+    mut commands: Commands,
 ) {
     use SelectedBody::*;
     // use bevy_prototype_lyon::prelude::*;
@@ -55,72 +61,53 @@ pub fn focus_camera_on_click(
                 },
                 Transform::default(),
             ));*/
+            commands.entity(camera.single()).set_parent(**focused_body);
         } else {
             **focused_body = Entity::from_raw(u32::MAX);
+            commands.entity(camera.single()).remove_parent();
         }
     }
 }
 
-pub fn align_camera_with_focus(
-    mut camera: Query<(&mut TargetTransform, &CameraOrbitParams), (With<Camera3d>, With<MainCamera3d>)>,
-    focused_body: Marker<FocusedBody>,
-    bodies: Query<&Transform>
-) {
-    let (mut target_transform, params) = camera.single_mut();
-
-    if focused_body.index() != u32::MAX {
-        let body = bodies.get(**focused_body).unwrap().translation;
-        target_transform.transform.translation = body - target_transform.transform.forward() * params.distance;
-        let up = target_transform.transform.up();
-        target_transform.transform.look_at(body, up);
-    }
-}
-
-
 pub fn camera_zoom(
-    mut camera: Query<(&mut TargetTransform, &mut CameraOrbitParams), (With<Camera3d>, With<MainCamera3d>)>,
+    mut camera: Query<&mut Rig, With<MainCamera3d>>,
     mut mouse: EventReader<MouseWheel>,
-    sensitivity: Res<CameraControlSensitivity>
+    sensitivity: Res<CameraControlSensitivity>,
 ) {
-    let offset = mouse.iter().fold(0.0, |offset, ev| offset + ev.y * sensitivity.zoom);
+    let offset = mouse
+        .iter()
+        .fold(0.0, |offset, ev| offset + ev.y * sensitivity.zoom);
     if offset == 0.0 {
-        return
+        return;
     }
 
-    let (mut camera, mut params) = camera.single_mut();
+    let mut rig = camera.single_mut();
+    let arm = rig.driver_mut::<Arm>();
 
-    let translation = camera.transform.forward() * offset;
-
-    camera.transform.translation += translation;
-
-    params.distance = camera.transform.translation.length();
+    arm.offset.z -= offset;
 }
-
 
 pub fn camera_orbit(
-    mut rig: Query<(&Transform, &mut Rig)>,
+    mut rig: Query<&mut Rig, With<MainCamera3d>>,
     mut mouse: EventReader<MouseMotion>,
     sensitivity: Res<CameraControlSensitivity>,
-    mouse_button: Res<Input<MouseButton>>
+    mouse_button: Res<Input<MouseButton>>,
 ) {
     if !mouse_button.pressed(MouseButton::Right) {
-        return
+        return;
     }
 
-    let (transform, mut rig) = rig.single_mut();
+    let mut rig = rig.single_mut();
 
-    let signum = rig.final_transform.up().y.signum();
-
-    let driver = rig.driver_mut::<Rotation>();
+    let driver = rig.driver_mut::<UnconstrainedOrbit>();
 
     let mut delta = Vec2::ZERO;
     for ev in mouse.iter() {
         delta += ev.delta;
     }
 
-    driver.rotation += transform.rotate_local_axis(axis, angle)
     driver.rotate_yaw_pitch(
-        -0.1 * delta.x * sensitivity.orbit.x * signum,
+        -0.1 * delta.x * sensitivity.orbit.x,
         -0.1 * delta.y * sensitivity.orbit.y,
     );
 }

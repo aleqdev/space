@@ -9,8 +9,11 @@ bevy = { version = "0.9.1", default_features = false, features = ["bevy_core_pip
 bevy_polyline = "0.4.0"
 bevy_ecs_markers = "1.0.4"
 bevy_mod_raycast = "0.7.0"
-bevy_config_cam = { git = "https://github.com/BlackPhlox/bevy_config_cam", branch = "bevy_dolly" }
+bevy_dolly = { git = "https://github.com/BlackPhlox/bevy_dolly" }
 bevy_prototype_lyon = "0.7.2"
 derive_more = "0.99.17"
 ringbuffer = "0.11.1"
 bevy_editor_pls = "*"
+itertools = "0.10.5"
+nohash-hasher = "0.2.0"
+sloth = "0.2.0"

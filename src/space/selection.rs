@@ -1,18 +1,17 @@
 use bevy::prelude::*;
-use bevy_ecs_markers::{EntityMarker, params::MarkerMut};
-use bevy_mod_raycast::{RaycastSource, RaycastMethod, RaycastMesh};
+use bevy_ecs_markers::{params::MarkerMut, EntityMarker};
+use bevy_mod_raycast::{RaycastMesh, RaycastMethod, RaycastSource};
 
 pub struct SelectionRaycastSet;
 
 pub struct DeselectionEvent(Entity);
 pub struct SelectionEvent(Entity);
 
-
 #[derive(EntityMarker)]
 #[entity_marker(data_name = "SelectedBodyMarker")]
 pub enum SelectedBody {
     Current,
-    Previous
+    Previous,
 }
 
 #[derive(EntityMarker)]
@@ -38,7 +37,7 @@ pub fn selection_raycast_update(
     bodies: Query<Entity, With<RaycastMesh<SelectionRaycastSet>>>,
     mut selected: MarkerMut<SelectedBody>,
     mut deselection_events: EventWriter<DeselectionEvent>,
-    mut selection_events: EventWriter<SelectionEvent>
+    mut selection_events: EventWriter<SelectionEvent>,
 ) {
     use SelectedBody::*;
 
@@ -53,7 +52,9 @@ pub fn selection_raycast_update(
             selection_events.send(SelectionEvent(entity));
 
             selected[Current] = entity;
-            if selected[Previous].index() != u32::MAX /* has been assigned */ {
+            if selected[Previous].index() != u32::MAX
+            /* has been assigned */
+            {
                 deselection_events.send(DeselectionEvent(selected[Previous]));
             }
             selected[Previous] = entity;
@@ -62,7 +63,9 @@ pub fn selection_raycast_update(
         }
     }
 
-    if selected[Current].index() != u32::MAX /* has been assigned */ {
+    if selected[Current].index() != u32::MAX
+    /* has been assigned */
+    {
         deselection_events.send(DeselectionEvent(selected[Current]));
         selected[Current] = Entity::from_raw(u32::MAX);
         selected[Previous] = Entity::from_raw(u32::MAX);
@@ -72,7 +75,7 @@ pub fn selection_raycast_update(
 pub fn select_current_body(
     bodies: Query<&Handle<StandardMaterial>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
-    mut selection_events: EventReader<SelectionEvent>
+    mut selection_events: EventReader<SelectionEvent>,
 ) {
     for SelectionEvent(entity) in selection_events.iter() {
         if let Ok(material_handle) = bodies.get(*entity) {
@@ -84,7 +87,7 @@ pub fn select_current_body(
 pub fn deselect_previous_body(
     bodies: Query<&Handle<StandardMaterial>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
-    mut deselection_events: EventReader<DeselectionEvent>
+    mut deselection_events: EventReader<DeselectionEvent>,
 ) {
     for DeselectionEvent(entity) in deselection_events.iter() {
         if let Ok(material_handle) = bodies.get(*entity) {
