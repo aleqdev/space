@@ -87,7 +87,7 @@ impl SpaceSimulation {
                 * delta;
 
             if distance < percision_entry {
-                //info!("PERCISION ISSUE DELTA {delta} when distance is {distance} and entry is {percision_entry}",);
+                info!("PERCISION ISSUE DELTA {delta} when distance is {distance} and entry is {percision_entry}",);
                 return SpaceSimulationStepResult::PercisionIssue;
             }
 

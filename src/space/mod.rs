@@ -47,12 +47,12 @@ impl Plugin for SpacePlugin {
             time: Default::default(),
             trails: Default::default(),
             percision_table: Default::default(),
-            G: 6.674 * 10e-11,
+            G: 6.67e-11,
         });
         app.insert_resource(CameraScale {
             scale: 1.0 / (147.1 * 1_000_000.0 * 1000.0 / 2.0),
         });
-        app.insert_resource(SpaceSimulationParams { speed: 864000.0 });
+        app.insert_resource(SpaceSimulationParams { speed: 86400.0 * 20.0 });
 
         app.add_startup_system(setup::setup);
         app.add_system(simulation_take_step);
@@ -70,7 +70,7 @@ impl Plugin for SpacePlugin {
         app.add_system(focus_camera_on_click.after(select_current_body));
 
         app.insert_resource(CameraControlSensitivity {
-            zoom: 2.059,
+            zoom: 1.359,
             orbit: Vec2::splat(2.0),
         });
 

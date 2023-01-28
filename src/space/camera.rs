@@ -76,7 +76,7 @@ pub fn camera_zoom(
 ) {
     let offset = mouse
         .iter()
-        .fold(0.0, |offset, ev| offset + ev.y * sensitivity.zoom);
+        .fold(1.0, |offset, ev| offset * sensitivity.zoom.powi(ev.y.signum() as i32));
     if offset == 0.0 {
         return;
     }
@@ -84,7 +84,7 @@ pub fn camera_zoom(
     let mut rig = camera.single_mut();
     let arm = rig.driver_mut::<Arm>();
 
-    arm.offset.z -= offset;
+    arm.offset.z /= offset;
 }
 
 pub fn camera_orbit(

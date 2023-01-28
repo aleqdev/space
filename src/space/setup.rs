@@ -21,14 +21,16 @@ pub fn setup(
     use bevy_dolly::prelude::*;
     use bevy_mod_raycast::{RaycastMesh, RaycastSource};
 
-    for (i, (color, mass, position, velocity)) in [
+    for (i, (color, radius, mass, position, velocity)) in [
         (
             Color::GREEN,
-            5.97217 * 10e24,
-            DVec3::X * 147.095 * 10e6 * 1000.0,
-            -DVec3::Z * 30.29 * 1000.0,
+            6378e3,
+            5.9724e24,
+            DVec3::X * 149.596e9,
+            // -DVec3::Z * 29.78e3,
+            -DVec3::Z * 29.78e2,
         ),
-        (Color::ORANGE, 1_988_500.0 * 10e24, DVec3::ZERO, DVec3::ZERO),
+        (Color::rgb(1.0, 0.6549, 0.0), 695700e3, 1.989e30, DVec3::ZERO, DVec3::ZERO),
     ]
     .into_iter()
     .enumerate()
@@ -47,7 +49,7 @@ pub fn setup(
             PbrBundle {
                 mesh: meshes.add(
                     shape::Icosphere {
-                        radius: 0.1,
+                        radius: (radius * camera_scale.scale) as f32,
                         subdivisions: 2,
                     }
                     .into(),
@@ -71,7 +73,7 @@ pub fn setup(
         commands.spawn(PolylineBundle {
             polyline,
             material: polyline_materials.add(PolylineMaterial {
-                width: 16.0,
+                width: 4.0,
                 color,
                 perspective: true,
                 ..Default::default()
@@ -88,8 +90,8 @@ pub fn setup(
                     .yaw_degrees(45.0)
                     .pitch_degrees(-30.0),
             )
-            .with(Smooth::new_position(0.1))
             .with(Arm::new(Vec3::Z * 8.0))
+            .with(Smooth::new_position_rotation(0.22, 0.22))
             .build(),
     ));
 
@@ -103,6 +105,7 @@ pub fn setup(
                 clear_color: ClearColorConfig::Custom(Color::BLACK),
                 ..default()
             },
+            projection: PerspectiveProjection { near: 0.0000001, ..default() }.into(),
             ..default()
         },
         BloomSettings {
