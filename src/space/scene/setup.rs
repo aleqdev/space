@@ -2,7 +2,10 @@ pub mod systems {
     use bevy::prelude::*;
     use bevy_polyline::prelude::{Polyline, PolylineMaterial};
 
-    use crate::space::{display::CameraScale, simulation::SpaceSimulation};
+    use crate::space::{
+        display::{BodyTrailRef, CameraScale, RelativeWorldOffset, RelativeWorldScale},
+        simulation::SpaceSimulation,
+    };
 
     pub fn insert_resources(world: &mut World) {
         use crate::space::{
@@ -22,8 +25,12 @@ pub mod systems {
         });
 
         world.insert_resource(CameraScale {
-            scale: 1.0 / (147.1 * 1_000_000.0 * 1000.0 / 32000.0),
+            scale: 1.0 / (147.1 * 1_000_000.0 * 1000.0),
         });
+
+        world.insert_resource(RelativeWorldScale { scale: 1.0 });
+
+        world.insert_resource(RelativeWorldOffset::default());
 
         world.insert_resource(CameraControlSensitivity {
             zoom: 1.359,
@@ -58,7 +65,7 @@ pub mod systems {
         for (i, (color, radius, mass, position, velocity)) in [
             (
                 Color::GREEN,
-                6378e3,
+                0.0001,
                 5.9724e24,
                 DVec3::X * 149.596e9,
                 //-DVec3::Z * 29.78e3,
@@ -87,10 +94,22 @@ pub mod systems {
                 vertices: Vec::with_capacity(512),
             });
 
+            let polyline_entity = commands
+                .spawn(PolylineBundle {
+                    polyline,
+                    material: polyline_materials.add(PolylineMaterial {
+                        width: 4.0,
+                        color,
+                        ..Default::default()
+                    }),
+                    ..Default::default()
+                })
+                .id();
+
             commands
                 .spawn((
                     BodyRef(i),
-                    polyline.clone(),
+                    BodyTrailRef(polyline_entity),
                     SpatialBundle {
                         transform: Transform::from_translation(Vec3::new(
                             (position.x * camera_scale.scale) as f32,
@@ -102,6 +121,8 @@ pub mod systems {
                 ))
                 .with_children(|anchor| {
                     anchor.spawn((
+                        BodyRef(i),
+                        BodyTrailRef(polyline_entity),
                         PbrBundle {
                             mesh: meshes.add(
                                 shape::Icosphere {
@@ -123,16 +144,6 @@ pub mod systems {
                         RaycastMesh::<SelectionRaycastSet>::default(),
                     ));
                 });
-
-            commands.spawn(PolylineBundle {
-                polyline,
-                material: polyline_materials.add(PolylineMaterial {
-                    width: 4.0,
-                    color,
-                    ..Default::default()
-                }),
-                ..Default::default()
-            });
         }
 
         commands.spawn((

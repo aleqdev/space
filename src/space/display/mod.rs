@@ -3,6 +3,9 @@ use bevy::prelude::*;
 pub mod body_ref;
 pub use body_ref::*;
 
+pub mod body_trail_ref;
+pub use body_trail_ref::*;
+
 pub mod camera;
 pub use camera::*;
 
@@ -18,6 +21,12 @@ pub use schematic::*;
 pub mod view_mode;
 pub use view_mode::*;
 
+pub mod relative_world_scale;
+pub use relative_world_scale::*;
+
+pub mod relative_world_offset;
+pub use relative_world_offset::*;
+
 pub struct DisplayPlugin;
 
 impl Plugin for DisplayPlugin {
@@ -25,7 +34,14 @@ impl Plugin for DisplayPlugin {
         app.add_state_to_stage(CoreStage::PostUpdate, ViewMode::Realistic);
 
         {
-            use bevy::transform::{TransformSystem, transform_propagate_system};
+            use crate::space::simulation::systems::simulation_take_step;
+            use relative_world_offset::systems::*;
+
+            app.add_system(extract_relative_world_offset.after(simulation_take_step));
+        }
+
+        {
+            use bevy::transform::{transform_propagate_system, TransformSystem};
             use schematic::systems::*;
 
             app.add_system_set_to_stage(
@@ -34,18 +50,27 @@ impl Plugin for DisplayPlugin {
             );
             app.add_system_set_to_stage(
                 CoreStage::PostUpdate,
-                SystemSet::on_update(ViewMode::Schematic).after(TransformSystem::TransformPropagate)
+                SystemSet::on_update(ViewMode::Schematic)
+                    .after(TransformSystem::TransformPropagate)
                     .with_system(update_bodies)
                     .with_system(transform_propagate_system.after(update_bodies)),
             );
         }
 
         {
+            use bevy::transform::{transform_propagate_system, TransformSystem};
             use realistic::systems::*;
 
             app.add_system_set_to_stage(
                 CoreStage::PostUpdate,
                 SystemSet::on_enter(ViewMode::Realistic).with_system(update_bodies_on_enter),
+            );
+            app.add_system_set_to_stage(
+                CoreStage::PostUpdate,
+                SystemSet::on_update(ViewMode::Realistic)
+                    .after(TransformSystem::TransformPropagate)
+                    .with_system(update_bodies)
+                    .with_system(transform_propagate_system.after(update_bodies)),
             );
         }
 
@@ -60,6 +85,12 @@ impl Plugin for DisplayPlugin {
             use view_mode::systems::*;
 
             app.add_system(toggle_mode);
+        }
+
+        {
+            use relative_world_scale::systems::*;
+
+            app.add_system(update_world_scale);
         }
     }
 }

@@ -21,14 +21,20 @@ pub mod systems {
     }
 
     pub fn update_bodies(
-        bodies: Query<(&GlobalTransform, &Children), (With<BodyRef>, Without<MainCamera3d>)>,
+        bodies: Query<
+            (&GlobalTransform, &Children),
+            (
+                Without<RaycastMesh<SelectionRaycastSet>>,
+                With<BodyRef>,
+                Without<MainCamera3d>,
+            ),
+        >,
         camera: Query<(&GlobalTransform, &Camera, &Projection), With<MainCamera3d>>,
         mut meshes: Query<
             &mut Transform,
             (
                 With<RaycastMesh<SelectionRaycastSet>>,
                 Without<MainCamera3d>,
-                Without<BodyRef>,
             ),
         >,
     ) {
@@ -44,8 +50,6 @@ pub mod systems {
             let length = transform
                 .translation()
                 .distance(camera_transform.translation());
-
-            info!("{length} : {}", transform.translation());
 
             let size = length * RADIUS / camera.logical_viewport_size().unwrap().x * projection.fov;
 
