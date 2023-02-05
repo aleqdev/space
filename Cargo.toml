@@ -5,7 +5,7 @@ edition = "2021"
 
 
 [dependencies]
-bevy = { version = "0.9.1", default_features = false, features = ["bevy_core_pipeline", "bevy_pbr", "bevy_render", "bevy_asset", "hdr", "x11"] }
+bevy = { version = "0.9.1", default_features = false, features = ["bevy_core_pipeline", "bevy_pbr", "bevy_render", "bevy_asset", "hdr", "x11", "jpeg"] }
 bevy_polyline = "0.4.0"
 bevy_ecs_markers = "1.0.4"
 bevy_mod_raycast = "0.7.0"

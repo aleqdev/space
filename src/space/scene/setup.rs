@@ -4,8 +4,8 @@ pub mod systems {
 
     use crate::space::{
         display::{
-            BodyTrailRef, CameraScale, RealisticView, RelativeWorldOffset, RelativeWorldScale,
-            SchematicView, StarMaterial,
+            BodyTrailRef, CameraScale, RealisticView, RelativeLightIntensivity,
+            RelativeWorldOffset, RelativeWorldScale, SchematicView, StarMaterial,
         },
         scene::SelectionTargetRedirect,
         simulation::SpaceSimulation,
@@ -25,7 +25,7 @@ pub mod systems {
         });
 
         world.insert_resource(SpaceSimulationParams {
-            speed: 86400.0 * 20.0,
+            speed: 86400.0 * 1.0,
         });
 
         world.insert_resource(CameraScale {
@@ -51,6 +51,7 @@ pub mod systems {
         mut polyline_materials: ResMut<Assets<PolylineMaterial>>,
         mut simulation: ResMut<SpaceSimulation>,
         camera_scale: Res<CameraScale>,
+        asset_server: Res<AssetServer>,
     ) {
         use crate::space::{
             controls::camera::UnconstrainedOrbit,
@@ -101,11 +102,12 @@ pub mod systems {
                 .id()
         };
 
-        let mut make_schematic_material = |color| materials.add(StandardMaterial {
-            unlit: true,
-            base_color: color,
+        commands.insert_resource(AmbientLight {
+            brightness: 0.015,
             ..default()
         });
+
+        let uv_sphere_sectors = 128;
 
         // spawn sun
         let i = 0;
@@ -144,7 +146,11 @@ pub mod systems {
                             }
                             .into(),
                         ),
-                        material: make_schematic_material(Color::GRAY),
+                        material: materials.add(StandardMaterial {
+                            unlit: true,
+                            base_color: Color::GRAY,
+                            ..default()
+                        }),
                         transform: Transform::from_scale(Vec3::splat(
                             (radius * camera_scale.scale) as f32,
                         )),
@@ -155,15 +161,33 @@ pub mod systems {
                     SchematicView,
                 ));
                 anchor.spawn((
+                    PointLightBundle {
+                        point_light: PointLight {
+                            color: Color::WHITE,
+                            intensity: 200.0 / camera_scale.scale as f32 / camera_scale.scale as f32,
+                            range: 1e8,
+                            radius: radius as f32,
+                            ..default()
+                        },
+                        ..default()
+                    },
+                    RelativeLightIntensivity(200.0 / camera_scale.scale / camera_scale.scale),
+                ));
+                anchor.spawn((
                     MaterialMeshBundle {
                         mesh: meshes.add(
-                            shape::Icosphere {
+                            shape::UVSphere {
                                 radius: 1.0,
-                                subdivisions: 6,
+                                sectors: uv_sphere_sectors,
+                                stacks: uv_sphere_sectors / 2,
                             }
                             .into(),
                         ),
-                        material: star_materials.add(StarMaterial { primary_color: color, secondary_color: Color::ORANGE, ..default() }),
+                        material: star_materials.add(StarMaterial {
+                            primary_color: Color::rgb(8.0 * 4.0, 8.0 * 4.0, 0.0),
+                            secondary_color: Color::rgb(8.0 * 4.0, 5.2 * 4.0, 0.0),
+                            ..default()
+                        }),
                         transform: Transform::from_scale(Vec3::splat(
                             (radius * camera_scale.scale) as f32,
                         )),
@@ -176,7 +200,7 @@ pub mod systems {
         // spawn earth
         let i = 1;
         let color = Color::SEA_GREEN;
-        let radius = 6378e3;
+        let radius = 6378e5;
         let mass = 5.9724e24;
         let position = DVec3::X * 149.596e9;
         let velocity = -DVec3::Z * 29.78e3;
@@ -210,7 +234,11 @@ pub mod systems {
                             }
                             .into(),
                         ),
-                        material: make_schematic_material(Color::GRAY),
+                        material: materials.add(StandardMaterial {
+                            unlit: true,
+                            base_color: Color::GRAY,
+                            ..default()
+                        }),
                         transform: Transform::from_scale(Vec3::splat(
                             (radius * camera_scale.scale) as f32,
                         )),
@@ -222,14 +250,19 @@ pub mod systems {
                 ));
                 anchor.spawn((
                     MaterialMeshBundle {
-                        mesh: meshes.add(
-                            shape::Icosphere {
-                                radius: 1.0,
-                                subdivisions: 6,
-                            }
-                            .into(),
-                        ),
-                        material: make_schematic_material(Color::GREEN),
+                        mesh: asset_server.load("glb/sphereUV.glb#Mesh0/Primitive0"),
+                        material: materials.add(StandardMaterial {
+                            base_color_texture: Some(
+                                asset_server.load("textures/earth_base_color.jpg"),
+                            ),
+                            normal_map_texture: Some(
+                                    asset_server.load("textures/earth_normal.jpg"),
+                            ),
+                            perceptual_roughness: 1.0,
+                            reflectance: 0.0,
+                            metallic: 0.0,
+                            ..default()
+                        }),
                         transform: Transform::from_scale(Vec3::splat(
                             (radius * camera_scale.scale) as f32,
                         )),
@@ -270,7 +303,8 @@ pub mod systems {
                 ..default()
             },
             BloomSettings {
-                intensity: 30.2,
+                intensity: 0.002,
+                scale: 0.5,
                 ..default()
             },
             RaycastSource::<SelectionRaycastSet>::new(),

@@ -6,9 +6,10 @@ pub use camera_sensitivity::*;
 
 pub mod systems {
     use super::{CameraControlSensitivity, UnconstrainedOrbit};
-    use crate::space::{scene::{
-        markers::{FocusedBody, MainCamera3d, SelectedBody},
-    }, display::BodyRef};
+    use crate::space::{
+        display::BodyRef,
+        scene::markers::{FocusedBody, MainCamera3d, SelectedBody},
+    };
     use bevy::{
         input::mouse::{MouseMotion, MouseWheel},
         prelude::*,

@@ -56,7 +56,8 @@ pub mod systems {
                 selection_events.send(SelectionEvent(entity));
 
                 selected[Current] = entity;
-                selected[CurrentRedirected] = redirect.map_or(entity, |SelectionTargetRedirect(e)| *e);
+                selected[CurrentRedirected] =
+                    redirect.map_or(entity, |SelectionTargetRedirect(e)| *e);
                 if selected[Previous].index() != u32::MAX
                 /* has been assigned */
                 {

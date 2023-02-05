@@ -1,16 +1,12 @@
 pub mod systems {
     use bevy::prelude::*;
     use bevy_ecs_markers::params::Marker;
-    use bevy_mod_raycast::RaycastMesh;
     use bevy_polyline::prelude::{Polyline, PolylineMaterial};
 
-    use crate::space::{
-        display::BodyTrailRef,
-        scene::{markers::FocusedBody, SelectionRaycastSet},
-    };
+    use crate::space::{display::BodyTrailRef, scene::markers::FocusedBody};
 
     pub fn dissolve_extreme_trails(
-        bodies: Query<&BodyTrailRef, With<RaycastMesh<SelectionRaycastSet>>>,
+        bodies: Query<&BodyTrailRef>,
         polyline_entities: Query<
             (&Handle<Polyline>, &Handle<PolylineMaterial>),
             Without<BodyTrailRef>,
@@ -31,15 +27,13 @@ pub mod systems {
 
         let distance = v1.distance(*v2);
 
-        info!("{distance}");
-
         let polyline_material = polyline_materials
             .get_mut(polyline_material_handle)
             .unwrap();
-        let opacity = if distance > 1000.0 { 0.0 } else { 1.0 };
+        let opacity_change = if distance > 1000.0 { -2.0 } else { 1.0 };
         let a = polyline_material.color.a();
         polyline_material
             .color
-            .set_a(a + (opacity - a) * time.delta_seconds() * 5.0);
+            .set_a((a + opacity_change * time.delta_seconds() * 0.5).clamp(0.0, 1.0));
     }
 }

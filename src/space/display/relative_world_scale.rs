@@ -5,6 +5,9 @@ pub struct RelativeWorldScale {
     pub scale: f64,
 }
 
+#[derive(Component)]
+pub struct RelativeLightIntensivity(pub f64);
+
 pub mod systems {
     use crate::space::scene::markers::{FocusedBody, MainCamera3d};
     use bevy::prelude::*;

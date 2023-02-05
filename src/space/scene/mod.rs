@@ -19,7 +19,7 @@ pub mod markers {
         CurrentRedirected,
         PreviousRedirected,
         Current,
-        Previous
+        Previous,
     }
 
     #[derive(EntityMarker)]
