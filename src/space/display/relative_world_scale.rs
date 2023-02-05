@@ -27,23 +27,15 @@ pub mod systems {
         let mut camera_rig = camera_rig.single_mut();
         let (mut camera_transform, camera_global_trasnform) = camera.single_mut();
 
-        let distance = camera_rig.driver::<Arm>().offset.z;
+        let distance = camera_global_trasnform
+            .translation()
+            .distance(focused.translation());
 
-        info!(
-            "{} with Z({})",
-            distance,
-            camera_rig.driver_mut::<Arm>().offset.z
-        );
-
-        let scaling;
-
-        if distance < 0.5 {
-            scaling = 2.0;
-        } else if distance > 2.0 {
-            scaling = 0.5;
-        } else {
+        if !(distance < 0.25 || distance > 4.0) {
             return;
         }
+
+        let scaling = 1.0 / distance as f64;
 
         relative_world_scale.scale *= scaling;
         camera_transform.translation *= scaling as f32;

@@ -1,43 +1,39 @@
+use bevy::prelude::*;
+
+#[derive(Component)]
+pub struct RealisticView;
+
 pub mod systems {
     use bevy::prelude::*;
-    use bevy_mod_raycast::RaycastMesh;
 
     use crate::space::{
-        display::{BodyRef, CameraScale, RelativeWorldScale},
-        scene::SelectionRaycastSet,
+        display::{BodyRef, CameraScale, RealisticView, RelativeWorldScale, SchematicView},
         simulation::SpaceSimulation,
     };
 
     pub fn update_bodies_on_enter(
-        mut bodies: Query<(&BodyRef, &Children), With<BodyRef>>,
-        simulation: Res<SpaceSimulation>,
-        camera: Res<CameraScale>,
-        mut meshes: Query<
-            (&mut Transform, &Handle<StandardMaterial>),
-            With<RaycastMesh<SelectionRaycastSet>>,
-        >,
-        mut materials: ResMut<Assets<StandardMaterial>>,
+        mut schematic_meshes: Query<&mut Visibility, (With<SchematicView>, Without<RealisticView>)>,
+        mut realistic_meshes: Query<&mut Visibility, With<RealisticView>>,
     ) {
-        for (&BodyRef(body_ref), children) in &mut bodies {
-            let (mut transform, material_handle) = meshes.get_mut(children[0]).unwrap();
-
-            transform.scale =
-                Vec3::splat((simulation.bodies.radius[body_ref] * camera.scale) as f32);
-
-            materials.get_mut(material_handle).unwrap().base_color = Color::GRAY;
+        for mut mesh in &mut schematic_meshes {
+            mesh.is_visible = false;
+        }
+        for mut mesh in &mut realistic_meshes {
+            mesh.is_visible = true;
         }
     }
 
     pub fn update_bodies(
-        mut bodies: Query<(&BodyRef, &Children), With<BodyRef>>,
+        bodies: Query<&BodyRef>,
         simulation: Res<SpaceSimulation>,
         camera_scale: Res<CameraScale>,
         relative_world_scale: Res<RelativeWorldScale>,
-        mut meshes: Query<&mut Transform, With<RaycastMesh<SelectionRaycastSet>>>,
+        mut meshes: Query<(&mut Transform, &Parent), With<RealisticView>>,
     ) {
         let scale = camera_scale.scale * relative_world_scale.scale;
-        for (&BodyRef(body_ref), children) in &mut bodies {
-            let mut transform = meshes.get_mut(children[0]).unwrap();
+
+        for (mut transform, parent) in &mut meshes {
+            let Ok(&BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
 
             transform.scale = Vec3::splat((simulation.bodies.radius[body_ref] * scale) as f32);
         }

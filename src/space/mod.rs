@@ -16,6 +16,7 @@ impl PluginGroup for SpacePlugins {
             .add(controls::ControlsPlugin)
             .add(bevy_prototype_lyon::prelude::ShapePlugin)
             .add(bevy_polyline::PolylinePlugin)
+            .add(noisy_bevy::NoisyShaderPlugin)
             .build()
     }
 }

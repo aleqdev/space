@@ -16,8 +16,10 @@ pub mod markers {
     #[derive(EntityMarker)]
     #[entity_marker(data_name = "SelectedBodyMarker")]
     pub enum SelectedBody {
+        CurrentRedirected,
+        PreviousRedirected,
         Current,
-        Previous,
+        Previous
     }
 
     #[derive(EntityMarker)]

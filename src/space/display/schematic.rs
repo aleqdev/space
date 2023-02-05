@@ -1,51 +1,41 @@
+use bevy::prelude::*;
+
+#[derive(Component)]
+pub struct SchematicView;
+
 pub mod systems {
     use bevy::prelude::*;
-    use bevy_mod_raycast::RaycastMesh;
 
     use crate::space::{
-        display::BodyRef,
-        scene::{markers::MainCamera3d, SelectionRaycastSet},
+        display::{BodyRef, RealisticView, SchematicView},
+        scene::markers::MainCamera3d,
     };
 
     pub fn update_bodies_on_enter(
-        bodies: Query<&Children, With<BodyRef>>,
-        meshes: Query<&Handle<StandardMaterial>, With<RaycastMesh<SelectionRaycastSet>>>,
-        mut materials: ResMut<Assets<StandardMaterial>>,
+        mut schematic_meshes: Query<&mut Visibility, (With<SchematicView>, Without<RealisticView>)>,
+        mut realistic_meshes: Query<&mut Visibility, With<RealisticView>>,
     ) {
-        for children in &bodies {
-            materials
-                .get_mut(meshes.get(children[0]).unwrap())
-                .unwrap()
-                .base_color = Color::GRAY;
+        for mut mesh in &mut schematic_meshes {
+            mesh.is_visible = true;
+        }
+        for mut mesh in &mut realistic_meshes {
+            mesh.is_visible = false;
         }
     }
 
     pub fn update_bodies(
-        bodies: Query<
-            (&GlobalTransform, &Children),
-            (
-                Without<RaycastMesh<SelectionRaycastSet>>,
-                With<BodyRef>,
-                Without<MainCamera3d>,
-            ),
-        >,
+        bodies: Query<&GlobalTransform, With<BodyRef>>,
         camera: Query<(&GlobalTransform, &Camera, &Projection), With<MainCamera3d>>,
-        mut meshes: Query<
-            &mut Transform,
-            (
-                With<RaycastMesh<SelectionRaycastSet>>,
-                Without<MainCamera3d>,
-            ),
-        >,
+        mut meshes: Query<(&mut Transform, &Parent), With<SchematicView>>,
     ) {
+        const RADIUS: f32 = 30.0;
+
         let (camera_transform, camera, projection) = camera.single();
 
         let Projection::Perspective(projection) = projection else { return };
 
-        for (transform, children) in &bodies {
-            const RADIUS: f32 = 30.0;
-
-            let mut mesh_transform = meshes.get_mut(children[0]).unwrap();
+        for (mut mesh_transform, parent) in &mut meshes {
+            let Ok(transform) = bodies.get(parent.get()) else { continue };
 
             let length = transform
                 .translation()

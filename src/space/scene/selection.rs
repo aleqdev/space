@@ -3,15 +3,21 @@ use bevy::prelude::*;
 
 pub struct SelectionRaycastSet;
 
-pub struct DeselectionEvent(Entity);
-pub struct SelectionEvent(Entity);
+#[derive(Component)]
+pub struct SelectionTargetRedirect(pub Entity);
+
+pub struct DeselectionEvent(pub Entity);
+pub struct SelectionEvent(pub Entity);
 
 pub mod systems {
     use bevy::prelude::*;
     use bevy_ecs_markers::params::MarkerMut;
     use bevy_mod_raycast::{RaycastMesh, RaycastMethod, RaycastSource};
 
-    use super::{DeselectionEvent, SelectedBody, SelectionEvent, SelectionRaycastSet};
+    use super::{
+        DeselectionEvent, SelectedBody, SelectionEvent, SelectionRaycastSet,
+        SelectionTargetRedirect,
+    };
 
     pub fn update_raycast_with_cursor(
         mut cursor: EventReader<CursorMoved>,
@@ -29,7 +35,10 @@ pub mod systems {
 
     pub fn selection_raycast_update(
         camera: Query<&RaycastSource<SelectionRaycastSet>>,
-        bodies: Query<Entity, With<RaycastMesh<SelectionRaycastSet>>>,
+        bodies: Query<
+            (Entity, Option<&SelectionTargetRedirect>),
+            With<RaycastMesh<SelectionRaycastSet>>,
+        >,
         mut selected: MarkerMut<SelectedBody>,
         mut deselection_events: EventWriter<DeselectionEvent>,
         mut selection_events: EventWriter<SelectionEvent>,
@@ -38,7 +47,7 @@ pub mod systems {
 
         let intersection = camera.single().intersections().first();
 
-        for entity in &bodies {
+        for (entity, redirect) in &bodies {
             if intersection.map(|(e, ..)| *e == entity).unwrap_or(false) {
                 if selected[Current] == entity {
                     return;
@@ -47,12 +56,14 @@ pub mod systems {
                 selection_events.send(SelectionEvent(entity));
 
                 selected[Current] = entity;
+                selected[CurrentRedirected] = redirect.map_or(entity, |SelectionTargetRedirect(e)| *e);
                 if selected[Previous].index() != u32::MAX
                 /* has been assigned */
                 {
                     deselection_events.send(DeselectionEvent(selected[Previous]));
                 }
-                selected[Previous] = entity;
+                selected[PreviousRedirected] = selected[CurrentRedirected];
+                selected[Previous] = selected[Current];
 
                 return;
             }
@@ -64,6 +75,8 @@ pub mod systems {
             deselection_events.send(DeselectionEvent(selected[Current]));
             selected[Current] = Entity::from_raw(u32::MAX);
             selected[Previous] = Entity::from_raw(u32::MAX);
+            selected[CurrentRedirected] = Entity::from_raw(u32::MAX);
+            selected[PreviousRedirected] = Entity::from_raw(u32::MAX);
         }
     }
 

@@ -27,10 +27,18 @@ pub use relative_world_scale::*;
 pub mod relative_world_offset;
 pub use relative_world_offset::*;
 
+pub mod body_trail;
+pub use body_trail::*;
+
+pub mod star_material;
+pub use star_material::*;
+
 pub struct DisplayPlugin;
 
 impl Plugin for DisplayPlugin {
     fn build(&self, app: &mut App) {
+        app.add_plugin(MaterialPlugin::<StarMaterial>::default());
+
         app.add_state_to_stage(CoreStage::PostUpdate, ViewMode::Realistic);
 
         {
@@ -76,9 +84,14 @@ impl Plugin for DisplayPlugin {
 
         {
             use crate::space::simulation::space_simulation::systems::simulation_take_step;
+            use relative_world_scale::systems::*;
             use sync::systems::*;
 
-            app.add_system(sync_with_simulation.after(simulation_take_step));
+            app.add_system(
+                sync_with_simulation
+                    .after(simulation_take_step)
+                    .after(update_world_scale),
+            );
         }
 
         {
@@ -91,6 +104,12 @@ impl Plugin for DisplayPlugin {
             use relative_world_scale::systems::*;
 
             app.add_system(update_world_scale);
+        }
+
+        {
+            use body_trail::systems::*;
+
+            app.add_system(dissolve_extreme_trails);
         }
     }
 }

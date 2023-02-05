@@ -6,17 +6,15 @@ pub use camera_sensitivity::*;
 
 pub mod systems {
     use super::{CameraControlSensitivity, UnconstrainedOrbit};
-    use crate::space::scene::{
+    use crate::space::{scene::{
         markers::{FocusedBody, MainCamera3d, SelectedBody},
-        SelectionRaycastSet,
-    };
+    }, display::BodyRef};
     use bevy::{
         input::mouse::{MouseMotion, MouseWheel},
         prelude::*,
     };
     use bevy_dolly::prelude::{Arm, Rig};
     use bevy_ecs_markers::params::{Marker, MarkerMut};
-    use bevy_mod_raycast::RaycastMesh;
 
     pub fn zoom(
         mut camera: Query<&mut Rig, With<MainCamera3d>>,
@@ -67,14 +65,14 @@ pub mod systems {
         mut focused_body: MarkerMut<FocusedBody>,
         camera: Query<Entity, (With<MainCamera3d>, With<Camera3d>)>,
         mut commands: Commands,
-        bodies: Query<&Parent, With<RaycastMesh<SelectionRaycastSet>>>,
+        bodies: Query<Entity, With<BodyRef>>,
     ) {
         use SelectedBody::*;
         // use bevy_prototype_lyon::prelude::*;
 
         if mouse.just_pressed(MouseButton::Left) {
-            if selected_body[Current].index() != u32::MAX {
-                **focused_body = selected_body[Current];
+            if selected_body[CurrentRedirected].index() != u32::MAX {
+                **focused_body = selected_body[CurrentRedirected];
 
                 /*let shape = shapes::RegularPolygon {
                     sides: 6,
@@ -104,7 +102,7 @@ pub mod systems {
                 ));*/
                 commands
                     .entity(camera.single())
-                    .set_parent(bodies.get(**focused_body).unwrap().get());
+                    .set_parent(bodies.get(**focused_body).unwrap());
             } else {
                 **focused_body = Entity::from_raw(u32::MAX);
                 commands.entity(camera.single()).remove_parent();
