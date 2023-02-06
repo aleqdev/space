@@ -52,8 +52,6 @@ pub mod systems {
         for (mut light, parent, &RelativeLightIntensivity(relative_intensity)) in &mut lights {
             light.intensity = (relative_intensity * scale * scale) as f32;
 
-            info!("{}", light.intensity);
-
             let Ok(&BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
 
             light.radius = (simulation.bodies.radius[body_ref] * scale) as f32;

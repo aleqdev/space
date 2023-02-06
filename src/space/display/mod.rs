@@ -111,5 +111,12 @@ impl Plugin for DisplayPlugin {
 
             app.add_system(dissolve_extreme_trails);
         }
+
+        {
+            use crate::space::controls::camera::systems::orbit;
+            use camera::systems::*;
+
+            app.add_system(sync_cubemap_camera.after(orbit));
+        }
     }
 }

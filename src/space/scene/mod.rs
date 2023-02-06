@@ -13,6 +13,9 @@ pub mod markers {
     #[derive(Component)]
     pub struct MainCamera3d;
 
+    #[derive(Component)]
+    pub struct CubemapCamera3d;
+
     #[derive(EntityMarker)]
     #[entity_marker(data_name = "SelectedBodyMarker")]
     pub enum SelectedBody {
