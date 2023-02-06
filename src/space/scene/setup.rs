@@ -7,7 +7,10 @@ pub mod systems {
             BodyTrailRef, CameraScale, RealisticView, RelativeLightIntensivity,
             RelativeWorldOffset, RelativeWorldScale, SchematicView, StarMaterial,
         },
-        scene::{markers::CubemapCamera3d, SelectionTargetRedirect},
+        scene::{
+            markers::CubemapCamera3d, solar_system::SolarSystemBodyBuilderMaterial,
+            SelectionTargetRedirect,
+        },
         simulation::SpaceSimulation,
     };
 
@@ -25,7 +28,7 @@ pub mod systems {
         });
 
         world.insert_resource(SpaceSimulationParams {
-            speed: 86400.0 * 1.0,
+            speed: 86400.0 * 1.0 * 16.0,
         });
 
         world.insert_resource(CameraScale {
@@ -59,10 +62,7 @@ pub mod systems {
             scene::{markers::MainCamera3d, SelectionRaycastSet},
             simulation::SpaceBody,
         };
-        use bevy::{
-            core_pipeline::{bloom::BloomSettings, clear_color::ClearColorConfig},
-            math::DVec3,
-        };
+        use bevy::core_pipeline::{bloom::BloomSettings, clear_color::ClearColorConfig};
         use bevy_dolly::prelude::*;
         use bevy_mod_raycast::{RaycastMesh, RaycastSource};
         use bevy_polyline::prelude::PolylineBundle;
@@ -107,244 +107,138 @@ pub mod systems {
             ..default()
         });
 
-        let uv_sphere_sectors = 128;
+        let uv_sphere = || asset_server.load::<Mesh, _>("glb/sphereUV.glb#Mesh0/Primitive0");
 
-        // spawn sun
-        let i = 0;
-        let color = Color::YELLOW;
-        let radius = 695700e3;
-        let mass = 1.989e30;
-        let position = DVec3::ZERO;
-        let velocity = DVec3::ZERO;
+        for (i, builder) in [
+            crate::space::scene::solar_system::sun::BODY(),
+            crate::space::scene::solar_system::mercury::BODY(),
+            crate::space::scene::solar_system::venus::BODY(),
+            crate::space::scene::solar_system::earth::BODY(),
+            crate::space::scene::solar_system::mars::BODY(),
+            crate::space::scene::solar_system::jupiter::BODY(),
+            crate::space::scene::solar_system::saturn::BODY(),
+            crate::space::scene::solar_system::uranus::BODY(),
+            crate::space::scene::solar_system::neptune::BODY(),
+            crate::space::scene::solar_system::moon::BODY(),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let color = Color::GRAY;
 
-        push_body(position, velocity, mass, radius);
+            push_body(
+                builder.position,
+                builder.velocity,
+                builder.mass,
+                builder.radius,
+            );
 
-        let polyline = add_polyline();
+            let polyline = add_polyline();
 
-        let polyline_entity = add_polyline_entity(&mut commands, polyline, color);
+            let polyline_entity = add_polyline_entity(&mut commands, polyline, color);
 
-        commands
-            .spawn((
-                BodyRef(i),
-                BodyTrailRef(polyline_entity),
-                SpatialBundle {
-                    transform: Transform::from_translation(Vec3::new(
-                        (position.x * camera_scale.scale) as f32,
-                        (position.y * camera_scale.scale) as f32,
-                        (position.z * camera_scale.scale) as f32,
-                    )),
-                    ..default()
-                },
-            ))
-            .with_children(|anchor| {
-                anchor.spawn((
-                    MaterialMeshBundle {
-                        mesh: meshes.add(
-                            shape::Icosphere {
-                                radius: 1.0,
-                                subdivisions: 2,
-                            }
-                            .into(),
-                        ),
-                        material: materials.add(StandardMaterial {
-                            unlit: true,
-                            base_color: Color::GRAY,
-                            ..default()
-                        }),
-                        transform: Transform::from_scale(Vec3::splat(
-                            (radius * camera_scale.scale) as f32,
+            commands
+                .spawn((
+                    BodyRef(i),
+                    BodyTrailRef(polyline_entity),
+                    SpatialBundle {
+                        transform: Transform::from_translation(Vec3::new(
+                            (builder.position.x * camera_scale.scale) as f32,
+                            (builder.position.y * camera_scale.scale) as f32,
+                            (builder.position.z * camera_scale.scale) as f32,
                         )),
                         ..default()
                     },
-                    RaycastMesh::<SelectionRaycastSet>::default(),
-                    SelectionTargetRedirect(anchor.parent_entity()),
-                    SchematicView,
-                ));
-                anchor.spawn((
-                    PointLightBundle {
-                        point_light: PointLight {
-                            color: Color::WHITE,
-                            intensity: 200.0
-                                / camera_scale.scale as f32
-                                / camera_scale.scale as f32,
-                            range: 1e8,
-                            radius: radius as f32,
-                            shadows_enabled: true,
+                ))
+                .with_children(|anchor| {
+                    let make_solid_material =
+                        |materials: &mut ResMut<Assets<StandardMaterial>>, path: &str| {
+                            materials.add(StandardMaterial {
+                                base_color_texture: Some(asset_server.load(path)),
+                                perceptual_roughness: 1.0,
+                                reflectance: 0.0,
+                                metallic: 0.0,
+                                ..default()
+                            })
+                        };
+
+                    let mut make_star_material = |material| star_materials.add(material);
+
+                    let make_schematic_material =
+                        |materials: &mut ResMut<Assets<StandardMaterial>>| {
+                            materials.add(StandardMaterial {
+                                unlit: true,
+                                base_color: Color::GRAY,
+                                ..default()
+                            })
+                        };
+
+                    anchor.spawn((
+                        MaterialMeshBundle {
+                            mesh: meshes.add(
+                                shape::Icosphere {
+                                    radius: 1.0,
+                                    subdivisions: 2,
+                                }
+                                .into(),
+                            ),
+                            material: make_schematic_material(&mut materials),
+                            transform: Transform::from_scale(Vec3::splat(
+                                (builder.radius * camera_scale.scale) as f32,
+                            )),
                             ..default()
                         },
-                        ..default()
-                    },
-                    RelativeLightIntensivity(200.0 / camera_scale.scale / camera_scale.scale),
-                ));
-                anchor.spawn((
-                    MaterialMeshBundle {
-                        mesh: meshes.add(
-                            shape::UVSphere {
-                                radius: 1.0,
-                                sectors: uv_sphere_sectors,
-                                stacks: uv_sphere_sectors / 2,
-                            }
-                            .into(),
-                        ),
-                        material: star_materials.add(StarMaterial {
-                            primary_color: Color::rgb(8.0 * 4.0, 8.0 * 4.0, 0.0),
-                            secondary_color: Color::rgb(8.0 * 4.0, 5.2 * 4.0, 0.0),
-                            ..default()
-                        }),
-                        transform: Transform::from_scale(Vec3::splat(
-                            (radius * camera_scale.scale) as f32,
-                        )),
-                        ..default()
-                    },
-                    RealisticView,
-                ));
-            });
-
-        // spawn earth
-        let i = 1;
-        let color = Color::SEA_GREEN;
-        let radius = 6378e3;
-        let mass = 5.9724e24;
-        let position = DVec3::X * 149.596e9;
-        let velocity = -DVec3::Z * 29.78e3;
-
-        push_body(position, velocity, mass, radius);
-
-        let polyline = add_polyline();
-
-        let polyline_entity = add_polyline_entity(&mut commands, polyline, color);
-
-        commands
-            .spawn((
-                BodyRef(i),
-                BodyTrailRef(polyline_entity),
-                SpatialBundle {
-                    transform: Transform::from_translation(Vec3::new(
-                        (position.x * camera_scale.scale) as f32,
-                        (position.y * camera_scale.scale) as f32,
-                        (position.z * camera_scale.scale) as f32,
-                    )),
-                    ..default()
-                },
-            ))
-            .with_children(|anchor| {
-                anchor.spawn((
-                    MaterialMeshBundle {
-                        mesh: meshes.add(
-                            shape::Icosphere {
-                                radius: 1.0,
-                                subdivisions: 2,
-                            }
-                            .into(),
-                        ),
-                        material: materials.add(StandardMaterial {
-                            unlit: true,
-                            base_color: Color::GRAY,
-                            ..default()
-                        }),
-                        transform: Transform::from_scale(Vec3::splat(
-                            (radius * camera_scale.scale) as f32,
-                        )),
-                        ..default()
-                    },
-                    RaycastMesh::<SelectionRaycastSet>::default(),
-                    SelectionTargetRedirect(anchor.parent_entity()),
-                    SchematicView,
-                ));
-                anchor.spawn((
-                    MaterialMeshBundle {
-                        mesh: asset_server.load("glb/sphereUV.glb#Mesh0/Primitive0"),
-                        material: materials.add(StandardMaterial {
-                            base_color_texture: Some(
-                                asset_server.load("textures/earth_base_color.jpg"),
+                        RaycastMesh::<SelectionRaycastSet>::default(),
+                        SelectionTargetRedirect(anchor.parent_entity()),
+                        SchematicView,
+                    ));
+                    if let SolarSystemBodyBuilderMaterial::Star(star_material) = builder.material {
+                        anchor.spawn((
+                            MaterialMeshBundle {
+                                mesh: uv_sphere(),
+                                material: make_star_material(star_material),
+                                transform: Transform::from_scale(Vec3::splat(
+                                    (builder.radius * camera_scale.scale) as f32,
+                                )),
+                                ..default()
+                            },
+                            RealisticView,
+                        ));
+                        anchor.spawn((
+                            PointLightBundle {
+                                point_light: PointLight {
+                                    color: Color::WHITE,
+                                    intensity: 200.0
+                                        / camera_scale.scale as f32
+                                        / camera_scale.scale as f32,
+                                    range: 1e8,
+                                    radius: builder.radius as f32,
+                                    shadows_enabled: true,
+                                    ..default()
+                                },
+                                ..default()
+                            },
+                            RelativeLightIntensivity(
+                                200.0 / camera_scale.scale / camera_scale.scale,
                             ),
-                            perceptual_roughness: 1.0,
-                            reflectance: 0.0,
-                            metallic: 0.0,
-                            ..default()
-                        }),
-                        transform: Transform::from_scale(Vec3::splat(
-                            (radius * camera_scale.scale) as f32,
-                        ))
-                        .with_rotation(Quat::from_rotation_x(0.40840704497)),
-                        ..default()
-                    },
-                    RealisticView,
-                ));
-            });
-
-        // spawn moon
-        let i = 2;
-        let color = Color::ALICE_BLUE;
-        let radius = 1737.4e3;
-        let mass = 7.342e22;
-        let position = DVec3::X * (149.596e9 - 385e6);
-        let velocity = -DVec3::Z * (29.78e3 - 1.022e3);
-
-        push_body(position, velocity, mass, radius);
-
-        let polyline = add_polyline();
-
-        let polyline_entity = add_polyline_entity(&mut commands, polyline, color);
-
-        commands
-            .spawn((
-                BodyRef(i),
-                BodyTrailRef(polyline_entity),
-                SpatialBundle {
-                    transform: Transform::from_translation(Vec3::new(
-                        (position.x * camera_scale.scale) as f32,
-                        (position.y * camera_scale.scale) as f32,
-                        (position.z * camera_scale.scale) as f32,
-                    )),
-                    ..default()
-                },
-            ))
-            .with_children(|anchor| {
-                anchor.spawn((
-                    MaterialMeshBundle {
-                        mesh: meshes.add(
-                            shape::Icosphere {
-                                radius: 1.0,
-                                subdivisions: 2,
-                            }
-                            .into(),
-                        ),
-                        material: materials.add(StandardMaterial {
-                            unlit: true,
-                            base_color: Color::GRAY,
-                            ..default()
-                        }),
-                        transform: Transform::from_scale(Vec3::splat(
-                            (radius * camera_scale.scale) as f32,
-                        )),
-                        ..default()
-                    },
-                    RaycastMesh::<SelectionRaycastSet>::default(),
-                    SelectionTargetRedirect(anchor.parent_entity()),
-                    SchematicView,
-                ));
-                anchor.spawn((
-                    MaterialMeshBundle {
-                        mesh: asset_server.load("glb/sphereUV.glb#Mesh0/Primitive0"),
-                        material: materials.add(StandardMaterial {
-                            base_color_texture: Some(
-                                asset_server.load("textures/moon_base_color.jpg"),
-                            ),
-                            perceptual_roughness: 1.0,
-                            reflectance: 0.0,
-                            metallic: 0.0,
-                            ..default()
-                        }),
-                        transform: Transform::from_scale(Vec3::splat(
-                            (radius * camera_scale.scale) as f32,
-                        ))
-                        .with_rotation(Quat::from_rotation_x(0.40840704497)),
-                        ..default()
-                    },
-                    RealisticView,
-                ));
-            });
+                        ));
+                    } else if let SolarSystemBodyBuilderMaterial::TexturePath(path) =
+                        builder.material
+                    {
+                        anchor.spawn((
+                            MaterialMeshBundle {
+                                mesh: uv_sphere(),
+                                material: make_solid_material(&mut materials, path),
+                                transform: Transform::from_scale(Vec3::splat(
+                                    (builder.radius * camera_scale.scale) as f32,
+                                )),
+                                ..default()
+                            },
+                            RealisticView,
+                        ));
+                    }
+                });
+        }
 
         commands.spawn((
             MainCamera3d,

@@ -6,6 +6,8 @@ pub use selection::*;
 pub mod setup;
 pub use setup::*;
 
+pub mod solar_system;
+
 pub mod markers {
     use bevy::prelude::*;
     use bevy_ecs_markers::EntityMarker;
