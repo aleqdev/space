@@ -14,6 +14,8 @@ pub mod systems {
     use bevy_ecs_markers::params::MarkerMut;
     use bevy_mod_raycast::{RaycastMesh, RaycastMethod, RaycastSource};
 
+    use crate::space::ext::EntityOpsExt;
+
     use super::{
         DeselectionEvent, SelectedBody, SelectionEvent, SelectionRaycastSet,
         SelectionTargetRedirect,
@@ -58,9 +60,7 @@ pub mod systems {
                 selected[Current] = entity;
                 selected[CurrentRedirected] =
                     redirect.map_or(entity, |SelectionTargetRedirect(e)| *e);
-                if selected[Previous].index() != u32::MAX
-                /* has been assigned */
-                {
+                if selected[Previous].is_valid() {
                     deselection_events.send(DeselectionEvent(selected[Previous]));
                 }
                 selected[PreviousRedirected] = selected[CurrentRedirected];
@@ -70,14 +70,12 @@ pub mod systems {
             }
         }
 
-        if selected[Current].index() != u32::MAX
-        /* has been assigned */
-        {
+        if selected[Current].is_valid() {
             deselection_events.send(DeselectionEvent(selected[Current]));
-            selected[Current] = Entity::from_raw(u32::MAX);
-            selected[Previous] = Entity::from_raw(u32::MAX);
-            selected[CurrentRedirected] = Entity::from_raw(u32::MAX);
-            selected[PreviousRedirected] = Entity::from_raw(u32::MAX);
+            selected[Current].invalidate();
+            selected[Previous].invalidate();
+            selected[CurrentRedirected].invalidate();
+            selected[PreviousRedirected].invalidate();
         }
     }
 

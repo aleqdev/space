@@ -33,6 +33,9 @@ pub use body_trail::*;
 pub mod star_material;
 pub use star_material::*;
 
+pub mod selection;
+pub use selection::*;
+
 pub struct DisplayPlugin;
 
 impl Plugin for DisplayPlugin {

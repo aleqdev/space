@@ -2,6 +2,7 @@ use bevy::{app::PluginGroupBuilder, prelude::*};
 
 pub mod controls;
 pub mod display;
+pub mod ext;
 pub mod scene;
 pub mod simulation;
 

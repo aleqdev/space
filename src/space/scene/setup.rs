@@ -5,7 +5,8 @@ pub mod systems {
     use crate::space::{
         display::{
             BodyTrailRef, CameraScale, RealisticView, RelativeLightIntensivity,
-            RelativeWorldOffset, RelativeWorldScale, SchematicView, StarMaterial,
+            RelativeWorldOffset, RelativeWorldScale, SchematicView, SelectionRectMarker,
+            StarMaterial,
         },
         scene::{
             markers::CubemapCamera3d, solar_system::SolarSystemBodyBuilderMaterial,
@@ -28,7 +29,7 @@ pub mod systems {
         });
 
         world.insert_resource(SpaceSimulationParams {
-            speed: 86400.0 * 1.0 * 16.0,
+            speed: 86400.0 * 1.0 * 2.0,
         });
 
         world.insert_resource(CameraScale {
@@ -271,11 +272,6 @@ pub mod systems {
                 .into(),
                 ..default()
             },
-            BloomSettings {
-                intensity: 0.002,
-                scale: 0.5,
-                ..default()
-            },
             RaycastSource::<SelectionRaycastSet>::new(),
             MainCamera3d,
         ));
@@ -297,11 +293,6 @@ pub mod systems {
                     ..default()
                 }
                 .into(),
-                ..default()
-            },
-            BloomSettings {
-                intensity: 0.002,
-                scale: 0.5,
                 ..default()
             },
             CubemapCamera3d,
@@ -434,5 +425,48 @@ pub mod systems {
             NotShadowCaster,
             RenderLayers::layer(1),
         ));
+
+        commands
+            .spawn((
+                Camera3dBundle {
+                    camera: Camera {
+                        priority: 2,
+                        hdr: true,
+                        ..default()
+                    },
+                    camera_3d: Camera3d {
+                        clear_color: ClearColorConfig::None,
+                        ..default()
+                    },
+                    projection: OrthographicProjection::default().into(),
+                    ..default()
+                },
+                RenderLayers::layer(2),
+                BloomSettings {
+                    intensity: 0.002,
+                    scale: 0.5,
+                    ..default()
+                },
+            ))
+            .with_children(|commands| {
+                commands.spawn((
+                    SelectionRectMarker,
+                    PbrBundle {
+                        mesh: meshes.add(
+                            shape::Quad {
+                                size: Vec2::splat(1.0),
+                                ..default()
+                            }
+                            .into(),
+                        ),
+                        material: materials.add(Color::ALICE_BLUE.into()),
+                        transform: Transform::from_translation(Vec3::Z),
+
+                        ..default()
+                    },
+                    NotShadowCaster,
+                    RenderLayers::layer(2),
+                ));
+            });
     }
 }

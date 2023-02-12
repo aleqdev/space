@@ -8,6 +8,7 @@ pub mod systems {
     use super::{CameraControlSensitivity, UnconstrainedOrbit};
     use crate::space::{
         display::BodyRef,
+        ext::EntityOpsExt,
         scene::markers::{FocusedBody, MainCamera3d, SelectedBody},
     };
     use bevy::{
@@ -69,43 +70,16 @@ pub mod systems {
         bodies: Query<Entity, With<BodyRef>>,
     ) {
         use SelectedBody::*;
-        // use bevy_prototype_lyon::prelude::*;
 
         if mouse.just_pressed(MouseButton::Left) {
-            if selected_body[CurrentRedirected].index() != u32::MAX {
+            if selected_body[CurrentRedirected].is_valid() {
                 **focused_body = selected_body[CurrentRedirected];
 
-                /*let shape = shapes::RegularPolygon {
-                    sides: 6,
-                    feature: shapes::RegularPolygonFeature::Radius(200.0),
-                    ..default()
-                };
-
-                commands.spawn(Camera2dBundle {
-                    camera: Camera {
-                        priority: 1,
-                        ..default()
-                    },
-                    camera_2d: Camera2d {
-                        clear_color: ClearColorConfig::None,
-                        ..default()
-                    },
-                    ..default()
-                });
-
-                commands.spawn(GeometryBuilder::build_as(
-                    &shape,
-                    DrawMode::Outlined {
-                        fill_mode: FillMode::color(Color::CYAN),
-                        outline_mode: StrokeMode::new(Color::BLACK, 10.0),
-                    },
-                    Transform::default(),
-                ));*/
                 commands
                     .entity(camera.single())
                     .set_parent(bodies.get(**focused_body).unwrap());
             } else {
-                **focused_body = Entity::from_raw(u32::MAX);
+                focused_body.invalidate();
                 commands.entity(camera.single()).remove_parent();
             }
         }
