@@ -66,20 +66,27 @@ pub mod systems {
         selected_body: Marker<SelectedBody>,
         mut focused_body: MarkerMut<FocusedBody>,
         camera: Query<Entity, (With<MainCamera3d>, With<Camera3d>)>,
+        keyboard: Res<Input<ScanCode>>,
         mut commands: Commands,
         bodies: Query<Entity, With<BodyRef>>,
     ) {
+        use FocusedBody::*;
         use SelectedBody::*;
 
         if mouse.just_pressed(MouseButton::Left) {
             if selected_body[CurrentRedirected].is_valid() {
-                **focused_body = selected_body[CurrentRedirected];
+                if keyboard.pressed(ScanCode(29)) {
+                    focused_body[Secondary] = selected_body[CurrentRedirected];
+                } else {
+                    focused_body[Primary] = selected_body[CurrentRedirected];
 
-                commands
-                    .entity(camera.single())
-                    .set_parent(bodies.get(**focused_body).unwrap());
+                    commands
+                        .entity(camera.single())
+                        .set_parent(bodies.get(focused_body[Primary]).unwrap());
+                }
             } else {
-                focused_body.invalidate();
+                focused_body[Primary].invalidate();
+                focused_body[Secondary].invalidate();
                 commands.entity(camera.single()).remove_parent();
             }
         }

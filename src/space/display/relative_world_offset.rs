@@ -20,7 +20,9 @@ pub mod systems {
         bodies: Query<&BodyRef>,
         focused_body: Marker<FocusedBody>,
     ) {
-        let Ok(&BodyRef(body)) = bodies.get(**focused_body) else { return };
+        use FocusedBody::*;
+
+        let Ok(&BodyRef(body)) = bodies.get(focused_body[Primary]) else { return };
 
         relative_world_offset.translation = simulation.bodies.position[body];
     }

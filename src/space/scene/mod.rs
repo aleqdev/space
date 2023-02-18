@@ -29,7 +29,10 @@ pub mod markers {
 
     #[derive(EntityMarker)]
     #[entity_marker(data_name = "FocusedBodyMarker")]
-    pub struct FocusedBody;
+    pub enum FocusedBody {
+        Primary,
+        Secondary,
+    }
 }
 
 pub struct ScenePlugin;

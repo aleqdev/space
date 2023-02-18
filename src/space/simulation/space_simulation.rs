@@ -1,7 +1,6 @@
 use std::{collections::HashMap, ops::Range};
 
 use bevy::{math::DVec3, prelude::*};
-use ringbuffer::{AllocRingBuffer, RingBufferWrite};
 
 use super::SpaceSimulationParams;
 
@@ -16,7 +15,7 @@ pub struct SpaceBody {
     pub velocity: DVec3,
     pub mass: f64,
     pub radius: f64,
-    pub trail: AllocRingBuffer<DVec3>,
+    pub name: String
 }
 
 #[allow(non_snake_case)]
@@ -59,12 +58,6 @@ impl SpaceSimulation {
                 }
             }
             break 'mainloop;
-        }
-
-        let range = self.get_range();
-
-        for i in range {
-            self.bodies.trail[i].push(self.bodies.position[i]);
         }
 
         self.time += delta;

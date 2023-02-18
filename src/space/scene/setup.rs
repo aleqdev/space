@@ -4,9 +4,9 @@ pub mod systems {
 
     use crate::space::{
         display::{
-            BodyTrailRef, CameraScale, RealisticView, RelativeLightIntensivity,
-            RelativeWorldOffset, RelativeWorldScale, SchematicView, SelectionRectMarker,
-            StarMaterial,
+            BodyTrail, CameraScale, PrimarySelectionRectMarker, RealisticView,
+            RelativeLightIntensivity, RelativeWorldOffset, RelativeWorldScale, SchematicView,
+            SecondarySelectionRectMarker, StarMaterial,
         },
         scene::{
             markers::CubemapCamera3d, solar_system::SolarSystemBodyBuilderMaterial,
@@ -67,7 +67,6 @@ pub mod systems {
         use bevy_dolly::prelude::*;
         use bevy_mod_raycast::{RaycastMesh, RaycastSource};
         use bevy_polyline::prelude::PolylineBundle;
-        use ringbuffer::AllocRingBuffer;
 
         let mut push_body = |position, velocity, mass, radius| {
             simulation.bodies.push(SpaceBody {
@@ -75,7 +74,6 @@ pub mod systems {
                 velocity,
                 mass,
                 radius,
-                trail: AllocRingBuffer::with_capacity(512),
             });
         };
 
@@ -85,23 +83,30 @@ pub mod systems {
             })
         };
 
-        let mut add_polyline_entity = |commands: &mut Commands, polyline, mut color: Color| {
-            color.set_a(0.1);
-            color.set_r((color.r() * 4.5).min(1.0));
-            color.set_g((color.g() * 4.5).min(1.0));
-            color.set_b((color.b() * 4.5).min(1.0));
-            commands
-                .spawn(PolylineBundle {
-                    polyline,
-                    material: polyline_materials.add(PolylineMaterial {
-                        width: 2.0,
-                        color,
-                        ..Default::default()
-                    }),
-                    ..Default::default()
-                })
-                .id()
-        };
+        let mut add_polyline_entity =
+            |commands: &mut Commands, polyline, mut color: Color, index: usize| {
+                color.set_a(0.1);
+                color.set_r((color.r() * 4.5).min(1.0));
+                color.set_g((color.g() * 4.5).min(1.0));
+                color.set_b((color.b() * 4.5).min(1.0));
+                commands
+                    .spawn((
+                        PolylineBundle {
+                            polyline,
+                            material: polyline_materials.add(PolylineMaterial {
+                                width: 2.0,
+                                color,
+                                ..Default::default()
+                            }),
+                            ..Default::default()
+                        },
+                        BodyTrail {
+                            body_index: index,
+                            ..default()
+                        },
+                    ))
+                    .id()
+            };
 
         commands.insert_resource(AmbientLight {
             brightness: 0.015,
@@ -136,12 +141,11 @@ pub mod systems {
 
             let polyline = add_polyline();
 
-            let polyline_entity = add_polyline_entity(&mut commands, polyline, color);
+            add_polyline_entity(&mut commands, polyline, color, i);
 
             commands
                 .spawn((
                     BodyRef(i),
-                    BodyTrailRef(polyline_entity),
                     SpatialBundle {
                         transform: Transform::from_translation(Vec3::new(
                             (builder.position.x * camera_scale.scale) as f32,
@@ -448,19 +452,61 @@ pub mod systems {
                     ..default()
                 },
             ))
+            .insert(SpatialBundle::default())
             .with_children(|commands| {
                 commands.spawn((
-                    SelectionRectMarker,
+                    PrimarySelectionRectMarker,
                     PbrBundle {
                         mesh: meshes.add(
-                            shape::Quad {
-                                size: Vec2::splat(1.0),
+                            shape::Plane {
+                                size: 32.0,
                                 ..default()
                             }
                             .into(),
                         ),
-                        material: materials.add(Color::ALICE_BLUE.into()),
-                        transform: Transform::from_translation(Vec3::Z),
+                        material: materials.add(StandardMaterial {
+                            base_color_texture: Some(
+                                asset_server.load("textures/selection_texture.png"),
+                            ),
+                            base_color: Color::AZURE,
+                            unlit: true,
+                            alpha_mode: AlphaMode::Mask(0.5),
+                            ..default()
+                        }),
+                        transform: Transform::from_rotation(Quat::from_euler(
+                            EulerRot::XYZ,
+                            std::f32::consts::FRAC_PI_2,
+                            0.0,
+                            0.0,
+                        )),
+
+                        ..default()
+                    },
+                    NotShadowCaster,
+                    RenderLayers::layer(2),
+                ));
+                commands.spawn((
+                    SecondarySelectionRectMarker,
+                    PbrBundle {
+                        mesh: meshes.add(
+                            shape::Plane {
+                                size: 32.0,
+                                ..default()
+                            }
+                            .into(),
+                        ),
+                        material: materials.add(StandardMaterial {
+                            base_color_texture: Some(
+                                asset_server.load("textures/selection_texture.png"),
+                            ),
+                            base_color: Color::ORANGE,
+                            unlit: true,
+                            alpha_mode: AlphaMode::Mask(0.5),
+                            ..default()
+                        }),
+                        transform: Transform::from_xyz(0.0, 0.0, -1.0).with_rotation(
+                            Quat::from_euler(EulerRot::XYZ, std::f32::consts::FRAC_PI_2, 0.0, 0.0),
+                        ),
 
                         ..default()
                     },

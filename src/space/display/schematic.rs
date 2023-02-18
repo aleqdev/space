@@ -28,7 +28,7 @@ pub mod systems {
         camera: Query<(&GlobalTransform, &Camera, &Projection), With<MainCamera3d>>,
         mut meshes: Query<(&mut Transform, &Parent), With<SchematicView>>,
     ) {
-        const RADIUS: f32 = 30.0;
+        const RADIUS: f32 = 31.0;
 
         let (camera_transform, camera, projection) = camera.single();
 

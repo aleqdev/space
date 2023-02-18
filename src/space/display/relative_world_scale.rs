@@ -23,9 +23,11 @@ pub mod systems {
         mut camera_rig: Query<&mut Rig, (With<MainCamera3d>, Without<Camera>)>,
         focused_body: Marker<FocusedBody>,
     ) {
+        use FocusedBody::*;
+
         use bevy_dolly::prelude::Arm;
 
-        let Ok(focused) = bodies.get(**focused_body) else { return };
+        let Ok(focused) = bodies.get(focused_body[Primary]) else { return };
 
         let mut camera_rig = camera_rig.single_mut();
         let (mut camera_transform, camera_global_trasnform) = camera.single_mut();

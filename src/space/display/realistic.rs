@@ -8,7 +8,7 @@ pub mod systems {
 
     use crate::space::{
         display::{
-            BodyRef, CameraScale, RealisticView, RelativeLightIntensivity, RelativeWorldScale,
+            custom_params::ComputedScale, BodyRef, RealisticView, RelativeLightIntensivity,
             SchematicView,
         },
         simulation::SpaceSimulation,
@@ -29,13 +29,12 @@ pub mod systems {
     pub fn update_bodies(
         bodies: Query<&BodyRef>,
         simulation: Res<SpaceSimulation>,
-        camera_scale: Res<CameraScale>,
-        relative_world_scale: Res<RelativeWorldScale>,
+        scale: ComputedScale,
         mut meshes: Query<(&mut Transform, &Parent), With<RealisticView>>,
         mut lights: Query<(&mut PointLight, &Parent, &RelativeLightIntensivity)>,
         mut previous_scale: Local<f64>,
     ) {
-        let scale = camera_scale.scale * relative_world_scale.scale;
+        let scale = scale.get_scale();
 
         if *previous_scale == scale {
             return;

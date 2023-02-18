@@ -6,6 +6,8 @@ pub use params::*;
 pub mod space_simulation;
 pub use space_simulation::*;
 
+pub mod nasa_horizons;
+
 pub struct SpaceSimulationPlugin;
 
 impl Plugin for SpaceSimulationPlugin {
