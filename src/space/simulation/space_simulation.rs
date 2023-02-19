@@ -15,7 +15,7 @@ pub struct SpaceBody {
     pub velocity: DVec3,
     pub mass: f64,
     pub radius: f64,
-    pub name: String
+    pub name: String,
 }
 
 #[allow(non_snake_case)]

@@ -54,9 +54,15 @@ pub mod systems {
         mut polylines: ResMut<Assets<Polyline>>,
         mut polyline_materials: ResMut<Assets<PolylineMaterial>>,
         mut simulation: ResMut<SpaceSimulation>,
+        mut test: EventWriter<crate::space::nasa_horizons::SpawnNasaBody>,
         camera_scale: Res<CameraScale>,
         asset_server: Res<AssetServer>,
     ) {
+        test.send(crate::space::nasa_horizons::SpawnNasaBody {
+            date: chrono::Utc::now(),
+            name: "399".into(),
+        });
+
         use crate::space::{
             controls::camera::UnconstrainedOrbit,
             display::BodyRef,
@@ -74,6 +80,7 @@ pub mod systems {
                 velocity,
                 mass,
                 radius,
+                name: "_".into(),
             });
         };
 
