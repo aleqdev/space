@@ -9,19 +9,93 @@ pub enum SpaceSimulationStepResult {
     PercisionIssue,
 }
 
-#[derive(Default, soa_derive::StructOfArray)]
+#[derive(Default)]
 pub struct SpaceBody {
     pub position: DVec3,
     pub velocity: DVec3,
     pub mass: f64,
     pub radius: f64,
-    pub name: String,
+}
+
+#[derive(Debug, Default)]
+pub struct SpaceBodies {
+    positions: Vec<DVec3>,
+    velocities: Vec<DVec3>,
+    masses: Vec<f64>,
+    radiuses: Vec<f64>,
+    map: bevy::utils::HashMap<String, usize>,
+}
+
+#[allow(dead_code)]
+impl SpaceBodies {
+    pub fn insert(&mut self, name: String, body: SpaceBody) {
+        self.map.insert(name, self.len());
+        self.positions.push(body.position);
+        self.velocities.push(body.velocity);
+        self.masses.push(body.mass);
+        self.radiuses.push(body.radius);
+    }
+
+    pub fn remove(&mut self, name: impl AsRef<str>) -> Option<usize> {
+        let Some(index) = self.map.remove(name.as_ref()) else { return None };
+
+        self.positions.swap_remove(index);
+        self.velocities.swap_remove(index);
+        self.masses.swap_remove(index);
+        self.radiuses.swap_remove(index);
+
+        if let Some(swapped) = self.map.values_mut().max() {
+            *swapped = index;
+        }
+
+        Some(index)
+    }
+
+    pub fn positions(&self) -> &Vec<DVec3> {
+        &self.positions
+    }
+
+    pub fn positions_mut(&mut self) -> &mut Vec<DVec3> {
+        &mut self.positions
+    }
+
+    pub fn velocities(&self) -> &Vec<DVec3> {
+        &self.velocities
+    }
+
+    pub fn velocities_mut(&mut self) -> &mut Vec<DVec3> {
+        &mut self.velocities
+    }
+
+    pub fn masses(&self) -> &Vec<f64> {
+        &self.masses
+    }
+
+    pub fn masses_mut(&mut self) -> &mut Vec<f64> {
+        &mut self.masses
+    }
+
+    pub fn radiuses(&self) -> &Vec<f64> {
+        &self.radiuses
+    }
+
+    pub fn radiuses_mut(&mut self) -> &mut Vec<f64> {
+        &mut self.radiuses
+    }
+
+    pub fn get_index(&self, name: impl AsRef<str>) -> usize {
+        self.map[name.as_ref()]
+    }
+
+    pub fn len(&self) -> usize {
+        self.positions.len()
+    }
 }
 
 #[allow(non_snake_case)]
-#[derive(Resource)]
+#[derive(Resource, Default)]
 pub struct SpaceSimulation {
-    pub bodies: SpaceBodyVec,
+    pub bodies: SpaceBodies,
     pub time: f64,
     pub percision_table: HashMap<usize, f64, nohash_hasher::BuildNoHashHasher<usize>>,
     pub G: f64,
@@ -40,8 +114,8 @@ impl SpaceSimulation {
         let mut try_count = 20;
         let mut step_count = 1;
 
-        let original_positions = self.bodies.position.clone();
-        let original_velocities = self.bodies.velocity.clone();
+        let original_positions = self.bodies.positions().clone();
+        let original_velocities = self.bodies.velocities().clone();
 
         'mainloop: while try_count > 0 {
             for _ in 0..step_count {
@@ -51,8 +125,8 @@ impl SpaceSimulation {
                         delta /= 4.0;
                         try_count -= 1;
                         step_count *= 4;
-                        self.bodies.position = original_positions.clone();
-                        self.bodies.velocity = original_velocities.clone();
+                        *self.bodies.positions_mut() = original_positions.clone();
+                        *self.bodies.velocities_mut() = original_velocities.clone();
                         continue 'mainloop;
                     }
                 }
@@ -69,7 +143,7 @@ impl SpaceSimulation {
         let range = self.get_range();
 
         for [i, j] in range.clone().combinations(2).map(|f| [f[0], f[1]]) {
-            let (p1, p2) = (self.bodies.position[i], self.bodies.position[j]);
+            let (p1, p2) = (self.bodies.positions()[i], self.bodies.positions()[j]);
 
             let distance = p1.distance(p2);
 
@@ -87,17 +161,21 @@ impl SpaceSimulation {
             let distance2 = distance.powi(2);
             let direction = (p1 - p2).normalize();
 
-            self.bodies.velocity[i] -= direction / distance2 * self.bodies.mass[j] * delta * self.G;
-            self.bodies.velocity[j] += direction / distance2 * self.bodies.mass[i] * delta * self.G;
+            let a1 = direction / distance2 * self.bodies.masses()[j] * delta * self.G;
+            let a2 = direction / distance2 * self.bodies.masses()[i] * delta * self.G;
 
-            let v_sum = self.bodies.velocity[i].length() + self.bodies.velocity[j].length();
+            self.bodies.velocities_mut()[i] -= a1;
+            self.bodies.velocities_mut()[j] += a2;
+
+            let v_sum = self.bodies.velocities()[i].length() + self.bodies.velocities()[j].length();
             // info!("{distance} - {} : {}", v_sum * delta, delta);
             self.percision_table
                 .insert(Self::make_percision_key(i, j), v_sum);
         }
 
         for i in range {
-            self.bodies.position[i] += self.bodies.velocity[i] * delta;
+            let d = self.bodies.velocities()[i] * delta;
+            self.bodies.positions_mut()[i] += d;
         }
 
         SpaceSimulationStepResult::Success
@@ -124,17 +202,17 @@ pub mod systems {
         let mut total = rug::Float::with_val(54, 0);
         let range = simulation.get_range();
         for i in range.clone() {
-            let mut K = rug::Float::with_val(54, simulation.bodies.velocity[i].length());
+            let mut K = rug::Float::with_val(54, simulation.bodies.velocities()[i].length());
             K = K.pow(2);
-            K *= simulation.bodies.mass[i];
+            K *= simulation.bodies.masses()[i];
             K *= 0.5;
             total += K;
         }
         for [i, j] in range.combinations(2).map(|f| [f[0], f[1]]) {
             let mut P = rug::Float::with_val(54, -simulation.G);
-            P *= simulation.bodies.mass[i];
-            P *= simulation.bodies.mass[j];
-            P /= simulation.bodies.position[i].distance(simulation.bodies.position[j]);
+            P *= simulation.bodies.masses()[i];
+            P *= simulation.bodies.masses()[j];
+            P /= simulation.bodies.positions()[i].distance(simulation.bodies.positions()[j]);
             total += P;
         }
 

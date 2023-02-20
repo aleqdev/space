@@ -22,8 +22,10 @@ pub mod systems {
     ) {
         use FocusedBody::*;
 
-        let Ok(&BodyRef(body)) = bodies.get(focused_body[Primary]) else { return };
+        let Ok(BodyRef(body)) = bodies.get(focused_body[Primary]) else { return };
 
-        relative_world_offset.translation = simulation.bodies.position[body];
+        let index = simulation.bodies.get_index(body);
+
+        relative_world_offset.translation = simulation.bodies.positions()[index];
     }
 }

@@ -3,8 +3,8 @@ use ringbuffer::AllocRingBuffer;
 
 #[derive(Default, Component)]
 pub struct BodyTrail {
-    pub body_index: usize,
-    pub anchor: Option<usize>,
+    pub body_name: String,
+    pub anchor: Option<String>,
     pub last_anchor_position: DVec3,
     pub trail: AllocRingBuffer<DVec3>,
 }
@@ -30,10 +30,15 @@ pub mod systems {
         for mut body_trail in &mut body_trails {
             use ringbuffer::RingBufferWrite;
 
-            let position = simulation.bodies.position[body_trail.body_index];
+            let index = simulation.bodies.get_index(&body_trail.body_name);
+            let position = simulation.bodies.positions()[index];
             body_trail.last_anchor_position = body_trail
                 .anchor
-                .map(|i| simulation.bodies.position[i])
+                .as_ref()
+                .map(|i| {
+                    let index = simulation.bodies.get_index(i);
+                    simulation.bodies.positions()[index]
+                })
                 .unwrap_or(DVec3::ZERO);
 
             let new_pos = position - body_trail.last_anchor_position;
@@ -89,14 +94,14 @@ pub mod systems {
             return;
         };
 
-        let &BodyRef(body) = bodies.get(focused[Primary]).unwrap();
-        let anchor = bodies.get(focused[Secondary]).ok().map(|&BodyRef(b)| b);
+        let BodyRef(body) = bodies.get(focused[Primary]).unwrap();
+        let anchor = bodies.get(focused[Secondary]).ok().map(|BodyRef(b)| b);
 
         for mut body_trail in &mut body_trails {
-            if body_trail.body_index == body {
+            if body_trail.body_name == *body {
                 use ringbuffer::RingBufferExt;
 
-                body_trail.anchor = anchor;
+                body_trail.anchor = anchor.cloned();
                 body_trail.trail.clear();
                 return;
             }

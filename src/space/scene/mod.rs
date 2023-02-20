@@ -6,6 +6,9 @@ pub use selection::*;
 pub mod setup;
 pub use setup::*;
 
+pub mod spawn_body;
+pub use spawn_body::*;
+
 pub mod markers {
     use bevy::prelude::*;
     use bevy_ecs_markers::EntityMarker;
@@ -53,6 +56,12 @@ impl Plugin for ScenePlugin {
 
             app.add_startup_system(insert_resources)
                 .add_startup_system(spawn_entities.at_end());
+        }
+
+        {
+            use spawn_body::systems::*;
+
+            app.add_system(spawn_nasa_body);
         }
 
         {

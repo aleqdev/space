@@ -1,4 +1,4 @@
 use bevy::prelude::*;
 
 #[derive(Component)]
-pub struct BodyRef(pub usize);
+pub struct BodyRef(pub String);

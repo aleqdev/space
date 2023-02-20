@@ -53,9 +53,11 @@ pub mod systems {
 
                 let Some(viewport) = camera.logical_viewport_size() else { return };
 
-                let (body_transform, &BodyRef(body_ref)) = bodies.get(selected).unwrap();
+                let (body_transform, BodyRef(body_ref)) = bodies.get(selected).unwrap();
 
-                let radius = simulation.bodies.radius[body_ref];
+                let index = simulation.bodies.get_index(body_ref);
+
+                let radius = simulation.bodies.radiuses()[index];
 
                 let Some(body_projected) = camera.world_to_viewport(camera_transform, body_transform
                     .translation()).map(|x| x - viewport / 2.0) else { return };

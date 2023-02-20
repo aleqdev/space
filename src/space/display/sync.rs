@@ -16,8 +16,10 @@ pub mod systems {
         let scale = scale.get_scale();
         let offset = relative_world_offset.translation;
 
-        for (mut transform, &BodyRef(i)) in &mut bodies {
-            let position = simulation.bodies.position[i];
+        for (mut transform, BodyRef(i)) in &mut bodies {
+            let index = simulation.bodies.get_index(i);
+
+            let position = simulation.bodies.positions()[index];
 
             transform.translation = Vec3::new(
                 ((position.x - offset.x) * scale) as f32,

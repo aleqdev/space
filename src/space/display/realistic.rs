@@ -43,17 +43,21 @@ pub mod systems {
         *previous_scale = scale;
 
         for (mut transform, parent) in &mut meshes {
-            let Ok(&BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
+            let Ok(BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
 
-            transform.scale = Vec3::splat((simulation.bodies.radius[body_ref] * scale) as f32);
+            let index = simulation.bodies.get_index(body_ref);
+
+            transform.scale = Vec3::splat((simulation.bodies.radiuses()[index] * scale) as f32);
         }
 
         for (mut light, parent, &RelativeLightIntensivity(relative_intensity)) in &mut lights {
             light.intensity = (relative_intensity * scale * scale) as f32;
 
-            let Ok(&BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
+            let Ok(BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
 
-            light.radius = (simulation.bodies.radius[body_ref] * scale) as f32;
+            let index = simulation.bodies.get_index(body_ref);
+
+            light.radius = (simulation.bodies.radiuses()[index] * scale) as f32;
         }
     }
 }
