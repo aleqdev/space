@@ -45,13 +45,61 @@ pub mod systems {
         mut test: EventWriter<crate::space::nasa_horizons::SpawnNasaBodyRequest>,
         camera_scale: Res<CameraScale>,
         asset_server: Res<AssetServer>,
+        mut simulation: ResMut<SpaceSimulation>,
+        mut ev: EventWriter<crate::space::nasa_horizons::NasaBodyAddition>,
     ) {
-        test.send_batch(include!("./MB-2.txt").split(";").map(|name| {
+        simulation.bodies.insert(
+            "a12".into(),
+            crate::space::simulation::SpaceBody {
+                position: bevy::math::DVec3::X * 1e10,
+                velocity: bevy::math::DVec3::Y * 1e3,
+                mass: 1e28,
+                radius: 1e1,
+            },
+        );
+
+        ev.send(crate::space::nasa_horizons::NasaBodyAddition {
+            date: chrono::Utc::now(),
+            name: "a12".into(),
+            position: bevy::math::DVec3::X * 1e10,
+            velocity: bevy::math::DVec3::Y * 1e3,
+            radius: 1e1,
+            mass: 1e28,
+            material: crate::space::nasa_horizons::SpaceBodyKnownDetailsMaterial::TexturePath(
+                "textures/asteroid.jpg",
+            ),
+            rotation: Default::default(),
+            rotation_rate: Default::default(),
+        });
+        simulation.bodies.insert(
+            "a13".into(),
+            crate::space::simulation::SpaceBody {
+                position: bevy::math::DVec3::ZERO,
+                velocity: bevy::math::DVec3::Y * 1e2,
+                mass: 1e17,
+                radius: 1e1,
+            },
+        );
+
+        ev.send(crate::space::nasa_horizons::NasaBodyAddition {
+            date: chrono::Utc::now(),
+            name: "a13".into(),
+            position: bevy::math::DVec3::ZERO,
+            velocity: bevy::math::DVec3::Y * 1e2,
+            radius: 1e1,
+            mass: 1e17,
+            material: crate::space::nasa_horizons::SpaceBodyKnownDetailsMaterial::TexturePath(
+                "textures/asteroid.jpg",
+            ),
+            rotation: Default::default(),
+            rotation_rate: Default::default(),
+        });
+        /*test.send_batch(include!("./MB-2.txt").split(";").map(|name| {
             crate::space::nasa_horizons::SpawnNasaBodyRequest {
                 date: chrono::Utc::now(),
                 name: name.into(),
             }
-        }));
+        }));*/
 
         /*test.send_batch("10;199;299;399;499;599;699;799;899;301".split(";").map(|name| {
             crate::space::nasa_horizons::SpawnNasaBodyRequest {
