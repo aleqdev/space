@@ -1,9 +1,10 @@
-use std::{collections::HashMap, ops::Range};
+use std::{collections::HashMap, ops::Range, sync::{Arc, Mutex, atomic::{AtomicUsize, AtomicU32, Ordering}}};
 
 use bevy::{math::DVec3, prelude::*};
 
 use super::SpaceSimulationParams;
 
+#[derive(PartialEq, Eq)]
 pub enum SpaceSimulationStepResult {
     Success,
     PercisionIssue,
@@ -110,75 +111,117 @@ impl SpaceSimulation {
         0..self.bodies.len()
     }
 
-    pub fn take_step_smooth(&mut self, mut delta: f64) {
-        let mut try_count = 20;
-        let mut step_count = 1;
-
-        let original_positions = self.bodies.positions().clone();
-        let original_velocities = self.bodies.velocities().clone();
-
-        'mainloop: while try_count > 0 {
-            for _ in 0..step_count {
-                match self.take_step(delta) {
-                    SpaceSimulationStepResult::Success => {}
-                    SpaceSimulationStepResult::PercisionIssue => {
-                        delta /= 4.0;
-                        try_count -= 1;
-                        step_count *= 4;
-                        *self.bodies.positions_mut() = original_positions.clone();
-                        *self.bodies.velocities_mut() = original_velocities.clone();
-                        continue 'mainloop;
-                    }
-                }
-            }
-            break 'mainloop;
-        }
-
-        self.time += delta;
-    }
-
-    pub fn take_step(&mut self, delta: f64) -> SpaceSimulationStepResult {
+    pub fn take_step_smooth(&mut self, delta: f64) {
         use itertools::Itertools;
+        use rayon::prelude::*;
+
+        let depth_power_limit = 4;
+        let mut iteration_count = 2u32.pow(depth_power_limit - 1);
+        let smallest_step = AtomicU32::new(iteration_count);
+
+        let positions_interpol = self.bodies.positions().iter().map(|x| Mutex::new(vec![*x])).collect::<Vec<_>>();
+        let velocities_interpol = self.bodies.velocities().iter().map(|x| Mutex::new(vec![*x, *x])).collect::<Vec<_>>();
+        let interpol_depths = Vec::from_iter(std::iter::from_fn(|| Some([AtomicU32::new(iteration_count), AtomicU32::new(iteration_count)])).take(positions_interpol.len()));
+        let mut interpol_depths_switch = 0;
 
         let range = self.get_range();
 
-        for [i, j] in range.clone().combinations(2).map(|f| [f[0], f[1]]) {
-            let (p1, p2) = (self.bodies.positions()[i], self.bodies.positions()[j]);
+        let combinations = range
+            .clone()
+            .combinations(2)
+            .collect_vec();
 
-            let distance = p1.distance(p2);
+        while iteration_count > 0 {
+            combinations
+            .par_iter()
+            .map(|f| [f[0], f[1]])
+            .for_each(|[i, j]| {
+                let (d1, d2) = (interpol_depths[i][interpol_depths_switch].load(Ordering::SeqCst), interpol_depths[j][interpol_depths_switch].load(Ordering::SeqCst));
 
-            let percision_entry = *self
-                .percision_table
-                .get(&Self::make_percision_key(i, j))
-                .unwrap_or(&0.0)
-                * delta;
+                if d1 == d2 && iteration_count % d1 == 0 && iteration_count % d2 == 0 {
+                    // Run the usual simulation
 
-            if distance < percision_entry {
-                // info!("PERCISION ISSUE DELTA {delta} when distance is {distance} and entry is {percision_entry}",);
-                return SpaceSimulationStepResult::PercisionIssue;
-            }
+                    let (p1, p2) = (*positions_interpol[i].lock().unwrap().last().unwrap(), *positions_interpol[j].lock().unwrap().last().unwrap());
 
-            let distance2 = distance.powi(2);
-            let direction = (p1 - p2).normalize();
+                    let distance = p1.distance(p2);
 
-            let a1 = direction / distance2 * self.bodies.masses()[j] * delta * self.G;
-            let a2 = direction / distance2 * self.bodies.masses()[i] * delta * self.G;
+                    let percision_entry = *
+                    self.percision_table
+                    .get(&Self::make_percision_key(i, j))
+                    .unwrap_or(&f64::INFINITY)
+                                          * delta;
 
-            self.bodies.velocities_mut()[i] -= a1;
-            self.bodies.velocities_mut()[j] += a2;
+                    let distance2 = distance.powi(2);
+                    let direction = (p1 - p2).normalize();
 
-            let v_sum = self.bodies.velocities()[i].length() + self.bodies.velocities()[j].length();
-            // info!("{distance} - {} : {}", v_sum * delta, delta);
-            self.percision_table
-                .insert(Self::make_percision_key(i, j), v_sum);
+                    let a1 = direction / distance2 * self.bodies.masses()[j] * delta * self.G;
+                    let a2 = direction / distance2 * self.bodies.masses()[i] * delta * self.G;
+
+                    for (vel, index) in [(-a1, i), (a2, j)] {
+                        if vel.length() > percision_entry {
+                            interpol_depths[index][1 - interpol_depths_switch].fetch_update(Ordering::SeqCst, Ordering::SeqCst, |value| {
+                                let new_value = value / 2;
+                                smallest_step.fetch_min(new_value, Ordering::SeqCst);
+                                Some(new_value)
+                            }).unwrap();
+                        } else {
+                            *velocities_interpol[index].lock().unwrap().last_mut().unwrap() += vel;
+                        }
+                    }
+
+                    //let v_sum =
+                    //    bodies.velocities()[i].lock().unwrap().length() + bodies.velocities()[j].lock().unwrap().length();
+                    // info!("{distance} - {} : {}", v_sum * delta, delta);
+                    //self.percision_table
+                    //    .insert(Self::make_percision_key(i, j), v_sum);
+                } else if iteration_count % d1 != 0 && iteration_count % d1 != 0 {
+                    // Do nothing
+                } else {
+                    // Interpolate
+
+                    info!("INTERPOLATE");
+
+                    let ((main, _), (interpolable, interpolable_d)) = if d1 < d2 {((i, d1), (j, d2))} else {((j, d2), (i, d1))};
+
+                    let (p1, (p2_last, p2_before_last)) =
+                    (*positions_interpol[main].lock().unwrap().last().unwrap(),
+                    {
+                        let v = positions_interpol[interpolable].lock().unwrap();
+                        (v[v.len() - 1], v[v.len() - 2])
+                    });
+
+                    let p2 = p2_before_last.lerp(p2_last, (interpolable_d - (iteration_count % interpolable_d)) as f64 / interpolable_d as f64);
+
+                    let distance = p1.distance(p2);
+
+                    let distance2 = distance.powi(2);
+                    let direction = (p1 - p2).normalize();
+
+                    let a1 = direction / distance2 * self.bodies.masses()[interpolable] * delta * self.G;
+
+                    *velocities_interpol[main].lock().unwrap().last_mut().unwrap() += a1;
+                }
+            });
+
+            range.clone()
+                .into_par_iter()
+                .for_each(|i| {
+                let mut v_vec = velocities_interpol[i].lock().unwrap();
+                let mut p_vec = positions_interpol[i].lock().unwrap();
+                let last_vel = *v_vec.last().unwrap();
+                let last_pos = *p_vec.last().unwrap() + last_vel * delta;
+                v_vec.push(last_vel);
+                p_vec.push(last_pos);
+            });
+
+            iteration_count -= smallest_step.load(Ordering::SeqCst);
+            interpol_depths_switch = 1 - interpol_depths_switch;
         }
 
-        for i in range {
-            let d = self.bodies.velocities()[i] * delta;
-            self.bodies.positions_mut()[i] += d;
-        }
+        self.bodies.positions = positions_interpol.iter().map(|vec| vec.lock().unwrap().last().unwrap().clone()).collect();
+        self.bodies.velocities = velocities_interpol.iter().map(|vec| vec.lock().unwrap().last().unwrap().clone()).collect();
 
-        SpaceSimulationStepResult::Success
+        self.time += delta;
     }
 }
 

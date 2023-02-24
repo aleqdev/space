@@ -1,15 +1,25 @@
 use crate::space::display::StarMaterial;
 use bevy::{math::DVec3, prelude::*, tasks::Task};
+use bevy_debug_text_overlay::screen_print;
 use chrono::{DateTime, Duration, Utc};
 use surf::StatusCode;
+
+lazy_static::lazy_static! {
+    static ref LIMITER: async_lock::Semaphore = {
+        async_lock::Semaphore::new(4)
+    };
+}
 
 pub async fn get_body_dynamics_using_nasa_horizons(
     date: DateTime<Utc>,
     name: impl ToString,
-) -> anyhow::Result<(DVec3, DVec3, f64)> {
+) -> anyhow::Result<(DVec3, DVec3, f64, f64)> {
+    use anyhow::anyhow;
+    let _guard = LIMITER.acquire().await;
+
     let data_regex = regex::Regex::new(r"\$\$SOE(.*)\$\$EOE").unwrap();
     let coord_regex = regex::Regex::new(r"[XYZ] ?=([ \-+0-9E.]+)").unwrap();
-    let radii_regex = regex::Regex::new(r"Target radii *: *([0-9\.E+\-]+)").unwrap();
+    let name_regex = regex::Regex::new(r"Target body name *: *([a-zA-Z0-9]+)").unwrap();
 
     #[allow(non_snake_case)]
     #[derive(serde::Serialize)]
@@ -27,8 +37,6 @@ pub async fn get_body_dynamics_using_nasa_horizons(
 
     let body_dynamics = async {
         for _ in 0..MAX_RETRIES {
-            info!("Trying to get NASA body [{}]", name.to_string());
-
             let mut resp = surf::Client::new()
                 .get("https://ssd.jpl.nasa.gov/api/horizons.api")
                 .query(&RequestQuery {
@@ -44,116 +52,142 @@ pub async fn get_body_dynamics_using_nasa_horizons(
                     OBJ_DATA: "NO".into(),
                     QUANTITIES: "1".into(),
                 })
-                .expect("Failed to construct NASA request")
+                .ok()?
                 .send()
                 .await
-                .expect("Failed to send NASA request");
+                .ok()?;
 
             if resp.status() == StatusCode::ServiceUnavailable {
-                async_std::task::sleep(Duration::milliseconds((rand::random::<i64>().abs() + 1) % 1000).to_std().unwrap()).await;
+                async_std::task::sleep(
+                    Duration::milliseconds((rand::random::<i64>().abs() + 1) % 1000)
+                        .to_std()
+                        .unwrap(),
+                )
+                .await;
                 continue;
             }
 
-            return Some(
-                resp.take_body()
-                    .into_string()
-                    .await
-                    .expect("Failed to get string contents of NASA response"),
-            );
+            return Some(resp.take_body().into_string().await.ok()?);
         }
 
         None
     };
 
-    let body_observer = async {
-        for _ in 0..MAX_RETRIES {
-            info!("Trying to get NASA body [{}]", name.to_string());
-
-            let mut resp = surf::Client::new()
-                .get("https://ssd.jpl.nasa.gov/api/horizons.api")
-                .query(&RequestQuery {
-                    COMMAND: name.to_string(),
-                    CENTER: "geo@0".into(),
-                    EPHEM_TYPE: "OBSERVER".into(),
-                    START_TIME: date.format("%Y-%b-%d-%T").to_string(),
-                    STOP_TIME: date
-                        .checked_add_signed(Duration::hours(1))
-                        .unwrap()
-                        .format("%Y-%b-%d-%T")
-                        .to_string(),
-                    OBJ_DATA: "NO".into(),
-                    QUANTITIES: "1".into(),
-                })
-                .expect("Failed to construct NASA request")
-                .send()
-                .await
-                .expect("Failed to send NASA request");
-
-            if resp.status() == StatusCode::ServiceUnavailable {
-                async_std::task::sleep(Duration::milliseconds((rand::random::<i64>().abs() + 1) % 1000).to_std().unwrap()).await;
-                continue;
-            }
-
-            return Some(
-                resp.take_body()
-                    .into_string()
-                    .await
-                    .expect("Failed to get string contents of NASA response"),
-            );
-        }
-
-        None
-    };
-
-    let (Some(result_dynamics), Some(result_observer)) = futures::join!(body_dynamics, body_observer) else {
+    let Some(result_dynamics) = body_dynamics.await else {
         error!("Failed to get NASA body: Serive Unavailable");
         return Err(anyhow::anyhow!("Failed to get NASA body: Serive Unavailable"));
     };
 
     let parsed = data_regex
         .captures(&result_dynamics)
-        .expect("Failed to regex NASA dynamics")
+        .ok_or_else(|| anyhow!("Failed to regex NASA dynamics: [{result_dynamics:?}]"))?
         .get(0)
-        .expect("Regex group [0] of NASA dynamics failed")
+        .ok_or_else(|| anyhow!("Regex group [0] of NASA dynamics failed"))?
         .as_str(); // get FROM SOE to EOE
 
-    let mut parsed = coord_regex
-        .find_iter(parsed)
-        .take(6)
-        .map(|x| x.as_str().split('=').nth(1).unwrap());
+    let mut coords = coord_regex.find_iter(parsed).take(6).map(|x| {
+        x.as_str()
+            .split('=')
+            .nth(1)
+            .ok_or_else(|| anyhow!("coord_regex fault"))
+    });
 
-    let x = parsed.next().unwrap().trim().parse().unwrap();
-    let z = parsed.next().unwrap().trim().parse().unwrap();
-    let y = parsed.next().unwrap().trim().parse().unwrap();
+    let x = coords
+        .next()
+        .ok_or_else(|| anyhow!("coord_regex fault"))??
+        .trim()
+        .parse()?;
+    let z = coords
+        .next()
+        .ok_or_else(|| anyhow!("coord_regex fault"))??
+        .trim()
+        .parse()?;
+    let y = coords
+        .next()
+        .ok_or_else(|| anyhow!("coord_regex fault"))??
+        .trim()
+        .parse()?;
 
-    let position = DVec3::new(
-        x,
-        y,
-        z,
-    ) * 1000.0;
+    let position = DVec3::new(x, y, z) * 1000.0;
 
-    let x = parsed.next().unwrap().trim().parse().unwrap();
-    let z = parsed.next().unwrap().trim().parse().unwrap();
-    let y = parsed.next().unwrap().trim().parse().unwrap();
+    let x = coords
+        .next()
+        .ok_or_else(|| anyhow!("coord_regex parse fault"))??
+        .trim()
+        .parse()?;
+    let z = coords
+        .next()
+        .ok_or_else(|| anyhow!("coord_regex parse fault"))??
+        .trim()
+        .parse()?;
+    let y = coords
+        .next()
+        .ok_or_else(|| anyhow!("coord_regex parse fault"))??
+        .trim()
+        .parse()?;
 
-    let velocity = DVec3::new(
-        x,
-        y,
-        z,
-    ) * 1000.0;
+    let velocity = DVec3::new(x, y, z) * 1000.0;
 
-    let radii = radii_regex
-        .captures(&result_observer)
-        .expect("Failed to regex NASA observer")
+    let name = name_regex
+        .captures(&result_dynamics)
+        .ok_or_else(|| anyhow!("name_regex fault"))?
         .get(1)
-        .expect("Regex group [1] of NASA observer failed")
-        .as_str()
-        .to_owned()
-        .parse::<f64>()
-        .expect("Failed to parse NASA observer radii")
-        * 1000.0;
+        .ok_or_else(|| anyhow!("name_regex fault"))?
+        .as_str();
 
-    Ok((position, velocity, radii))
+    #[allow(non_snake_case)]
+    #[derive(Debug, serde::Deserialize)]
+    struct MassParams {
+        massValue: f64,
+        massExponent: f64,
+    }
+
+    #[allow(non_snake_case)]
+    #[derive(Debug, serde::Deserialize)]
+    struct BodyParams {
+        mass: Option<MassParams>,
+        meanRadius: f64,
+    }
+
+    let body_params = async {
+        for _ in 0..MAX_RETRIES {
+            let mut resp = surf::Client::new()
+                .with(surf::middleware::Redirect::new(2))
+                .get(format!("https://api.le-systeme-solaire.net/rest/bodies/{name}?data=meanRadius,mass,massValue,massExponent"))
+                .send()
+                .await
+                .ok()?;
+
+            if resp.status() == StatusCode::ServiceUnavailable {
+                async_std::task::sleep(
+                    Duration::milliseconds((rand::random::<i64>().abs() + 1) % 1000)
+                        .to_std()
+                        .unwrap(),
+                )
+                .await;
+                continue;
+            }
+
+            return Some(resp.take_body().into_json().await.ok()?);
+        }
+
+        None
+    };
+
+    let data: BodyParams = body_params
+        .await
+        .ok_or_else(|| anyhow!("Failed to get body info"))?;
+
+    screen_print!(sec: 3.0, col: Color::GREEN, "got response for {}", name.to_string());
+
+    Ok((
+        position,
+        velocity,
+        data.meanRadius * 1000.0,
+        data.mass
+            .map(|mass| mass.massValue * 10f64.powf(mass.massExponent))
+            .unwrap_or(0.0),
+    ))
 }
 
 pub struct NasaHorizonsPlugin;
@@ -303,6 +337,7 @@ pub struct SpawnNasaBodyResponse {
     pub position: DVec3,
     pub velocity: DVec3,
     pub radius: f64,
+    pub mass: f64,
 }
 
 pub struct NasaBodyAddition {
@@ -317,9 +352,14 @@ pub struct NasaBodyAddition {
     pub rotation_rate: f64,
 }
 
+pub enum SpawnNasaBodyResponseResult {
+    Errored,
+    Some(SpawnNasaBodyResponse),
+}
+
 #[derive(Resource, Default)]
 pub struct NasaTasksManager {
-    pub tasks: Vec<Task<SpawnNasaBodyResponse>>,
+    pub tasks: Vec<Task<SpawnNasaBodyResponseResult>>,
 }
 
 #[derive(Clone)]
@@ -350,6 +390,7 @@ pub mod systems {
 
     use super::{
         NasaTasksManager, SpaceBodiesKnownDetails, SpawnNasaBodyRequest, SpawnNasaBodyResponse,
+        SpawnNasaBodyResponseResult,
     };
 
     pub fn reqeust_nasa_bodies_on_event(
@@ -362,18 +403,19 @@ pub mod systems {
             let date = e.date;
             let name = e.name.clone();
             manager.tasks.push(thread_pool.spawn(async move {
-                let (position, velocity, radius) =
+                let Ok((position, velocity, radius, mass)) =
                     super::get_body_dynamics_using_nasa_horizons(date, &name)
                         .await
-                        .unwrap();
+                        else { return SpawnNasaBodyResponseResult::Errored };
 
-                SpawnNasaBodyResponse {
+                SpawnNasaBodyResponseResult::Some(SpawnNasaBodyResponse {
                     date,
                     name,
                     position,
                     velocity,
                     radius,
-                }
+                    mass,
+                })
             }));
         }
     }
@@ -384,12 +426,12 @@ pub mod systems {
         known_details: ResMut<SpaceBodiesKnownDetails>,
         mut ev: EventWriter<NasaBodyAddition>,
     ) {
-        const AVERAGE_DENSITY: f64 = 3346.4;
-
         use futures_lite::future;
 
         manager.tasks.retain_mut(|task| {
             let Some(response) = future::block_on(future::poll_once(task)) else { return true };
+
+            let SpawnNasaBodyResponseResult::Some(response) = response else { return false };
 
             let mass;
             let rotation;
@@ -402,16 +444,11 @@ pub mod systems {
                 rotation_rate = details.rotation_rate;
                 material = details.material.clone();
             } else {
-                mass =
-                    AVERAGE_DENSITY * std::f64::consts::PI * (4.0 / 3.0) * response.radius.powi(3);
+                mass = response.mass;
                 rotation = Default::default();
                 rotation_rate = Default::default();
-                material = crate::space::nasa_horizons::SpaceBodyKnownDetailsMaterial::Star(
-                    crate::space::display::StarMaterial {
-                        primary_color: Color::WHITE,
-                        secondary_color: Color::GRAY,
-                        ..Default::default()
-                    },
+                material = crate::space::nasa_horizons::SpaceBodyKnownDetailsMaterial::TexturePath(
+                    "textures/asteroid.jpg",
                 );
             }
 

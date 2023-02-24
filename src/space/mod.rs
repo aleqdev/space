@@ -20,6 +20,10 @@ impl PluginGroup for SpacePlugins {
             .add(bevy_prototype_lyon::prelude::ShapePlugin)
             .add(bevy_polyline::PolylinePlugin)
             .add(noisy_bevy::NoisyShaderPlugin)
+            .add(bevy_debug_text_overlay::OverlayPlugin {
+                font_size: 14.0,
+                ..default()
+            })
             .build()
     }
 }

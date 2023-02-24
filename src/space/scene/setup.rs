@@ -46,14 +46,19 @@ pub mod systems {
         camera_scale: Res<CameraScale>,
         asset_server: Res<AssetServer>,
     ) {
-        test.send_batch(
-                ["10", "199", "299", "399", "499", "599", "699", "799", "899", "301"].map(|name| {
-                crate::space::nasa_horizons::SpawnNasaBodyRequest {
-                    date: chrono::Utc::now(),
-                    name: name.into(),
-                }
-            }),
-        );
+        test.send_batch(include!("./MB-2.txt").split(";").map(|name| {
+            crate::space::nasa_horizons::SpawnNasaBodyRequest {
+                date: chrono::Utc::now(),
+                name: name.into(),
+            }
+        }));
+
+        /*test.send_batch("10;199;299;399;499;599;699;799;899;301".split(";").map(|name| {
+            crate::space::nasa_horizons::SpawnNasaBodyRequest {
+                date: chrono::Utc::now(),
+                name: name.into(),
+            }
+        }));*/
 
         use crate::space::{
             controls::camera::UnconstrainedOrbit,
