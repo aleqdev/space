@@ -21,7 +21,7 @@ pub mod systems {
         });
 
         world.insert_resource(SpaceSimulationParams {
-            speed: 86400.0 * 1.0 * 2.0,
+            speed: 3364000.0 * 1.0 * 2.0,
         });
 
         world.insert_resource(CameraScale {
@@ -75,7 +75,7 @@ pub mod systems {
             "a13".into(),
             crate::space::simulation::SpaceBody {
                 position: bevy::math::DVec3::ZERO,
-                velocity: bevy::math::DVec3::Y * 1e2,
+                velocity: bevy::math::DVec3::Y * 1e3,
                 mass: 1e17,
                 radius: 1e1,
             },
@@ -85,7 +85,7 @@ pub mod systems {
             date: chrono::Utc::now(),
             name: "a13".into(),
             position: bevy::math::DVec3::ZERO,
-            velocity: bevy::math::DVec3::Y * 1e2,
+            velocity: bevy::math::DVec3::Y * -1e3,
             radius: 1e1,
             mass: 1e17,
             material: crate::space::nasa_horizons::SpaceBodyKnownDetailsMaterial::TexturePath(

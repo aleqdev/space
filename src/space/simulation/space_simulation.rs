@@ -11,12 +11,6 @@ use bevy::{math::DVec3, prelude::*};
 
 use super::SpaceSimulationParams;
 
-#[derive(PartialEq, Eq)]
-pub enum SpaceSimulationStepResult {
-    Success,
-    PercisionIssue,
-}
-
 #[derive(Default)]
 pub struct SpaceBody {
     pub position: DVec3,
@@ -105,214 +99,147 @@ impl SpaceBodies {
 pub struct SpaceSimulation {
     pub bodies: SpaceBodies,
     pub time: f64,
-    pub percision_table: Mutex<HashMap<usize, f64, nohash_hasher::BuildNoHashHasher<usize>>>,
     pub G: f64,
 }
 
 impl SpaceSimulation {
-    pub fn make_percision_key(i: usize, j: usize) -> usize {
-        (i << 32) | j
-    }
-
-    pub fn get_range(&self) -> Range<usize> {
-        0..self.bodies.len()
-    }
-
     pub fn take_step_smooth(&mut self, delta: f64) {
         fn calculate_accerelation(
-            p1: DVec3,
-            p2: DVec3,
+            distance2: f64,
+            direction: DVec3,
             mass1: f64,
             mass2: f64,
-            delta: f64,
             g: f64,
         ) -> (DVec3, DVec3) {
-            let distance2 = p1.distance_squared(p2);
-            let direction = (p1 - p2).normalize();
-
-            let a1 = direction / distance2 * mass2 * delta * g;
-            let a2 = direction / distance2 * mass1 * delta * g;
+            let a1 = direction / distance2 * mass2 * g;
+            let a2 = direction / distance2 * mass1 * g;
 
             (a1, a2)
         }
 
-        fn lock<T>(mutex: &Mutex<T>) -> MutexGuard<T> {
-            mutex.lock().unwrap()
+        fn from_end<T>(vec: &Vec<T>, n: usize) -> &T {
+            &vec[vec.len() - n]
         }
 
-        fn last<T>(vec: &Vec<T>) -> &T {
-            vec.last().unwrap()
+        fn from_end_mut<T>(vec: &mut Vec<T>, n: usize) -> &mut T {
+            let index = vec.len() - n;
+            &mut vec[index]
         }
-
-        fn last_mut<T>(vec: &mut Vec<T>) -> &mut T {
-            vec.last_mut().unwrap()
-        }
-
-        let get_percision_entry = |i, j| {
-            *self
-                .percision_table
-                .lock()
-                .unwrap()
-                .get(&Self::make_percision_key(i, j))
-                .unwrap_or(&f64::INFINITY)
-        };
 
         use itertools::Itertools;
         use rayon::prelude::*;
 
-        let depth_power_limit = 4;
-        let delta_iteration_count = 2u32.pow(depth_power_limit - 1);
-        let mut iteration_count = delta_iteration_count;
-        let smallest_step = AtomicU32::new(iteration_count);
+        const MAX_DEPTH_POWER: u32 = 8;
 
-        let positions_interpol = self
-            .bodies
-            .positions()
-            .iter()
-            .map(|x| Mutex::new(vec![*x]))
-            .collect::<Vec<_>>();
-        let velocities_interpol = self
-            .bodies
-            .velocities()
-            .iter()
-            .map(|x| Mutex::new(vec![*x, *x]))
-            .collect::<Vec<_>>();
-        let interpol_depths = Vec::from_iter(
-            std::iter::from_fn(|| {
-                Some([
-                    AtomicU32::new(iteration_count),
-                    AtomicU32::new(iteration_count),
-                ])
-            })
-            .take(positions_interpol.len()),
-        );
-        let mut interpol_depths_switch = 0;
+        let mut positions_lerp: Vec<_> = self.bodies.positions.iter().map(|e| vec![*e, *e]).collect();
+        let mut velocities_lerp: Vec<_> = self.bodies.velocities.iter().map(|e| vec![*e, *e]).collect();
 
-        let range = self.get_range();
+        let iteration_cap = 2u32.pow(MAX_DEPTH_POWER - 1);
+        let mut iteration = iteration_cap;
+        let mut step = iteration;
+        let mut depths_lerp = vec![iteration; self.bodies.len()];
 
-        let combinations = range.clone().combinations(2).collect_vec();
+        while iteration > 0 {
+            info!("Iter[{iteration}], Step[{step}]");
+            for [i, j] in (0..self.bodies.len()).combinations(2).map(|e| [e[0], e[1]]) {
+                let depth1 = depths_lerp[i];
+                let depth2 = depths_lerp[j];
 
-        while iteration_count > 0 {
-            let flip_interpol_depths_switch = |interpol_depths_switch: &mut usize| {
-                *interpol_depths_switch = 1 - *interpol_depths_switch;
-            };
+                let delta1 = delta * (depth1 as f64 / iteration_cap as f64);
+                let delta2 = delta * (depth2 as f64 / iteration_cap as f64);
 
-            let get_interpol_depth = |index: usize| {
-                interpol_depths[index][interpol_depths_switch].load(Ordering::SeqCst)
-            };
+                let perc_a1 = from_end(&velocities_lerp[i], 2).length() * delta1;
+                let perc_a2 = from_end(&velocities_lerp[j], 2).length() * delta2;
 
-            let depths_equal = |d1: u32, d2: u32| d1 == d2;
+                let distance2 = from_end(&positions_lerp[i], 2)
+                    .distance_squared(*from_end(&positions_lerp[j], 2));
 
-            let depth_is_ticking = |d: u32| iteration_count % d == 0;
+                for (perc, index) in [(perc_a1, i), (perc_a2, j)] {
+                    let mut factor = distance2 / perc.powi(2);
 
-            let get_depth_delta = |d: u32| d as f64 / delta_iteration_count as f64;
+                    info!("Factor[{factor}], Distance2[{distance2}], Perc[{}]", perc.powi(2));
 
-            let opposite_interpol_depths_switch = || 1 - interpol_depths_switch;
-
-            combinations
-                .par_iter()
-                .map(|f| [f[0], f[1]])
-                .for_each(|[i, j]| {
-                    let (d1, d2) = (get_interpol_depth(i), get_interpol_depth(j));
-
-                    if depths_equal(d1, d2) && depth_is_ticking(d1) && depth_is_ticking(d2) {
-                        // Run the usual simulation
-
-                        let (p1, p2) = (
-                                *last(&lock(&positions_interpol[i])),
-                            *last(&lock(&positions_interpol[j])),
-                        );
-
-                        let percision_entry = get_percision_entry(i, j);
-
-                        let (a1, a2) = calculate_accerelation(
-                                p1,
-                            p2,
-                            self.bodies.masses()[i],
-                            self.bodies.masses()[j],
-                            delta,
-                            self.G,
-                        );
-
-                        for (mut vel, d, index) in [(-a1, d1, i), (a2, d2, j)] {
-                            vel *= get_depth_delta(d);
-                            if vel.length() > percision_entry {
-                                interpol_depths[index][opposite_interpol_depths_switch()]
-                                    .fetch_update(Ordering::SeqCst, Ordering::SeqCst, |value| {
-                                        let new_value = value / 2;
-                                        smallest_step.fetch_min(new_value, Ordering::SeqCst);
-                                        Some(new_value)
-                                    })
-                                    .unwrap();
-                            } else {
-                                *last_mut(&mut lock(&velocities_interpol[index])) += vel;
-                            }
+                    while factor < 16.0 && step > 1 {
+                        if depths_lerp[index] == 1 {
+                            break;
                         }
-
-                        let v_sum = a1.length() + a2.length();
-
-                        lock(&self.percision_table).insert(Self::make_percision_key(i, j), v_sum);
-                    } else if !(depth_is_ticking(d1) || depth_is_ticking(d2)) {
-                        // Do nothing
-                    } else {
-                        // Interpolate
-
-                        info!("INTERPOLATE");
-
-                        let ((main, _), (interpolable, interpolable_d)) = if d1 < d2 {
-                            ((i, d1), (j, d2))
-                        } else {
-                            ((j, d2), (i, d1))
-                        };
-
-                        let (p1, (p2_last, p2_before_last)) =
-                            (*last(&lock(&positions_interpol[main])), {
-                                let v = lock(&positions_interpol[interpolable]);
-                                (v[v.len() - 1], v[v.len() - 2])
-                            });
-
-                        let p2 = p2_before_last.lerp(
-                            p2_last,
-                            (interpolable_d - (iteration_count % interpolable_d)) as f64
-                                / interpolable_d as f64,
-                        );
-
-                        let (a1, _) = calculate_accerelation(
-                            p1,
-                            p2,
-                            self.bodies.masses()[main],
-                            self.bodies.masses()[interpolable],
-                            delta,
-                            self.G,
-                        );
-
-                        *last_mut(&mut lock(&velocities_interpol[main])) += a1;
+                        depths_lerp[index] /= 2;
+                        step = step.min(depths_lerp[index]);
+                        factor *= 2.0;
                     }
-                });
+                }
 
-            range.clone().into_par_iter().for_each(|i| {
-                let mut v_vec = lock(&velocities_interpol[i]);
-                let mut p_vec = lock(&positions_interpol[i]);
-                let last_vel = *last(&v_vec);
-                let last_pos = *last(&p_vec) + last_vel * delta;
-                v_vec.push(last_vel);
-                p_vec.push(last_pos);
-            });
+                let depth1 = depths_lerp[i];
+                let depth2 = depths_lerp[j];
 
-            iteration_count -= smallest_step.load(Ordering::SeqCst);
-            flip_interpol_depths_switch(&mut interpol_depths_switch);
+                let delta1 = delta * (depth1 as f64 / iteration_cap as f64);
+                let delta2 = delta * (depth2 as f64 / iteration_cap as f64);
+
+                info!("Delta1[{delta1}], Delta2[{delta2}]");
+
+                if iteration % depth1 == 0 && iteration % depth2 == 0 {
+                    let direction =
+                        (*from_end(&positions_lerp[i], 1) - *from_end(&positions_lerp[j], 1)).normalize();
+
+                    let (a1, a2) = calculate_accerelation(
+                        distance2,
+                        direction,
+                        self.bodies.masses[i],
+                        self.bodies.masses[j],
+                        self.G,
+                    );
+
+                    for (a, index, delta) in [(-a1, i, delta1), (a2, j, delta2)] {
+                        *from_end_mut(&mut velocities_lerp[index], 1) += a * delta;
+                    }
+                } else if iteration % depth1 != 0 && iteration % depth2 != 0 {
+                } else {
+                    let (main_index, lerp_index) = if depth1 < depth2 { (i, j) } else { (j, i) };
+                    let main_delta = if depth1 < depth2 { delta1 } else { delta2 };
+
+                    let lerp_depth = depths_lerp[lerp_index];
+
+                    let lerp = (lerp_depth - (iteration % lerp_depth)) as f64 / lerp_depth as f64;
+
+                    let lerp_pos = from_end(&positions_lerp[lerp_index], 3)
+                        .lerp(*from_end(&positions_lerp[lerp_index], 2), lerp);
+
+                    let distance2 = from_end(&positions_lerp[main_index], 2)
+                        .distance_squared(lerp_pos);
+
+                    let direction = (lerp_pos - *from_end(&positions_lerp[i], 1)).normalize();
+
+                    let (a1, _) = calculate_accerelation(
+                        distance2,
+                        direction,
+                        self.bodies.masses[main_index],
+                        self.bodies.masses[lerp_index],
+                        self.G,
+                    );
+
+                    *from_end_mut(&mut velocities_lerp[main_index], 1) -= a1 * main_delta
+                }
+            }
+            for i in 0..self.bodies.len() {
+                let depth = depths_lerp[i];
+                if iteration % depth == 0 {
+                    *from_end_mut(&mut positions_lerp[i], 1) +=
+                        *from_end(&velocities_lerp[i], 1) * delta * (depth as f64 / iteration_cap as f64);
+
+                    let new_pos = *from_end(&positions_lerp[i], 1);
+                    let new_vel = *from_end(&velocities_lerp[i], 1);
+                    positions_lerp[i].push(new_pos);
+                    velocities_lerp[i].push(new_vel);
+                }
+            }
+
+            iteration -= step
         }
 
-        self.bodies.positions = positions_interpol
-            .iter()
-            .map(|vec| last(&lock(&vec)).clone())
-            .collect();
-        self.bodies.velocities = velocities_interpol
-            .iter()
-            .map(|vec| last(&lock(&vec)).clone())
-            .collect();
-
-        self.time += delta;
+        for i in 0..self.bodies.len() {
+            self.bodies.positions[i] = *from_end(&positions_lerp[i], 1);
+            self.bodies.velocities[i] = *from_end(&velocities_lerp[i], 1);
+        }
     }
 }
 
@@ -326,30 +253,5 @@ pub mod systems {
         mut simulation: ResMut<SpaceSimulation>,
     ) {
         simulation.take_step_smooth(time.delta_seconds_f64() * simulation_params.speed);
-    }
-
-    #[allow(non_snake_case, dead_code)]
-    pub fn print_simulation_energy(simulation: ResMut<SpaceSimulation>) {
-        use itertools::*;
-        use rug::ops::Pow;
-
-        let mut total = rug::Float::with_val(54, 0);
-        let range = simulation.get_range();
-        for i in range.clone() {
-            let mut K = rug::Float::with_val(54, simulation.bodies.velocities()[i].length());
-            K = K.pow(2);
-            K *= simulation.bodies.masses()[i];
-            K *= 0.5;
-            total += K;
-        }
-        for [i, j] in range.combinations(2).map(|f| [f[0], f[1]]) {
-            let mut P = rug::Float::with_val(54, -simulation.G);
-            P *= simulation.bodies.masses()[i];
-            P *= simulation.bodies.masses()[j];
-            P /= simulation.bodies.positions()[i].distance(simulation.bodies.positions()[j]);
-            total += P;
-        }
-
-        info!("Simulation total energy : {}", total)
     }
 }
