@@ -6,6 +6,7 @@ pub mod ext;
 pub mod nasa_horizons;
 pub mod scene;
 pub mod simulation;
+pub mod ui;
 
 pub struct SpacePlugins;
 
@@ -17,6 +18,7 @@ impl PluginGroup for SpacePlugins {
             .add(display::DisplayPlugin)
             .add(controls::ControlsPlugin)
             .add(nasa_horizons::NasaHorizonsPlugin)
+            .add(ui::SpaceUIPlugin)
             .add(bevy_prototype_lyon::prelude::ShapePlugin)
             .add(bevy_polyline::PolylinePlugin)
             .add(noisy_bevy::NoisyShaderPlugin)
@@ -24,6 +26,7 @@ impl PluginGroup for SpacePlugins {
                 font_size: 14.0,
                 ..default()
             })
+            .add(bevy_egui::EguiPlugin)
             .build()
     }
 }

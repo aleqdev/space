@@ -1,0 +1,319 @@
+[
+  {
+    "date": "2023-03-04T12:56:56.606040100Z",
+    "name": "599",
+    "body": {
+      "position": [
+        703270944188.0585,
+        16679305346.50247,
+        -227832832110.3956
+      ],
+      "velocity": [
+        -4174.936151018362,
+        -39.29074608643113,
+        -13044.53330854482
+      ],
+      "mass": 1.89818722e27,
+      "radius": 69911000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.00007292115
+      }
+    },
+    "material": {
+      "TexturePath": "textures/jupiter_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606041200Z",
+    "name": "301",
+    "body": {
+      "position": [
+        -143716570678.0553,
+        -65770694.66615282,
+        -42705766505.24552
+      ],
+      "velocity": [
+        -9735.644854975732,
+        6.888845413891787,
+        29297.09823636495
+      ],
+      "mass": 7.349e22,
+      "radius": 1737000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 2.6617e-6
+      }
+    },
+    "material": {
+      "TexturePath": "textures/moon_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606040200Z",
+    "name": "699",
+    "body": {
+      "position": [
+        1243051090308.147,
+        35930789845.21681,
+        779914220696.9637
+      ],
+      "velocity": [
+        4594.264455483417,
+        324.4954258937076,
+        -8162.969992447323
+      ],
+      "mass": 5.6834e26,
+      "radius": 58232000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 3.877071759259259e-7
+      }
+    },
+    "material": {
+      "TexturePath": "textures/saturn_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606038800Z",
+    "name": "10",
+    "body": {
+      "position": [
+        -1342117630.307514,
+        -31827058.225119226,
+        69080248.39345016
+      ],
+      "velocity": [
+        2.974983385149109,
+        -0.05315446956859985,
+        15.21104589288997
+      ],
+      "mass": 1.9885e30,
+      "radius": 695508000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "Star": {
+        "primary_color": {
+          "Rgba": {
+            "red": 32.0,
+            "green": 32.0,
+            "blue": 0.0,
+            "alpha": 1.0
+          }
+        },
+        "secondary_color": {
+          "Rgba": {
+            "red": 32.0,
+            "green": 20.8,
+            "blue": 0.0,
+            "alpha": 1.0
+          }
+        }
+      }
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606040300Z",
+    "name": "799",
+    "body": {
+      "position": [
+        1971310540092.52,
+        17436897418.82503,
+        -2181395622144.741
+      ],
+      "velocity": [
+        -5102.371903447323,
+        -81.91125188938808,
+        -4248.665765853996
+      ],
+      "mass": 8.6813e25,
+      "radius": 25362000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": -0.000101237
+      }
+    },
+    "material": {
+      "TexturePath": "textures/uranus_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606039400Z",
+    "name": "299",
+    "body": {
+      "position": [
+        52357981273.519455,
+        1781064813.4729528,
+        -93580332737.87192
+      ],
+      "velocity": [
+        -30489.87181552211,
+        -1996.613361579133,
+        -17250.468927027898
+      ],
+      "mass": 4.8685e24,
+      "radius": 6051800.0,
+      "rotation": {
+        "initial": [
+          2.7429595,
+          0.34557518,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": -2.9924e-7
+      }
+    },
+    "material": {
+      "TexturePath": "textures/venus_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606039200Z",
+    "name": "199",
+    "body": {
+      "position": [
+        36248297193.51664,
+        7618650789.956823,
+        51494688094.19593
+      ],
+      "velocity": [
+        29622.24086966287,
+        174.203938416575,
+        -31097.86988730274
+      ],
+      "mass": 3.302e23,
+      "radius": 2439400.0,
+      "rotation": {
+        "initial": [
+          0.49829134,
+          -0.53148776,
+          -1.7285647e-8
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 1.24001e-6
+      }
+    },
+    "material": {
+      "TexturePath": "textures/mercury_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606039500Z",
+    "name": "399",
+    "body": {
+      "position": [
+        -143454748527.205,
+        -29957263.45646568,
+        -42398065289.411026
+      ],
+      "velocity": [
+        -9001.352083744396,
+        -1.699275650032916,
+        28662.466889920383
+      ],
+      "mass": 5.97219e24,
+      "radius": 6371008.399999999,
+      "rotation": {
+        "initial": [
+          -0.4090929,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": -15445678.5462,
+        "sideral_rotation_speed": 0.00007292115
+      }
+    },
+    "material": {
+      "TexturePath": "textures/earth_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606040600Z",
+    "name": "899",
+    "body": {
+      "position": [
+        4453407217704.8955,
+        94173627405.8579,
+        410814468991.0333
+      ],
+      "velocity": [
+        463.4347774977777,
+        122.9569606720542,
+        -5444.47733432403
+      ],
+      "mass": 1.02409e26,
+      "radius": 24622000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.000108338
+      }
+    },
+    "material": {
+      "TexturePath": "textures/neptune_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:56:56.606039700Z",
+    "name": "499",
+    "body": {
+      "position": [
+        -113529070279.4112,
+        -7315532644.202262,
+        -216162696862.54718
+      ],
+      "velocity": [
+        -20587.42325944651,
+        -314.4397902376448,
+        9113.602865276896
+      ],
+      "mass": 6.4171e23,
+      "radius": 3389500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0000708822
+      }
+    },
+    "material": {
+      "TexturePath": "textures/mars_base_color.jpg"
+    }
+  }
+]

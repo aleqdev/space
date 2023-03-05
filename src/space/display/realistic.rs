@@ -36,28 +36,35 @@ pub mod systems {
     ) {
         let scale = scale.get_scale();
 
-        if *previous_scale == scale {
-            return;
-        }
-
-        *previous_scale = scale;
-
         for (mut transform, parent) in &mut meshes {
             let Ok(BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
 
             let index = simulation.bodies.get_index(body_ref);
 
-            transform.scale = Vec3::splat((simulation.bodies.radiuses()[index] * scale) as f32);
+            let body_rotation = &simulation.bodies.rotations()[index];
+            transform.rotation = simulation.calculate_body_rotation(
+                &body_rotation.initial,
+                body_rotation.sideral_rotation_offset,
+                body_rotation.sideral_rotation_speed,
+            );
+
+            if *previous_scale != scale {
+                transform.scale = Vec3::splat((simulation.bodies.radiuses()[index] * scale) as f32);
+            }
         }
 
-        for (mut light, parent, &RelativeLightIntensivity(relative_intensity)) in &mut lights {
-            light.intensity = (relative_intensity * scale * scale) as f32;
+        if *previous_scale != scale {
+            for (mut light, parent, &RelativeLightIntensivity(relative_intensity)) in &mut lights {
+                light.intensity = (relative_intensity * scale * scale) as f32;
 
-            let Ok(BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
+                let Ok(BodyRef(body_ref)) = bodies.get(parent.get()) else { continue };
 
-            let index = simulation.bodies.get_index(body_ref);
+                let index = simulation.bodies.get_index(body_ref);
 
-            light.radius = (simulation.bodies.radiuses()[index] * scale) as f32;
+                light.radius = (simulation.bodies.radiuses()[index] * scale) as f32;
+            }
         }
+
+        *previous_scale = scale;
     }
 }

@@ -1,8 +1,10 @@
-use crate::space::display::StarMaterial;
+use crate::space::{display::StarMaterial, simulation::SpaceBodyRotation};
 use bevy::{math::DVec3, prelude::*, tasks::Task};
 use bevy_debug_text_overlay::screen_print;
 use chrono::{DateTime, Duration, Utc};
 use surf::StatusCode;
+
+use super::simulation::SpaceBody;
 
 lazy_static::lazy_static! {
     static ref LIMITER: async_lock::Semaphore = {
@@ -10,10 +12,25 @@ lazy_static::lazy_static! {
     };
 }
 
+#[allow(non_snake_case)]
+#[derive(Debug, serde::Deserialize)]
+pub struct MassParams {
+    massValue: f64,
+    massExponent: f64,
+}
+
+#[allow(non_snake_case)]
+#[derive(Debug, serde::Deserialize)]
+pub struct BodyParams {
+    mass: Option<MassParams>,
+    meanRadius: f64,
+    sideralRotation: f64,
+}
+
 pub async fn get_body_dynamics_using_nasa_horizons(
     date: DateTime<Utc>,
     name: impl ToString,
-) -> anyhow::Result<(DVec3, DVec3, f64, f64)> {
+) -> anyhow::Result<SpaceBody> {
     use anyhow::anyhow;
     let _guard = LIMITER.acquire().await;
 
@@ -96,17 +113,17 @@ pub async fn get_body_dynamics_using_nasa_horizons(
         .next()
         .ok_or_else(|| anyhow!("coord_regex fault"))??
         .trim()
-        .parse()?;
-    let z = coords
+        .parse::<f64>()?;
+    let z = -coords
         .next()
         .ok_or_else(|| anyhow!("coord_regex fault"))??
         .trim()
-        .parse()?;
-    let y = coords
+        .parse::<f64>()?;
+    let y = -coords
         .next()
         .ok_or_else(|| anyhow!("coord_regex fault"))??
         .trim()
-        .parse()?;
+        .parse::<f64>()?;
 
     let position = DVec3::new(x, y, z) * 1000.0;
 
@@ -114,17 +131,17 @@ pub async fn get_body_dynamics_using_nasa_horizons(
         .next()
         .ok_or_else(|| anyhow!("coord_regex parse fault"))??
         .trim()
-        .parse()?;
-    let z = coords
+        .parse::<f64>()?;
+    let z = -coords
         .next()
         .ok_or_else(|| anyhow!("coord_regex parse fault"))??
         .trim()
-        .parse()?;
-    let y = coords
+        .parse::<f64>()?;
+    let y = -coords
         .next()
         .ok_or_else(|| anyhow!("coord_regex parse fault"))??
         .trim()
-        .parse()?;
+        .parse::<f64>()?;
 
     let velocity = DVec3::new(x, y, z) * 1000.0;
 
@@ -135,25 +152,11 @@ pub async fn get_body_dynamics_using_nasa_horizons(
         .ok_or_else(|| anyhow!("name_regex fault"))?
         .as_str();
 
-    #[allow(non_snake_case)]
-    #[derive(Debug, serde::Deserialize)]
-    struct MassParams {
-        massValue: f64,
-        massExponent: f64,
-    }
-
-    #[allow(non_snake_case)]
-    #[derive(Debug, serde::Deserialize)]
-    struct BodyParams {
-        mass: Option<MassParams>,
-        meanRadius: f64,
-    }
-
     let body_params = async {
         for _ in 0..MAX_RETRIES {
             let mut resp = surf::Client::new()
                 .with(surf::middleware::Redirect::new(2))
-                .get(format!("https://api.le-systeme-solaire.net/rest/bodies/{name}?data=meanRadius,mass,massValue,massExponent"))
+                .get(format!("https://api.le-systeme-solaire.net/rest/bodies/{name}?data=meanRadius,mass,massValue,massExponent,sideralRotation"))
                 .send()
                 .await
                 .ok()?;
@@ -180,14 +183,20 @@ pub async fn get_body_dynamics_using_nasa_horizons(
 
     screen_print!(sec: 3.0, col: Color::GREEN, "got response for {}", name.to_string());
 
-    Ok((
+    Ok(SpaceBody {
         position,
         velocity,
-        data.meanRadius * 1000.0,
-        data.mass
+        radius: data.meanRadius * 1000.0,
+        mass: data
+            .mass
             .map(|mass| mass.massValue * 10f64.powf(mass.massExponent))
-            .unwrap_or(0.0),
-    ))
+            .unwrap_or(1.0),
+        rotation: SpaceBodyRotation {
+            initial: Default::default(),
+            sideral_rotation_offset: Default::default(),
+            sideral_rotation_speed: data.sideralRotation,
+        },
+    })
 }
 
 pub struct NasaHorizonsPlugin;
@@ -214,7 +223,8 @@ impl Plugin for NasaHorizonsPlugin {
                         ..Default::default()
                     }),
                     rotation: Default::default(),
-                    rotation_rate: Default::default(),
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: Default::default(),
                 },
             );
 
@@ -223,9 +233,15 @@ impl Plugin for NasaHorizonsPlugin {
                 "199".into(),
                 SpaceBodyKnownDetails {
                     mass: 3.302e23,
-                    material: TexturePath("textures/mercury_base_color.jpg"),
-                    rotation: Default::default(),
-                    rotation_rate: 0.00000124001,
+                    material: TexturePath("textures/mercury_base_color.jpg".into()),
+                    rotation: Quat::from_euler(
+                        EulerRot::XYZ,
+                        28.55f32.to_radians(),
+                        329.548f32.to_radians(),
+                        0.0,
+                    ),
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: 0.00000124001,
                 },
             );
 
@@ -234,9 +250,15 @@ impl Plugin for NasaHorizonsPlugin {
                 "299".into(),
                 SpaceBodyKnownDetails {
                     mass: 48.685e23,
-                    material: TexturePath("textures/venus_base_color.jpg"),
-                    rotation: Default::default(),
-                    rotation_rate: -0.00000029924,
+                    material: TexturePath("textures/venus_base_color.jpg".into()),
+                    rotation: Quat::from_euler(
+                        EulerRot::XYZ,
+                        157.16f32.to_radians(),
+                        19.8f32.to_radians(),
+                        0.0,
+                    ),
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: -0.00000029924,
                 },
             );
 
@@ -245,9 +267,15 @@ impl Plugin for NasaHorizonsPlugin {
                 "399".into(),
                 SpaceBodyKnownDetails {
                     mass: 5.97219e24,
-                    material: TexturePath("textures/earth_base_color.jpg"),
-                    rotation: Default::default(),
-                    rotation_rate: 0.00007292115,
+                    material: TexturePath("textures/earth_base_color.jpg".into()),
+                    rotation: Quat::from_euler(
+                        EulerRot::XYZ,
+                        -23.4392911f32.to_radians(),
+                        (360.0 - 280.147f32).to_radians(),
+                        0.0,
+                    ),
+                    sideral_rotation_offset: -15445678.5462,
+                    sideral_rotation_speed: 0.00007292115,
                 },
             );
 
@@ -256,9 +284,10 @@ impl Plugin for NasaHorizonsPlugin {
                 "499".into(),
                 SpaceBodyKnownDetails {
                     mass: 6.4171e23,
-                    material: TexturePath("textures/mars_base_color.jpg"),
+                    material: TexturePath("textures/mars_base_color.jpg".into()),
                     rotation: Default::default(),
-                    rotation_rate: 0.0000708822,
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: 0.0000708822,
                 },
             );
 
@@ -267,9 +296,10 @@ impl Plugin for NasaHorizonsPlugin {
                 "599".into(),
                 SpaceBodyKnownDetails {
                     mass: 189818.722e22,
-                    material: TexturePath("textures/jupiter_base_color.jpg"),
+                    material: TexturePath("textures/jupiter_base_color.jpg".into()),
                     rotation: Default::default(),
-                    rotation_rate: 0.00007292115,
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: 0.00007292115,
                 },
             );
 
@@ -278,9 +308,10 @@ impl Plugin for NasaHorizonsPlugin {
                 "699".into(),
                 SpaceBodyKnownDetails {
                     mass: 5.6834e26,
-                    material: TexturePath("textures/saturn_base_color.jpg"),
+                    material: TexturePath("textures/saturn_base_color.jpg".into()),
                     rotation: Default::default(),
-                    rotation_rate: 0.0334979 / (24.0 * 60.0 * 60.0),
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: 0.0334979 / (24.0 * 60.0 * 60.0),
                 },
             );
 
@@ -289,9 +320,10 @@ impl Plugin for NasaHorizonsPlugin {
                 "799".into(),
                 SpaceBodyKnownDetails {
                     mass: 86.813e24,
-                    material: TexturePath("textures/uranus_base_color.jpg"),
+                    material: TexturePath("textures/uranus_base_color.jpg".into()),
                     rotation: Default::default(),
-                    rotation_rate: -0.000101237,
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: -0.000101237,
                 },
             );
 
@@ -300,9 +332,10 @@ impl Plugin for NasaHorizonsPlugin {
                 "899".into(),
                 SpaceBodyKnownDetails {
                     mass: 102.409e24,
-                    material: TexturePath("textures/neptune_base_color.jpg"),
+                    material: TexturePath("textures/neptune_base_color.jpg".into()),
                     rotation: Default::default(),
-                    rotation_rate: 0.000108338,
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: 0.000108338,
                 },
             );
 
@@ -311,9 +344,10 @@ impl Plugin for NasaHorizonsPlugin {
                 "301".into(),
                 SpaceBodyKnownDetails {
                     mass: 7.349e22,
-                    material: TexturePath("textures/moon_base_color.jpg"),
+                    material: TexturePath("textures/moon_base_color.jpg".into()),
                     rotation: Default::default(),
-                    rotation_rate: 0.0000026617,
+                    sideral_rotation_offset: Default::default(),
+                    sideral_rotation_speed: 0.0000026617,
                 },
             );
 
@@ -324,6 +358,7 @@ impl Plugin for NasaHorizonsPlugin {
         app.add_system(
             systems::manage_nasa_bodies_on_response.after(systems::reqeust_nasa_bodies_on_event),
         );
+        app.add_system(systems::insert_nasa_bodies.after(systems::manage_nasa_bodies_on_response));
     }
 }
 pub struct SpawnNasaBodyRequest {
@@ -334,22 +369,15 @@ pub struct SpawnNasaBodyRequest {
 pub struct SpawnNasaBodyResponse {
     pub date: DateTime<Utc>,
     pub name: String,
-    pub position: DVec3,
-    pub velocity: DVec3,
-    pub radius: f64,
-    pub mass: f64,
+    pub body: SpaceBody,
 }
 
+#[derive(serde::Serialize, serde::Deserialize, Clone)]
 pub struct NasaBodyAddition {
     pub date: DateTime<Utc>,
     pub name: String,
-    pub position: DVec3,
-    pub velocity: DVec3,
-    pub radius: f64,
-    pub mass: f64,
+    pub body: SpaceBody,
     pub material: SpaceBodyKnownDetailsMaterial,
-    pub rotation: Quat,
-    pub rotation_rate: f64,
 }
 
 pub enum SpawnNasaBodyResponseResult {
@@ -362,9 +390,9 @@ pub struct NasaTasksManager {
     pub tasks: Vec<Task<SpawnNasaBodyResponseResult>>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
 pub enum SpaceBodyKnownDetailsMaterial {
-    TexturePath(&'static str),
+    TexturePath(std::borrow::Cow<'static, str>),
     Star(StarMaterial),
 }
 
@@ -372,7 +400,8 @@ pub struct SpaceBodyKnownDetails {
     pub mass: f64,
     pub material: SpaceBodyKnownDetailsMaterial,
     pub rotation: Quat,
-    pub rotation_rate: f64,
+    pub sideral_rotation_offset: f64,
+    pub sideral_rotation_speed: f64,
 }
 
 #[derive(Resource)]
@@ -385,7 +414,7 @@ pub mod systems {
 
     use crate::space::{
         nasa_horizons::NasaBodyAddition,
-        simulation::{SpaceBody, SpaceSimulation},
+        simulation::{SpaceBody, SpaceBodyRotation, SpaceSimulation},
     };
 
     use super::{
@@ -403,26 +432,18 @@ pub mod systems {
             let date = e.date;
             let name = e.name.clone();
             manager.tasks.push(thread_pool.spawn(async move {
-                let Ok((position, velocity, radius, mass)) =
+                let Ok(body) =
                     super::get_body_dynamics_using_nasa_horizons(date, &name)
                         .await
                         else { return SpawnNasaBodyResponseResult::Errored };
 
-                SpawnNasaBodyResponseResult::Some(SpawnNasaBodyResponse {
-                    date,
-                    name,
-                    position,
-                    velocity,
-                    radius,
-                    mass,
-                })
+                SpawnNasaBodyResponseResult::Some(SpawnNasaBodyResponse { date, name, body })
             }));
         }
     }
 
     pub fn manage_nasa_bodies_on_response(
         mut manager: ResMut<NasaTasksManager>,
-        mut simulation: ResMut<SpaceSimulation>,
         known_details: ResMut<SpaceBodiesKnownDetails>,
         mut ev: EventWriter<NasaBodyAddition>,
     ) {
@@ -435,46 +456,53 @@ pub mod systems {
 
             let mass;
             let rotation;
-            let rotation_rate;
+            let sideral_rotation_speed;
+            let sideral_rotation_offset;
             let material;
 
             if let Some(details) = known_details.map.get(&response.name) {
                 mass = details.mass;
                 rotation = details.rotation;
-                rotation_rate = details.rotation_rate;
+                sideral_rotation_speed = details.sideral_rotation_speed;
+                sideral_rotation_offset = details.sideral_rotation_offset;
                 material = details.material.clone();
             } else {
-                mass = response.mass;
+                mass = response.body.mass;
                 rotation = Default::default();
-                rotation_rate = Default::default();
+                sideral_rotation_speed = Default::default();
+                sideral_rotation_offset = Default::default();
                 material = crate::space::nasa_horizons::SpaceBodyKnownDetailsMaterial::TexturePath(
-                    "textures/asteroid.jpg",
+                    "textures/asteroid.jpg".into(),
                 );
             }
 
-            simulation.bodies.insert(
-                response.name.clone(),
-                SpaceBody {
-                    position: response.position,
-                    velocity: response.velocity,
-                    mass,
-                    radius: response.radius,
-                },
-            );
-
-            ev.send(NasaBodyAddition {
+            let st = NasaBodyAddition {
                 date: response.date,
                 name: response.name,
-                position: response.position,
-                velocity: response.velocity,
-                radius: response.radius,
-                mass,
+                body: SpaceBody {
+                    mass,
+                    rotation: SpaceBodyRotation {
+                        initial: rotation,
+                        sideral_rotation_offset,
+                        sideral_rotation_speed,
+                    },
+                    ..response.body
+                },
                 material,
-                rotation,
-                rotation_rate,
-            });
+            };
+
+            ev.send(st);
 
             return false;
         });
+    }
+
+    pub fn insert_nasa_bodies(
+        mut ev: EventReader<NasaBodyAddition>,
+        mut simulation: ResMut<SpaceSimulation>,
+    ) {
+        for e in ev.iter().cloned() {
+            simulation.bodies.insert(e.name, e.body);
+        }
     }
 }

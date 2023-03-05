@@ -1,0 +1,5269 @@
+[
+  {
+    "date": "2023-03-04T12:45:58.621553200Z",
+    "name": "499",
+    "body": {
+      "position": [
+        -113515523532.2052,
+        -7315325728.36189,
+        -216168693184.05585
+      ],
+      "velocity": [
+        -20588.10015072249,
+        -314.48373662408306,
+        9112.298368151458
+      ],
+      "mass": 6.4171e23,
+      "radius": 3389500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0000708822
+      }
+    },
+    "material": {
+      "TexturePath": "textures/mars_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621551700Z",
+    "name": "10",
+    "body": {
+      "position": [
+        -1342119587.795828,
+        -31827023.24801996,
+        69070239.50621215
+      ],
+      "velocity": [
+        2.974829119256818,
+        -0.05315890208680736,
+        15.21110376621572
+      ],
+      "mass": 1.9885e30,
+      "radius": 695508000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "Star": {
+        "primary_color": {
+          "Rgba": {
+            "red": 32.0,
+            "green": 32.0,
+            "blue": 0.0,
+            "alpha": 1.0
+          }
+        },
+        "secondary_color": {
+          "Rgba": {
+            "red": 32.0,
+            "green": 20.8,
+            "blue": 0.0,
+            "alpha": 1.0
+          }
+        }
+      }
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621552Z",
+    "name": "199",
+    "body": {
+      "position": [
+        36228801670.58396,
+        7618535331.528206,
+        51515144897.58581
+      ],
+      "velocity": [
+        29634.6661842313,
+        176.733430130982,
+        -31080.86335215854
+      ],
+      "mass": 3.302e23,
+      "radius": 2439400.0,
+      "rotation": {
+        "initial": [
+          0.4982907,
+          -0.5314878,
+          -1.9878493e-7
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 1.24001e-6
+      }
+    },
+    "material": {
+      "TexturePath": "textures/mercury_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621552300Z",
+    "name": "299",
+    "body": {
+      "position": [
+        52378042383.29183,
+        1782378543.674149,
+        -93568979791.71536
+      ],
+      "velocity": [
+        -30486.14550017693,
+        -1996.487538830969,
+        -17256.96606349221
+      ],
+      "mass": 4.8685e24,
+      "radius": 6051800.0,
+      "rotation": {
+        "initial": [
+          2.7429595,
+          0.34557518,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": -2.9924e-7
+      }
+    },
+    "material": {
+      "TexturePath": "textures/venus_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621553Z",
+    "name": "401",
+    "body": {
+      "position": [
+        -113507923649.485,
+        -7311598260.661304,
+        -216172904035.2197
+      ],
+      "velocity": [
+        -21408.48498255234,
+        -836.7254723814694,
+        7228.823784022626
+      ],
+      "mass": 1.06e16,
+      "radius": 11100.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621552400Z",
+    "name": "301",
+    "body": {
+      "position": [
+        -143710163040.3376,
+        -65775180.91381341,
+        -42725043223.6992
+      ],
+      "velocity": [
+        -9740.45728608576,
+        6.747162955441866,
+        29294.750814030143
+      ],
+      "mass": 7.349e22,
+      "radius": 1737000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 2.6617e-6
+      }
+    },
+    "material": {
+      "TexturePath": "textures/moon_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621552500Z",
+    "name": "399",
+    "body": {
+      "position": [
+        -143448824390.409,
+        -29956145.91844194,
+        -42416924823.56077
+      ],
+      "velocity": [
+        -9005.142718200188,
+        -1.697496405077104,
+        28661.3450335169
+      ],
+      "mass": 5.97219e24,
+      "radius": 6371008.399999999,
+      "rotation": {
+        "initial": [
+          -0.4090929,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": -15445678.5462,
+        "sideral_rotation_speed": 0.00007292115
+      }
+    },
+    "material": {
+      "TexturePath": "textures/earth_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621553700Z",
+    "name": "503",
+    "body": {
+      "position": [
+        702201407634.2113,
+        16693788259.08495,
+        -227836616879.38895
+      ],
+      "velocity": [
+        -4278.53522309383,
+        375.9163792961344,
+        -2193.330934368534
+      ],
+      "mass": 1.4819e23,
+      "radius": 2631200.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621553300Z",
+    "name": "501",
+    "body": {
+      "position": [
+        703286549372.1361,
+        16693946538.09185,
+        -227404685829.47452
+      ],
+      "velocity": [
+        13224.76053734773,
+        -320.87880805666106,
+        -13565.32391576578
+      ],
+      "mass": 8.932e22,
+      "radius": 1821500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621553800Z",
+    "name": "504",
+    "body": {
+      "position": [
+        702426372422.8883,
+        16637610151.30167,
+        -229509821689.827
+      ],
+      "velocity": [
+        -11511.90204709973,
+        172.39333682211068,
+        -9423.5365168765
+      ],
+      "mass": 1.0759e23,
+      "radius": 2410300.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621554Z",
+    "name": "505",
+    "body": {
+      "position": [
+        703435711248.6953,
+        16672968967.71957,
+        -227905861241.5543
+      ],
+      "velocity": [
+        -16168.50486310867,
+        -782.8900626376995,
+        -36609.04642681708
+      ],
+      "mass": 7.5e18,
+      "radius": 84000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621554100Z",
+    "name": "506",
+    "body": {
+      "position": [
+        713073039798.1212,
+        19124493488.51836,
+        -230225501666.00983
+      ],
+      "velocity": [
+        -4956.586155434245,
+        -1729.847716291264,
+        -16191.44491219686
+      ],
+      "mass": 9.5e18,
+      "radius": 85000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621554200Z",
+    "name": "507",
+    "body": {
+      "position": [
+        702597022287.8599,
+        15715101499.83971,
+        -241243540583.6895
+      ],
+      "velocity": [
+        -6630.554591845213,
+        -1415.668001423701,
+        -13096.811454661707
+      ],
+      "mass": 8e17,
+      "radius": 40000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621554300Z",
+    "name": "508",
+    "body": {
+      "position": [
+        719612025183.7635,
+        12266805687.88213,
+        -238273872977.95532
+      ],
+      "velocity": [
+        -2044.742597272009,
+        -1216.076917502719,
+        -11788.62172075514
+      ],
+      "mass": 3e17,
+      "radius": 18000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621554400Z",
+    "name": "509",
+    "body": {
+      "position": [
+        692201177215.3213,
+        26510896910.76449,
+        -255565373180.8729
+      ],
+      "velocity": [
+        -2689.92778122351,
+        -276.3534085154626,
+        -13467.48172257372
+      ],
+      "mass": 8e16,
+      "radius": 14000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621554900Z",
+    "name": "510",
+    "body": {
+      "position": [
+        701445943263.9025,
+        22500466755.68955,
+        -216211024746.4642
+      ],
+      "velocity": [
+        -1338.277332264292,
+        -268.369735150312,
+        -12458.08985181954
+      ],
+      "mass": 8e16,
+      "radius": 12000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555Z",
+    "name": "511",
+    "body": {
+      "position": [
+        724834002441.6296,
+        21255001729.876072,
+        -223809417726.1045
+      ],
+      "velocity": [
+        -3924.573465982256,
+        482.0688760753673,
+        -10669.844763923227
+      ],
+      "mass": 1e17,
+      "radius": 15000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555100Z",
+    "name": "512",
+    "body": {
+      "position": [
+        687922517841.0237,
+        27675257353.19544,
+        -218759954729.73532
+      ],
+      "velocity": [
+        -5496.5757964376835,
+        661.7409872921085,
+        -15032.91209045074
+      ],
+      "mass": 4e16,
+      "radius": 10000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555200Z",
+    "name": "513",
+    "body": {
+      "position": [
+        713692345599.2783,
+        18853906162.53535,
+        -233340829791.995
+      ],
+      "velocity": [
+        -6047.716107426741,
+        1276.9394846557589,
+        -15187.369000379813
+      ],
+      "mass": 6e17,
+      "radius": 5000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555300Z",
+    "name": "514",
+    "body": {
+      "position": [
+        703488708209.191,
+        16675632272.31762,
+        -227778561242.1566
+      ],
+      "velocity": [
+        462.1886709754799,
+        -1331.2456378771,
+        -36702.51827902293
+      ],
+      "mass": 8e17,
+      "radius": 49000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555400Z",
+    "name": "515",
+    "body": {
+      "position": [
+        703289888104.5544,
+        16674518694.85897,
+        -227952042041.192
+      ],
+      "velocity": [
+        -35387.732229179055,
+        270.38660646970493,
+        -17016.39002195939
+      ],
+      "mass": 2000000000000000.0,
+      "radius": 8000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555500Z",
+    "name": "516",
+    "body": {
+      "position": [
+        703292086242.4347,
+        16674519107.011011,
+        -227950716143.44855
+      ],
+      "velocity": [
+        -35435.09270783737,
+        254.01729310908377,
+        -17619.84001893975
+      ],
+      "mass": 1e17,
+      "radius": 22000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555700Z",
+    "name": "517",
+    "body": {
+      "position": [
+        696679203475.2382,
+        33812589157.1429,
+        -258883503300.3459
+      ],
+      "velocity": [
+        -2987.603816547131,
+        -142.72075169303642,
+        -13195.25727846149
+      ],
+      "mass": 869999999999999.9,
+      "radius": 4000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555800Z",
+    "name": "518",
+    "body": {
+      "position": [
+        708837594395.0336,
+        17558639914.536552,
+        -229616499792.0248
+      ],
+      "velocity": [
+        -6562.758497990293,
+        3315.534673892147,
+        -16009.13383398124
+      ],
+      "mass": 690000000000000.0,
+      "radius": 4000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621555900Z",
+    "name": "519",
+    "body": {
+      "position": [
+        677895434365.6179,
+        28949908032.56717,
+        -244800432452.37
+      ],
+      "velocity": [
+        -3239.779718396075,
+        446.8362026552253,
+        -14116.550103464251
+      ],
+      "mass": 210000000000000.0,
+      "radius": 2700.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621556Z",
+    "name": "520",
+    "body": {
+      "position": [
+        683070898536.1384,
+        21106699950.35152,
+        -233761415200.8551
+      ],
+      "velocity": [
+        -2971.858041943072,
+        171.419703935916,
+        -15243.62378748665
+      ],
+      "mass": 160000000000000.0,
+      "radius": 2500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621556100Z",
+    "name": "521",
+    "body": {
+      "position": [
+        705850158148.0961,
+        12405289063.77447,
+        -256467201391.41492
+      ],
+      "velocity": [
+        -2488.822256241852,
+        392.2316936868144,
+        -12981.1657996708
+      ],
+      "mass": 75000000000000.0,
+      "radius": 1900.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621556200Z",
+    "name": "522",
+    "body": {
+      "position": [
+        686195145228.253,
+        27565910050.826477,
+        -231443915187.53113
+      ],
+      "velocity": [
+        -4348.800165406738,
+        -298.37593258747927,
+        -15539.21768538922
+      ],
+      "mass": 120000000000000.0,
+      "radius": 2200.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621553100Z",
+    "name": "402",
+    "body": {
+      "position": [
+        -113536329913.2478,
+        -7324159423.021213,
+        -216162416326.64688
+      ],
+      "velocity": [
+        -20295.922286138728,
+        -81.05711148693429,
+        10410.68169831414
+      ],
+      "mass": 1476200000000000.0,
+      "radius": 6200.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621556300Z",
+    "name": "523",
+    "body": {
+      "position": [
+        691407763070.7114,
+        15325099151.63985,
+        -243562425131.5791
+      ],
+      "velocity": [
+        -2322.8861688092943,
+        -726.3139454688971,
+        -14868.41636696817
+      ],
+      "mass": 190000000000000.0,
+      "radius": 2600.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621556400Z",
+    "name": "524",
+    "body": {
+      "position": [
+        686017678712.6638,
+        13905579644.6162,
+        -227232454119.6445
+      ],
+      "velocity": [
+        -5069.635360948804,
+        1226.549624145451,
+        -15530.07618645365
+      ],
+      "mass": 190000000000000.0,
+      "radius": 2600.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621556500Z",
+    "name": "525",
+    "body": {
+      "position": [
+        679077659432.9362,
+        23164712764.40097,
+        -240223195343.26788
+      ],
+      "velocity": [
+        -3854.882103815364,
+        157.5072949430893,
+        -14911.73575144729
+      ],
+      "mass": 45000000000000.0,
+      "radius": 1600.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557100Z",
+    "name": "526",
+    "body": {
+      "position": [
+        720227097615.8813,
+        18703355414.35224,
+        -235607565855.4616
+      ],
+      "velocity": [
+        -3307.556009541108,
+        608.9918727064023,
+        -10411.68332855837
+      ],
+      "mass": 75000000000000.0,
+      "radius": 1900.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557200Z",
+    "name": "527",
+    "body": {
+      "position": [
+        686362914603.7634,
+        15160871041.29672,
+        -229387752445.3796
+      ],
+      "velocity": [
+        -3233.53484677716,
+        1455.3791601112548,
+        -15451.912606659247
+      ],
+      "mass": 430000000000000.0,
+      "radius": 3400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557300Z",
+    "name": "528",
+    "body": {
+      "position": [
+        724279466950.3475,
+        23825299811.6376,
+        -247580253636.4405
+      ],
+      "velocity": [
+        -3183.929015334601,
+        -863.1404114567891,
+        -11707.51873566904
+      ],
+      "mass": 90000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588200Z",
+    "name": "645",
+    "body": {
+      "position": [
+        1240877964269.502,
+        25481438205.89405,
+        808360033504.8036
+      ],
+      "velocity": [
+        3847.958566760951,
+        42.54792269949803,
+        -8506.271830985257
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557400Z",
+    "name": "529",
+    "body": {
+      "position": [
+        709983859680.8798,
+        28042948507.65032,
+        -244530464088.28632
+      ],
+      "velocity": [
+        -2069.012067990858,
+        685.5298217031307,
+        -12111.75010099006
+      ],
+      "mass": 90000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557500Z",
+    "name": "530",
+    "body": {
+      "position": [
+        687927614626.9882,
+        26937346723.91595,
+        -238450080599.7818
+      ],
+      "velocity": [
+        -2582.323120751313,
+        0.9370629253666608,
+        -14850.76799035735
+      ],
+      "mass": 90000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588300Z",
+    "name": "646",
+    "body": {
+      "position": [
+        1219524492137.1902,
+        38149795053.74765,
+        770090788843.7021
+      ],
+      "velocity": [
+        4919.8324442161065,
+        568.5171367217339,
+        -9249.662966158352
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557600Z",
+    "name": "531",
+    "body": {
+      "position": [
+        720934094989.8285,
+        12233553432.66028,
+        -220282106775.4148
+      ],
+      "velocity": [
+        -5624.408119235899,
+        489.3466469820282,
+        -10810.49942770886
+      ],
+      "mass": 45000000000000.0,
+      "radius": 1500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588400Z",
+    "name": "647",
+    "body": {
+      "position": [
+        1231549915631.989,
+        27449790853.25146,
+        797742940692.0686
+      ],
+      "velocity": [
+        4020.478378781613,
+        360.0642128619067,
+        -9068.192949968436
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557700Z",
+    "name": "532",
+    "body": {
+      "position": [
+        694119419301.5232,
+        9376115163.544952,
+        -201380430441.2996
+      ],
+      "velocity": [
+        -5472.754713152316,
+        802.3143386565285,
+        -13966.2153561314
+      ],
+      "mass": 45000000000000.0,
+      "radius": 1500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621557900Z",
+    "name": "533",
+    "body": {
+      "position": [
+        697754355641.1934,
+        26419026576.76886,
+        -250005996658.6645
+      ],
+      "velocity": [
+        -2360.2927314233943,
+        769.9500340364444,
+        -12985.06336579792
+      ],
+      "mass": 45000000000000.0,
+      "radius": 1500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558Z",
+    "name": "534",
+    "body": {
+      "position": [
+        689584077451.1086,
+        20038925925.75203,
+        -241515987218.95547
+      ],
+      "velocity": [
+        -2752.7441126128733,
+        -1459.012471039677,
+        -14538.76397859376
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588500Z",
+    "name": "648",
+    "body": {
+      "position": [
+        1260599493063.486,
+        40707480596.997086,
+        778035819472.7604
+      ],
+      "velocity": [
+        4116.545505245101,
+        172.7210026370933,
+        -6669.11179896729
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558100Z",
+    "name": "535",
+    "body": {
+      "position": [
+        703393637538.5588,
+        9771597475.576542,
+        -205866684711.7335
+      ],
+      "velocity": [
+        -5948.220887669444,
+        -1253.080848427206,
+        -12632.00711741856
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588600Z",
+    "name": "649",
+    "body": {
+      "position": [
+        1243125758255.923,
+        35851966064.450386,
+        780083907272.4404
+      ],
+      "velocity": [
+        17274.53994805766,
+        3817.092253421083,
+        -12477.09080435387
+      ],
+      "mass": 5000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558200Z",
+    "name": "536",
+    "body": {
+      "position": [
+        687248821713.5242,
+        7010987580.224052,
+        -234447682562.0115
+      ],
+      "velocity": [
+        -2500.093235986474,
+        -211.8050013752715,
+        -15167.08014368414
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588700Z",
+    "name": "650",
+    "body": {
+      "position": [
+        1227612840561.781,
+        38862584263.25768,
+        778291976346.6632
+      ],
+      "velocity": [
+        5009.332637245441,
+        629.1533969220824,
+        -9768.917723807535
+      ],
+      "mass": 100000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558300Z",
+    "name": "537",
+    "body": {
+      "position": [
+        709237334172.3162,
+        20990944612.99952,
+        -206930200768.488
+      ],
+      "velocity": [
+        -6306.199141722057,
+        425.7320818201622,
+        -12067.0775356587
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588800Z",
+    "name": "651",
+    "body": {
+      "position": [
+        1239829062125.624,
+        34202166925.669132,
+        794061740235.0804
+      ],
+      "velocity": [
+        3002.408597174309,
+        391.86407028826807,
+        -8926.473681274107
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588900Z",
+    "name": "652",
+    "body": {
+      "position": [
+        1238833075474.9082,
+        29410108634.03141,
+        766671219333.0011
+      ],
+      "velocity": [
+        3625.646832033511,
+        -666.1414940291186,
+        -7219.445464446415
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558400Z",
+    "name": "538",
+    "body": {
+      "position": [
+        718012664535.2875,
+        10435970487.80131,
+        -204026398810.4613
+      ],
+      "velocity": [
+        -5375.2049360993615,
+        138.3438895681417,
+        -11767.96510239586
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621589Z",
+    "name": "653",
+    "body": {
+      "position": [
+        1243023291494.03,
+        36005586350.143906,
+        779771816285.6831
+      ],
+      "velocity": [
+        -10251.58778038379,
+        -1847.718321344671,
+        -6762.996233468018
+      ],
+      "mass": 100000000000.0,
+      "radius": 500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558500Z",
+    "name": "539",
+    "body": {
+      "position": [
+        715525156400.6603,
+        13081659212.47984,
+        -239760072590.0405
+      ],
+      "velocity": [
+        -1755.5737999386688,
+        -1343.280584661648,
+        -11766.99402577786
+      ],
+      "mass": 45000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558700Z",
+    "name": "540",
+    "body": {
+      "position": [
+        680868881434.0942,
+        29219529442.08786,
+        -224000886102.7183
+      ],
+      "velocity": [
+        -4694.8899420195075,
+        224.5739765190509,
+        -14919.19984969658
+      ],
+      "mass": 15000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558800Z",
+    "name": "541",
+    "body": {
+      "position": [
+        699397047227.2618,
+        10447914566.74067,
+        -196645548685.7373
+      ],
+      "velocity": [
+        -5357.098318441093,
+        -679.7918949396822,
+        -13877.31550075028
+      ],
+      "mass": 90000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621558900Z",
+    "name": "542",
+    "body": {
+      "position": [
+        695330409278.2684,
+        7655020905.411452,
+        -246066494804.9124
+      ],
+      "velocity": [
+        -2480.264447338655,
+        574.2782984581582,
+        -14508.71776698642
+      ],
+      "mass": 15000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559Z",
+    "name": "543",
+    "body": {
+      "position": [
+        718176517212.7957,
+        11996059449.344387,
+        -203508392736.2727
+      ],
+      "velocity": [
+        -5716.393318846347,
+        305.9480647818678,
+        -12295.14915431161
+      ],
+      "mass": 41500000000000.0,
+      "radius": 1500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559100Z",
+    "name": "544",
+    "body": {
+      "position": [
+        688975993618.2683,
+        16404647814.509651,
+        -248012161554.9484
+      ],
+      "velocity": [
+        -2305.815575863205,
+        -573.9085442839303,
+        -13915.78007133743
+      ],
+      "mass": 15000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559200Z",
+    "name": "545",
+    "body": {
+      "position": [
+        711974358380.4656,
+        24438857213.53196,
+        -207583058958.4173
+      ],
+      "velocity": [
+        -6189.480086098898,
+        489.4494844980226,
+        -12530.61410026877
+      ],
+      "mass": 90000000000000.0,
+      "radius": 4000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559300Z",
+    "name": "546",
+    "body": {
+      "position": [
+        705457905140.1193,
+        33719874496.0232,
+        -213825913859.3023
+      ],
+      "velocity": [
+        -2603.151646677298,
+        -989.1330215919618,
+        -13684.33144827282
+      ],
+      "mass": 45000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559400Z",
+    "name": "547",
+    "body": {
+      "position": [
+        684603096998.7982,
+        11587661817.5825,
+        -236080801682.89352
+      ],
+      "velocity": [
+        -3921.079381879577,
+        229.3654686578677,
+        -15581.33493565676
+      ],
+      "mass": 90000000000000.0,
+      "radius": 4000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621596200Z",
+    "name": "699",
+    "body": {
+      "position": [
+        1243048067271.97,
+        35930576327.41922,
+        779919591923.3364
+      ],
+      "velocity": [
+        4594.295353855347,
+        324.4948422409757,
+        -8162.946036973373
+      ],
+      "mass": 5.6834e26,
+      "radius": 58232000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 3.877071759259259e-7
+      }
+    },
+    "material": {
+      "TexturePath": "textures/saturn_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559500Z",
+    "name": "548",
+    "body": {
+      "position": [
+        684853365203.5248,
+        4998660819.90762,
+        -203022415891.2945
+      ],
+      "velocity": [
+        -5002.855434170414,
+        642.121135213105,
+        -14213.57984964459
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621596300Z",
+    "name": "701",
+    "body": {
+      "position": [
+        1971461750782.278,
+        17317238249.13812,
+        -2181377067031.3591
+      ],
+      "velocity": [
+        -1820.184487091077,
+        4147.957574087594,
+        -2946.237016361635
+      ],
+      "mass": 1.29e21,
+      "radius": 581100.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559600Z",
+    "name": "549",
+    "body": {
+      "position": [
+        686214543815.0762,
+        23450635804.04222,
+        -225001010612.4117
+      ],
+      "velocity": [
+        -3971.021951183507,
+        1345.914122205688,
+        -15596.67493342849
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621596400Z",
+    "name": "702",
+    "body": {
+      "position": [
+        1971178019125.59,
+        17665931483.74116,
+        -2181390740759.786
+      ],
+      "velocity": [
+        -8979.92527059698,
+        -2393.4813098905333,
+        -5414.403876309879
+      ],
+      "mass": 1.22e21,
+      "radius": 584700.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559700Z",
+    "name": "550",
+    "body": {
+      "position": [
+        720816646573.2921,
+        17233883591.037228,
+        -237831334633.7604
+      ],
+      "velocity": [
+        -3565.536923483696,
+        -652.7225903792942,
+        -10497.06836053402
+      ],
+      "mass": 15000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621596500Z",
+    "name": "703",
+    "body": {
+      "position": [
+        1971003956338.1384,
+        17741933821.60747,
+        -2181418185090.878
+      ],
+      "velocity": [
+        -7550.80823943837,
+        -2637.268636017664,
+        -5142.631277024908
+      ],
+      "mass": 3.4200000000000005e21,
+      "radius": 788900.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559800Z",
+    "name": "553",
+    "body": {
+      "position": [
+        697737262378.5576,
+        18576303021.94304,
+        -218630646763.39575
+      ],
+      "velocity": [
+        -2023.173284371074,
+        -1334.591732141758,
+        -10470.49679303836
+      ],
+      "mass": 90000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621559900Z",
+    "name": "557",
+    "body": {
+      "position": [
+        699413430458.0656,
+        15036811199.37813,
+        -198570393981.4501
+      ],
+      "velocity": [
+        -5760.782901705779,
+        -581.1566558347181,
+        -13412.90115035358
+      ],
+      "mass": 90000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621560Z",
+    "name": "558",
+    "body": {
+      "position": [
+        695478410034.7166,
+        22182200090.704502,
+        -253214602021.3938
+      ],
+      "velocity": [
+        -2791.307960882468,
+        1061.3276342794088,
+        -13695.44601828946
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621599600Z",
+    "name": "704",
+    "body": {
+      "position": [
+        1971823396021.638,
+        17678452111.37271,
+        -2181247540822.3472
+      ],
+      "velocity": [
+        -6475.119265163007,
+        2760.177386656601,
+        -4143.4696988062005
+      ],
+      "mass": 2.88e21,
+      "radius": 761400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621599700Z",
+    "name": "705",
+    "body": {
+      "position": [
+        1971336360395.556,
+        17310960704.628227,
+        -2181415022455.721
+      ],
+      "velocity": [
+        1300.4484696653592,
+        749.3002515416291,
+        -2541.30126619032
+      ],
+      "mass": 6.6e19,
+      "radius": 240000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621599800Z",
+    "name": "706",
+    "body": {
+      "position": [
+        1971359358355.289,
+        17453442787.863018,
+        -2181380563795.012
+      ],
+      "velocity": [
+        -8926.500070416754,
+        10010.371298376893,
+        -3713.462260786976
+      ],
+      "mass": 4.5e16,
+      "radius": 20000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621599900Z",
+    "name": "707",
+    "body": {
+      "position": [
+        1971335381683.606,
+        17484409848.54829,
+        -2181381385180.2349
+      ],
+      "velocity": [
+        -14432.0215257026,
+        4525.963339452657,
+        -5657.341803149846
+      ],
+      "mass": 5.4e16,
+      "radius": 21000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600Z",
+    "name": "708",
+    "body": {
+      "position": [
+        1971316704289.521,
+        17495395486.166,
+        -2181384103269.492
+      ],
+      "velocity": [
+        -14771.60012508754,
+        659.4016476343774,
+        -6267.715155456099
+      ],
+      "mass": 9.2e16,
+      "radius": 27000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600100Z",
+    "name": "709",
+    "body": {
+      "position": [
+        1971258750462.091,
+        17413705738.35611,
+        -2181407994977.9185
+      ],
+      "velocity": [
+        -1264.049956856665,
+        -8966.491677124723,
+        -4633.656480496745
+      ],
+      "mass": 3.4e17,
+      "radius": 41000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600300Z",
+    "name": "710",
+    "body": {
+      "position": [
+        1971373693797.19,
+        17421369404.68776,
+        -2181381867468.651
+      ],
+      "velocity": [
+        -3014.680776034371,
+        9145.611111105918,
+        -2518.739416379395
+      ],
+      "mass": 1.8e17,
+      "radius": 35000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600400Z",
+    "name": "711",
+    "body": {
+      "position": [
+        1971323618034.712,
+        17373641771.69466,
+        -2181399358948.681
+      ],
+      "velocity": [
+        4070.61296163671,
+        1086.545237721807,
+        -2076.050745427759
+      ],
+      "mass": 5.5999999999999994e17,
+      "radius": 53000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621560600Z",
+    "name": "560",
+    "body": {
+      "position": [
+        717270458469.1401,
+        17063021234.351591,
+        -211785712911.9245
+      ],
+      "velocity": [
+        -5974.945262445836,
+        -1333.5691408646112,
+        -12158.181425428858
+      ],
+      "mass": 15000000000000.0,
+      "radius": 1000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600500Z",
+    "name": "712",
+    "body": {
+      "position": [
+        1971309941464.103,
+        17502334361.92739,
+        -2181384473318.8235
+      ],
+      "velocity": [
+        -14239.53858663455,
+        -384.6022604441091,
+        -6293.425151705037
+      ],
+      "mass": 1.7e18,
+      "radius": 70000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621560800Z",
+    "name": "562",
+    "body": {
+      "position": [
+        713513475723.4812,
+        8148992660.922393,
+        -221212876906.1388
+      ],
+      "velocity": [
+        -2739.688962394428,
+        602.9866577831608,
+        -15812.90547236591
+      ],
+      "mass": 1.0,
+      "radius": 500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621564Z",
+    "name": "565",
+    "body": {
+      "position": [
+        705253779254.0236,
+        19680805566.30877,
+        -236976048427.4899
+      ],
+      "velocity": [
+        -7798.047999727934,
+        1216.844683740779,
+        -13054.95315802164
+      ],
+      "mass": 1.0,
+      "radius": 1500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621564100Z",
+    "name": "571",
+    "body": {
+      "position": [
+        709167789142.6259,
+        20290170883.07248,
+        -217712040639.3953
+      ],
+      "velocity": [
+        -2046.998881486262,
+        1172.180869873028,
+        -14921.63159798119
+      ],
+      "mass": 1.0,
+      "radius": 1500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621583300Z",
+    "name": "599",
+    "body": {
+      "position": [
+        703273691244.5636,
+        16679331198.95366,
+        -227824248782.9516
+      ],
+      "velocity": [
+        -4174.779559253504,
+        -39.28813453661029,
+        -13044.60785646491
+      ],
+      "mass": 1.89818722e27,
+      "radius": 69911000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.00007292115
+      }
+    },
+    "material": {
+      "TexturePath": "textures/jupiter_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621583400Z",
+    "name": "601",
+    "body": {
+      "position": [
+        1243084544228.374,
+        35845323966.90148,
+        780084457715.8058
+      ],
+      "velocity": [
+        18292.65716701106,
+        2919.9040690072484,
+        -9821.668223508324
+      ],
+      "mass": 3.79e19,
+      "radius": 396400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621583500Z",
+    "name": "602",
+    "body": {
+      "position": [
+        1243000246097.2358,
+        36035724540.95596,
+        779710179325.339
+      ],
+      "velocity": [
+        -7679.107467725076,
+        -1779.198770321727,
+        -6419.077781040055
+      ],
+      "mass": 1.08e20,
+      "radius": 504200.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621583700Z",
+    "name": "603",
+    "body": {
+      "position": [
+        1243284760675.674,
+        35866558808.9695,
+        780082919367.9648
+      ],
+      "velocity": [
+        11272.09208799798,
+        5265.937555524962,
+        -15902.09716201806
+      ],
+      "mass": 6.18e20,
+      "radius": 1066000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600600Z",
+    "name": "713",
+    "body": {
+      "position": [
+        1971354556957.26,
+        17379941978.53005,
+        -2181391799825.1465
+      ],
+      "velocity": [
+        2059.073423925686,
+        5058.5313788318335,
+        -1965.395547399406
+      ],
+      "mass": 2.5e16,
+      "radius": 36000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621583800Z",
+    "name": "604",
+    "body": {
+      "position": [
+        1243414984099.302,
+        35995342045.89534,
+        779864114691.8192
+      ],
+      "velocity": [
+        2502.021214987902,
+        4722.229978768058,
+        -16951.09772572657
+      ],
+      "mass": 1.095e21,
+      "radius": 1123400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600700Z",
+    "name": "714",
+    "body": {
+      "position": [
+        1971242690716.774,
+        17457401480.06022,
+        -2181405489017.581
+      ],
+      "velocity": [
+        -7216.054821092019,
+        -8445.540769510735,
+        -5874.695457646982
+      ],
+      "mass": 4.9000000000000006e17,
+      "radius": 45000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600800Z",
+    "name": "715",
+    "body": {
+      "position": [
+        1971398008365.4128,
+        17438456408.546688,
+        -2181374446692.1868
+      ],
+      "velocity": [
+        -5472.818656422912,
+        8056.461541272167,
+        -3236.299107895413
+      ],
+      "mass": 2.9e18,
+      "radius": 81000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621583900Z",
+    "name": "605",
+    "body": {
+      "position": [
+        1243463627996.8928,
+        35810395287.09394,
+        780219951715.2961
+      ],
+      "velocity": [
+        9764.380725189852,
+        3822.867891790795,
+        -13919.288484448967
+      ],
+      "mass": 2.2999999999999995e21,
+      "radius": 1528600.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621600900Z",
+    "name": "716",
+    "body": {
+      "position": [
+        1977287676639.2031,
+        20129311679.01409,
+        -2177741484356.798
+      ],
+      "velocity": [
+        -5661.280125628128,
+        360.4230827913404,
+        -3770.864231501164
+      ],
+      "mass": 2.5e17,
+      "radius": 36000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584Z",
+    "name": "606",
+    "body": {
+      "position": [
+        1243805142917.65,
+        36419227093.53971,
+        779118308019.1626
+      ],
+      "velocity": [
+        320.0917477101832,
+        1670.021662410369,
+        -11598.13266952716
+      ],
+      "mass": 1.3452e23,
+      "radius": 2575000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601Z",
+    "name": "717",
+    "body": {
+      "position": [
+        1971349594224.199,
+        16064111907.78112,
+        -2197210386233.392
+      ],
+      "velocity": [
+        -4679.335062834034,
+        103.1723225556798,
+        -4451.798188480259
+      ],
+      "mass": 2.2999999999999995e18,
+      "radius": 75000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584100Z",
+    "name": "607",
+    "body": {
+      "position": [
+        1244333229698.046,
+        35857677670.73619,
+        780308576743.7545
+      ],
+      "velocity": [
+        6563.001890918504,
+        2804.247097661734,
+        -12734.32033404595
+      ],
+      "mass": 5.6e18,
+      "radius": 266000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601100Z",
+    "name": "718",
+    "body": {
+      "position": [
+        1961379046974.3892,
+        13327250121.20032,
+        -2181783352558.122
+      ],
+      "velocity": [
+        -5080.301604780233,
+        351.5660111686703,
+        -4978.070429432712
+      ],
+      "mass": 8.5e16,
+      "radius": 25000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584200Z",
+    "name": "608",
+    "body": {
+      "position": [
+        1242040449559.0652,
+        36507360692.706474,
+        776546098379.0852
+      ],
+      "velocity": [
+        1506.966700764465,
+        -457.8227009551568,
+        -7473.158211290897
+      ],
+      "mass": 1.805e21,
+      "radius": 1471200.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584300Z",
+    "name": "609",
+    "body": {
+      "position": [
+        1247080258959.085,
+        36413257664.92587,
+        765263373530.415
+      ],
+      "velocity": [
+        5961.421788480167,
+        496.1821135885947,
+        -7783.869778311787
+      ],
+      "mass": 8.292e18,
+      "radius": 214400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601200Z",
+    "name": "719",
+    "body": {
+      "position": [
+        1969216573975.587,
+        12560113149.57631,
+        -2204382289661.236
+      ],
+      "velocity": [
+        -4793.672157897342,
+        62.5209229756325,
+        -4456.94110159587
+      ],
+      "mass": 7.5e16,
+      "radius": 24000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584400Z",
+    "name": "610",
+    "body": {
+      "position": [
+        1242972470760.9292,
+        35985826608.784904,
+        779800793412.3945
+      ],
+      "velocity": [
+        -9139.553368039784,
+        -4347.185798995392,
+        -1716.4045053425002
+      ],
+      "mass": 1.9e18,
+      "radius": 89500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601300Z",
+    "name": "720",
+    "body": {
+      "position": [
+        1974034379855.876,
+        13273069933.32267,
+        -2187234009153.3389
+      ],
+      "velocity": [
+        -4243.405966116244,
+        106.2861683041421,
+        -4156.483485554029
+      ],
+      "mass": 2.2e16,
+      "radius": 16000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584500Z",
+    "name": "611",
+    "body": {
+      "position": [
+        1243192770339.504,
+        35962553373.62164,
+        779883248924.5309
+      ],
+      "velocity": [
+        -346.0239536542939,
+        6883.872683190966,
+        -21605.54942305903
+      ],
+      "mass": 5.3e17,
+      "radius": 113400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601400Z",
+    "name": "721",
+    "body": {
+      "position": [
+        1965667253347.915,
+        15601733900.14935,
+        -2187349976608.942
+      ],
+      "velocity": [
+        -4385.76102745059,
+        -120.938021264706,
+        -4673.58194878791
+      ],
+      "mass": 3900000000000000.0,
+      "radius": 9000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584600Z",
+    "name": "612",
+    "body": {
+      "position": [
+        1243214650327.048,
+        36099154723.40751,
+        779625995987.9277
+      ],
+      "velocity": [
+        -4335.914423336942,
+        1757.233966767989,
+        -12506.308668505691
+      ],
+      "mass": 1.0,
+      "radius": 17600.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584700Z",
+    "name": "613",
+    "body": {
+      "position": [
+        1243318833623.591,
+        36008581484.45153,
+        779833558292.604
+      ],
+      "velocity": [
+        273.1790122688409,
+        4914.095851275806,
+        -17605.730508583987
+      ],
+      "mass": 1e16,
+      "radius": 12400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584800Z",
+    "name": "614",
+    "body": {
+      "position": [
+        1243033680466.42,
+        35787260782.4226,
+        780176609268.3123
+      ],
+      "velocity": [
+        15904.53928536829,
+        773.6278142635107,
+        -7286.376883102474
+      ],
+      "mass": 6500000000000000.0,
+      "radius": 10700.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621584900Z",
+    "name": "615",
+    "body": {
+      "position": [
+        1243101132549.062,
+        35875582395.10733,
+        780034296878.432
+      ],
+      "velocity": [
+        19871.32187900763,
+        4459.665577636537,
+        -13230.33941106034
+      ],
+      "mass": 7000000000000000.0,
+      "radius": 15100.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585Z",
+    "name": "616",
+    "body": {
+      "position": [
+        1243079058250.71,
+        35869738072.48622,
+        780041365000.16
+      ],
+      "velocity": [
+        20624.107593887013,
+        3251.431460710086,
+        -10789.346074283809
+      ],
+      "mass": 1.6e17,
+      "radius": 43100.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585100Z",
+    "name": "617",
+    "body": {
+      "position": [
+        1242960775176.3389,
+        35872072295.87114,
+        780015320224.7783
+      ],
+      "velocity": [
+        17425.845971381852,
+        -3360.7078517611344,
+        1249.653169206073
+      ],
+      "mass": 1.3999999999999998e17,
+      "radius": 40700.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585300Z",
+    "name": "618",
+    "body": {
+      "position": [
+        1243080180657.85,
+        35872840146.837166,
+        780035673115.7313
+      ],
+      "velocity": [
+        20931.8098506049,
+        3451.913968210468,
+        -11110.50915952109
+      ],
+      "mass": 4950000000000000.0,
+      "radius": 14100.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585400Z",
+    "name": "619",
+    "body": {
+      "position": [
+        1234034693147.0898,
+        33760237185.00614,
+        765140947131.9182
+      ],
+      "velocity": [
+        5813.64612000516,
+        380.7021335310665,
+        -9262.344748399815
+      ],
+      "mass": 3970000000000000.0,
+      "radius": 9000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585500Z",
+    "name": "620",
+    "body": {
+      "position": [
+        1258771267536.103,
+        33091962725.33506,
+        784624419421.1161
+      ],
+      "velocity": [
+        5376.492817326332,
+        -636.4255436529911,
+        -8877.664778764154
+      ],
+      "mass": 7250000000000000.0,
+      "radius": 10000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585600Z",
+    "name": "621",
+    "body": {
+      "position": [
+        1242425286012.12,
+        39963565370.708534,
+        793277617177.0748
+      ],
+      "velocity": [
+        5951.861897619881,
+        937.5039143411744,
+        -9223.729571068545
+      ],
+      "mass": 2300000000000000.0,
+      "radius": 7000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585700Z",
+    "name": "622",
+    "body": {
+      "position": [
+        1237876875063.6648,
+        39532496391.37024,
+        772224315883.2385
+      ],
+      "velocity": [
+        3613.973845521528,
+        -1245.02641481189,
+        -7234.08411889001
+      ],
+      "mass": 1180000000000000.0,
+      "radius": 5000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621585900Z",
+    "name": "623",
+    "body": {
+      "position": [
+        1239306098094.346,
+        35368346486.765686,
+        761040381417.3236
+      ],
+      "velocity": [
+        5922.69777066,
+        460.894991099511,
+        -8608.470794996774
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586Z",
+    "name": "624",
+    "body": {
+      "position": [
+        1233174215616.574,
+        42610059805.86702,
+        783247620894.2092
+      ],
+      "velocity": [
+        5385.27746729136,
+        1312.68382229889,
+        -7082.655486498532
+      ],
+      "mass": 2790000000000000.0,
+      "radius": 7000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586100Z",
+    "name": "625",
+    "body": {
+      "position": [
+        1251187828056.924,
+        34030606995.43899,
+        765464865007.7488
+      ],
+      "velocity": [
+        6040.072801496793,
+        67.98112279836799,
+        -7592.718202004483
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601500Z",
+    "name": "722",
+    "body": {
+      "position": [
+        1971386702811.658,
+        16728927530.37012,
+        -2185711021819.2668
+      ],
+      "velocity": [
+        -4144.739076943278,
+        -634.282438297574,
+        -3983.478094661716
+      ],
+      "mass": 7200000000000000.0,
+      "radius": 11000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601600Z",
+    "name": "723",
+    "body": {
+      "position": [
+        1964464376737.724,
+        19511756632.69067,
+        -2176858663134.1528
+      ],
+      "velocity": [
+        -5449.651230485885,
+        539.8569913884061,
+        -3570.554228856371
+      ],
+      "mass": 5400000000000000.0,
+      "radius": 10000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601700Z",
+    "name": "724",
+    "body": {
+      "position": [
+        1986621571330.525,
+        19873618741.16337,
+        -2181116140399.284
+      ],
+      "velocity": [
+        -4958.17839300321,
+        31.994502508210683,
+        -3594.173022773871
+      ],
+      "mass": 5400000000000000.0,
+      "radius": 10000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601800Z",
+    "name": "725",
+    "body": {
+      "position": [
+        1971328414372.1409,
+        17362148136.93333,
+        -2181399939447.6536
+      ],
+      "velocity": [
+        3252.6502802283044,
+        1318.125762159593,
+        -2219.039740330662
+      ],
+      "mass": 1.8e19,
+      "radius": 13000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586200Z",
+    "name": "626",
+    "body": {
+      "position": [
+        1251301831281.262,
+        40621209198.629616,
+        769404388418.3864
+      ],
+      "velocity": [
+        3156.137006144026,
+        -639.1493427229942,
+        -8284.905200919438
+      ],
+      "mass": 2.23e16,
+      "radius": 13000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621601900Z",
+    "name": "726",
+    "body": {
+      "position": [
+        1971255199760.9329,
+        17362129579.91958,
+        -2181416114203.928
+      ],
+      "velocity": [
+        838.4482442541739,
+        -4917.643237283214,
+        -3631.402048706682
+      ],
+      "mass": 1e16,
+      "radius": 12000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586300Z",
+    "name": "627",
+    "body": {
+      "position": [
+        1235890657105.408,
+        34563614239.914536,
+        769772378578.963
+      ],
+      "velocity": [
+        6082.524063654362,
+        1297.849217771135,
+        -8857.42128897487
+      ],
+      "mass": 350000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602Z",
+    "name": "727",
+    "body": {
+      "position": [
+        1971316236348.14,
+        17510768591.74347,
+        -2181381787627.4053
+      ],
+      "velocity": [
+        -13694.40393145656,
+        472.8390929849864,
+        -6057.218220260558
+      ],
+      "mass": 3800000000000000.0,
+      "radius": 9000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586400Z",
+    "name": "628",
+    "body": {
+      "position": [
+        1242281346806.688,
+        26447123720.84361,
+        802715613015.9879
+      ],
+      "velocity": [
+        5355.616761044015,
+        847.5827223407149,
+        -7970.397297644034
+      ],
+      "mass": 680000000000000.0,
+      "radius": 4000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602100Z",
+    "name": "799",
+    "body": {
+      "position": [
+        1971313897451.196,
+        17436951316.507103,
+        -2181392826520.146
+      ],
+      "velocity": [
+        -5102.365711597758,
+        -81.91148708327556,
+        -4248.673426819116
+      ],
+      "mass": 8.6813e25,
+      "radius": 25362000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": -0.000101237
+      }
+    },
+    "material": {
+      "TexturePath": "textures/uranus_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586500Z",
+    "name": "629",
+    "body": {
+      "position": [
+        1242349116802.8418,
+        30239087026.56871,
+        773105943215.1578
+      ],
+      "velocity": [
+        2319.821336634377,
+        -139.9528920524813,
+        -7159.507951606202
+      ],
+      "mass": 4.35e16,
+      "radius": 16000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586600Z",
+    "name": "630",
+    "body": {
+      "position": [
+        1251903200375.074,
+        36771350608.3026,
+        803036783020.8936
+      ],
+      "velocity": [
+        3505.421682464536,
+        209.42375865509268,
+        -8133.592465786849
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586700Z",
+    "name": "631",
+    "body": {
+      "position": [
+        1233397814372.629,
+        22710595864.45022,
+        767094044303.1478
+      ],
+      "velocity": [
+        5836.657751176243,
+        306.39717988060823,
+        -8536.345472666244
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586800Z",
+    "name": "632",
+    "body": {
+      "position": [
+        1242960876542.745,
+        35843464286.30233,
+        780069760279.9949
+      ],
+      "velocity": [
+        17035.0711820445,
+        -1654.88684871485,
+        -2080.227435967398
+      ],
+      "mass": 20000000000000.0,
+      "radius": 1600.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621586900Z",
+    "name": "633",
+    "body": {
+      "position": [
+        1243258690157.785,
+        35958900333.73761,
+        779904048097.4712
+      ],
+      "velocity": [
+        2885.382887189555,
+        6369.668791805642,
+        -19927.62132434154
+      ],
+      "mass": 60000000000000.0,
+      "radius": 2500.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587Z",
+    "name": "634",
+    "body": {
+      "position": [
+        1243189123737.376,
+        35775078991.451195,
+        780239997756.076
+      ],
+      "velocity": [
+        13790.98446888828,
+        2660.2073029610033,
+        -10926.84717455289
+      ],
+      "mass": 10000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587300Z",
+    "name": "636",
+    "body": {
+      "position": [
+        1246965609576.322,
+        31714849185.41813,
+        754883365402.6799
+      ],
+      "velocity": [
+        5597.465374922891,
+        507.6046843084621,
+        -7928.7069570887
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587400Z",
+    "name": "637",
+    "body": {
+      "position": [
+        1258848708055.64,
+        47006081050.786385,
+        766773903595.2473
+      ],
+      "velocity": [
+        3777.304974454596,
+        718.8960770087278,
+        -8586.615378239383
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587500Z",
+    "name": "638",
+    "body": {
+      "position": [
+        1256150226150.348,
+        43697604837.16119,
+        792725713897.3427
+      ],
+      "velocity": [
+        3786.3814324338177,
+        375.0973660187382,
+        -7064.1950247108125
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587600Z",
+    "name": "639",
+    "body": {
+      "position": [
+        1267868686315.334,
+        53862588988.99031,
+        765348158335.9092
+      ],
+      "velocity": [
+        4899.542339396166,
+        138.9934342547008,
+        -7683.604503688166
+      ],
+      "mass": 229999999999999.97,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587700Z",
+    "name": "640",
+    "body": {
+      "position": [
+        1259598231110.652,
+        39907346094.94781,
+        796568873980.6989
+      ],
+      "velocity": [
+        3746.448861989478,
+        708.8725544169758,
+        -7470.772015392311
+      ],
+      "mass": 90000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587800Z",
+    "name": "641",
+    "body": {
+      "position": [
+        1250227121758.8042,
+        36693645115.52697,
+        761385622700.1987
+      ],
+      "velocity": [
+        5900.974206464493,
+        767.2146815792224,
+        -7728.997277326147
+      ],
+      "mass": 50000000000000.0,
+      "radius": 2000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621587900Z",
+    "name": "642",
+    "body": {
+      "position": [
+        1218628953866.3608,
+        30873588894.16057,
+        779505927476.4811
+      ],
+      "velocity": [
+        4387.690569604795,
+        363.10701169390967,
+        -9384.573706473371
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602200Z",
+    "name": "801",
+    "body": {
+      "position": [
+        4453313256481.662,
+        93904169424.1806,
+        410606617477.7369
+      ],
+      "velocity": [
+        4036.623552562669,
+        809.574465667354,
+        -7898.598072710827
+      ],
+      "mass": 2.14e22,
+      "radius": 1353400.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588Z",
+    "name": "643",
+    "body": {
+      "position": [
+        1241596881785.868,
+        42345031320.514145,
+        754230882423.0475
+      ],
+      "velocity": [
+        5547.613742751822,
+        405.1346626344219,
+        -8081.102361345138
+      ],
+      "mass": 150000000000000.0,
+      "radius": 3000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621588100Z",
+    "name": "644",
+    "body": {
+      "position": [
+        1231188663579.473,
+        40254003659.27756,
+        787145385719.2704
+      ],
+      "velocity": [
+        4351.118543851185,
+        760.9264968787076,
+        -9863.67785505204
+      ],
+      "mass": 350000000000000.0,
+      "radius": 4000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602300Z",
+    "name": "802",
+    "body": {
+      "position": [
+        4457619430854.2,
+        93793220677.47617,
+        408759030595.166
+      ],
+      "velocity": [
+        933.1402439680154,
+        15.46061249045572,
+        -6642.209537820301
+      ],
+      "mass": 3e19,
+      "radius": 170000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602400Z",
+    "name": "803",
+    "body": {
+      "position": [
+        4453440672880.412,
+        94196404085.32243,
+        410843286930.5073
+      ],
+      "velocity": [
+        8065.586517725478,
+        -1115.817171658234,
+        -14529.52528305027
+      ],
+      "mass": 2e17,
+      "radius": 33000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621605200Z",
+    "name": "920050000",
+    "body": {
+      "position": [
+        763180267047.3296,
+        -887973029207.3807,
+        6283237879657.63
+      ],
+      "velocity": [
+        4536.575316852269,
+        -0.1315717123005489,
+        -710.4915800150761
+      ],
+      "mass": 1e21,
+      "radius": 675000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602500Z",
+    "name": "804",
+    "body": {
+      "position": [
+        4453449562663.443,
+        94195632216.66774,
+        410831166006.2961
+      ],
+      "velocity": [
+        4804.614997399154,
+        -1930.345580286328,
+        -16100.24709580982
+      ],
+      "mass": 4e17,
+      "radius": 41000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602600Z",
+    "name": "805",
+    "body": {
+      "position": [
+        4453426046144.744,
+        94164200151.1016,
+        410770036807.4504
+      ],
+      "velocity": [
+        -9316.18357887465,
+        -4958.082735506343,
+        -8426.24550072922
+      ],
+      "mass": 2e18,
+      "radius": 75000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602700Z",
+    "name": "806",
+    "body": {
+      "position": [
+        4453359075324.274,
+        94144188945.00407,
+        410791118358.2716
+      ],
+      "velocity": [
+        -5090.901426882537,
+        1009.645648551824,
+        3430.641125724087
+      ],
+      "mass": 2e18,
+      "radius": 88000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602800Z",
+    "name": "807",
+    "body": {
+      "position": [
+        4453384722866.892,
+        94142014511.31532,
+        410755076077.8996
+      ],
+      "velocity": [
+        -8062.050068305506,
+        -1918.902408631851,
+        -1453.005921786062
+      ],
+      "mass": 5e18,
+      "radius": 97000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621605700Z",
+    "name": "920090482",
+    "body": {
+      "position": [
+        -6493069566067.22,
+        2452979863946.1167,
+        -1868884924663.578
+      ],
+      "velocity": [
+        -877.7848157327088,
+        295.17925115656317,
+        3674.437289355255
+      ],
+      "mass": 7e20,
+      "radius": 473000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621602900Z",
+    "name": "808",
+    "body": {
+      "position": [
+        4453297507022.619,
+        94136404081.9212,
+        410841791393.2695
+      ],
+      "velocity": [
+        1044.36685149827,
+        2952.420250962575,
+        1607.156184214809
+      ],
+      "mass": 5e19,
+      "radius": 210000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621605800Z",
+    "name": "120090482",
+    "body": {
+      "position": [
+        -6493066319331.7295,
+        2452972530585.506,
+        -1868888984013.74
+      ],
+      "velocity": [
+        -912.9445834873288,
+        255.6501971154967,
+        3717.681102856499
+      ],
+      "mass": 3.6e19,
+      "radius": 434000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603Z",
+    "name": "809",
+    "body": {
+      "position": [
+        4462681204011.364,
+        105895141139.43327,
+        409760792163.07465
+      ],
+      "velocity": [
+        196.3489204011746,
+        591.2506090508006,
+        -4986.5262001712
+      ],
+      "mass": 2e17,
+      "radius": 30000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603100Z",
+    "name": "810",
+    "body": {
+      "position": [
+        4486126950236.709,
+        137780914368.8204,
+        400436329165.6749
+      ],
+      "velocity": [
+        675.5541382566859,
+        62.55563096954964,
+        -5214.995895085214
+      ],
+      "mass": 2e16,
+      "radius": 20000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603300Z",
+    "name": "811",
+    "body": {
+      "position": [
+        4455088482368.161,
+        84796821279.11102,
+        393769022589.1975
+      ],
+      "velocity": [
+        10.69757220252976,
+        -258.0129237371569,
+        -5238.468670002518
+      ],
+      "mass": 1e17,
+      "radius": 20000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621606200Z",
+    "name": "920136108",
+    "body": {
+      "position": [
+        -5746573993160.486,
+        -3539432760166.327,
+        3257184778133.821
+      ],
+      "velocity": [
+        2244.499413353582,
+        132.96968860034912,
+        3130.821190325001
+      ],
+      "mass": 4.006e21,
+      "radius": 0.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603400Z",
+    "name": "812",
+    "body": {
+      "position": [
+        4449774203721.544,
+        100549386114.6304,
+        427210520608.6596
+      ],
+      "velocity": [
+        966.0218649515026,
+        538.7803200056447,
+        -5235.861466535576
+      ],
+      "mass": 1e17,
+      "radius": 20000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603500Z",
+    "name": "813",
+    "body": {
+      "position": [
+        4395112754141.4775,
+        143231814653.4026,
+        375710796994.8415
+      ],
+      "velocity": [
+        511.4565399202861,
+        142.04660388938132,
+        -5606.12406936672
+      ],
+      "mass": 1e17,
+      "radius": 30000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603600Z",
+    "name": "814",
+    "body": {
+      "position": [
+        4453377825093.952,
+        94128562700.75256,
+        410727122187.7921
+      ],
+      "velocity": [
+        -6709.6061188065005,
+        -1700.9804648341772,
+        -2264.507832922896
+      ],
+      "mass": 3e16,
+      "radius": 17000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603700Z",
+    "name": "899",
+    "body": {
+      "position": [
+        4453406912763.266,
+        94173546499.97704,
+        410818051456.9041
+      ],
+      "velocity": [
+        463.4394794125713,
+        122.9575708120747,
+        -5444.476680329227
+      ],
+      "mass": 1.02409e26,
+      "radius": 24622000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.000108338
+      }
+    },
+    "material": {
+      "TexturePath": "textures/neptune_base_color.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603800Z",
+    "name": "901",
+    "body": {
+      "position": [
+        2445325403027.0474,
+        217635730654.4714,
+        4576486636602.179
+      ],
+      "velocity": [
+        4799.500394675325,
+        1434.92777328006,
+        -1320.2546448242
+      ],
+      "mass": 1.58e21,
+      "radius": 606000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621603900Z",
+    "name": "902",
+    "body": {
+      "position": [
+        2445333614315.642,
+        217667678525.3942,
+        4576497589228.724
+      ],
+      "velocity": [
+        4826.387271117642,
+        1529.706896281428,
+        -1290.391389585567
+      ],
+      "mass": 4.5e16,
+      "radius": 44000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621604Z",
+    "name": "903",
+    "body": {
+      "position": [
+        2445306303177.014,
+        217566353287.4978,
+        4576464159553.798
+      ],
+      "velocity": [
+        5008.777951178064,
+        1557.092091754896,
+        -1470.696523501168
+      ],
+      "mass": 4.8e16,
+      "radius": 36000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621604100Z",
+    "name": "904",
+    "body": {
+      "position": [
+        2445313621774.2153,
+        217661170511.3711,
+        4576515419217.893
+      ],
+      "velocity": [
+        4844.028617425013,
+        1484.803174210258,
+        -1335.999922980836
+      ],
+      "mass": 1.64e16,
+      "radius": 25000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621604200Z",
+    "name": "905",
+    "body": {
+      "position": [
+        2445334479723.639,
+        217591166466.9569,
+        4576448997905.183
+      ],
+      "velocity": [
+        5042.620011707682,
+        1642.425177668178,
+        -1454.210572548603
+      ],
+      "mass": 7500000000000000.0,
+      "radius": 20000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621604300Z",
+    "name": "999",
+    "body": {
+      "position": [
+        2445331764718.507,
+        217623918165.9675,
+        4576472353044.1455
+      ],
+      "velocity": [
+        4946.568761737048,
+        1590.3928740639171,
+        -1383.3368179206711
+      ],
+      "mass": 1.3029999999999998e22,
+      "radius": 1188300.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621606400Z",
+    "name": "220136108",
+    "body": {
+      "position": [
+        -5746556986218.295,
+        -3539437109450.345,
+        3257164787598.39
+      ],
+      "velocity": [
+        2286.0527006725893,
+        212.2979067725255,
+        3170.243667913375
+      ],
+      "mass": 1.79e18,
+      "radius": 85000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621606500Z",
+    "name": "920136199",
+    "body": {
+      "position": [
+        12817996465157.5,
+        2762338289339.86,
+        -5769208948166.351
+      ],
+      "velocity": [
+        -764.0179906588764,
+        -1611.9982241237522,
+        -1508.612097500749
+      ],
+      "mass": 1.66e22,
+      "radius": 1163000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621606600Z",
+    "name": "120136199",
+    "body": {
+      "position": [
+        12817986425571.83,
+        2762362978864.036,
+        -5769235300415.746
+      ],
+      "velocity": [
+        -896.0056360375241,
+        -1711.282458274044,
+        -1551.95576704249
+      ],
+      "mass": 1.45e20,
+      "radius": 350000.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  },
+  {
+    "date": "2023-03-04T12:45:58.621553600Z",
+    "name": "502",
+    "body": {
+      "position": [
+        703277091438.1586,
+        16703311070.99874,
+        -227147317830.7037
+      ],
+      "velocity": [
+        9435.535238490851,
+        -348.80094308710505,
+        -13109.29759031329
+      ],
+      "mass": 4.8e22,
+      "radius": 1560800.0,
+      "rotation": {
+        "initial": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "sideral_rotation_offset": 0.0,
+        "sideral_rotation_speed": 0.0
+      }
+    },
+    "material": {
+      "TexturePath": "textures/asteroid.jpg"
+    }
+  }
+]

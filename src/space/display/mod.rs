@@ -61,6 +61,11 @@ impl Plugin for DisplayPlugin {
 
         app.add_state_to_stage(DisplayStage::Sync, ViewMode::Realistic);
 
+        'add_view_mode_stuff: {
+            app.add_event::<ToggleViewModeEvent>();
+            app.add_system(toggle_view_mode);
+        }
+
         'add_cubemap_camera_sync: {
             use crate::space::controls::camera::systems::orbit;
             use camera::systems::*;

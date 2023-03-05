@@ -22,8 +22,12 @@ impl Plugin for ControlsPlugin {
         {
             use keyboard::systems::*;
 
-            app.add_system(toggle_simulation_state)
-                .add_system(toggle_view_mode);
+            app.add_system(
+                toggle_simulation_state.before(crate::space::display::view_mode::toggle_view_mode),
+            )
+            .add_system(
+                toggle_view_mode.before(crate::space::simulation::systems::toggle_simulation_state),
+            );
         }
     }
 }
